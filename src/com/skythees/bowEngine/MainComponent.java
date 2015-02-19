@@ -12,15 +12,15 @@ public class MainComponent
 	public static final double FRAME_CAP = 5000.0;
 	
 	private boolean isRunning;
-	private Game game;
-	
-	public MainComponent()
+    private TestGame testGame;
+
+    public MainComponent()
 	{
 		System.out.println(RenderUtil.getOpenGLVersion());
 		RenderUtil.initGraphics();
 		isRunning = false;
-		game = new Game();
-	}
+        testGame = new TestGame();
+    }
 
     public static void main(String[] args) {
         Window.createWindow(WIDTH, HEIGHT, TITLE);
@@ -80,10 +80,10 @@ public class MainComponent
 
                 Time.setDelta(frameTime);
 
-                game.input();
-				Input.update();
+                testGame.input();
+                Input.update();
 
-                game.update();
+                testGame.update();
 
                 if(frameCounter >= Time.SECOND)
 				{
@@ -113,8 +113,8 @@ public class MainComponent
 	private void render()
 	{
 		RenderUtil.clearScreen();
-		game.render();
-		Window.render();
+        testGame.render();
+        Window.render();
 	}
 	
 	private void cleanUp()

@@ -8,13 +8,12 @@ import com.skythees.bowEngine.render.Shader;
 import com.skythees.bowEngine.render.Vertex;
 import org.lwjgl.input.Keyboard;
 
-public class Game
+public class TestGame
 {
 	private Mesh mesh;
 	private Shader shader;
-	
-	public Game()
-	{
+
+    public TestGame() {
 		mesh = new Mesh();
 		shader = new Shader();
 		
