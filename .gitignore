@@ -13,5 +13,6 @@ hs_err_pid*
 
 # IntelliJ IDEA Files
 out/*
+runDIR/*
 .idea/*
 *.iml
