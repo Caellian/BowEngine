@@ -1,4 +1,4 @@
-package com.base.engine;
+package com.skythees.bowEngine;
 
 import com.skythees.bowEngine.managers.Input;
 import com.skythees.bowEngine.managers.ResourceLoader;
