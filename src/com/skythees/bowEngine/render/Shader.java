@@ -3,6 +3,7 @@ package com.skythees.bowEngine.render;
 import com.skythees.bowEngine.managers.DataUtil;
 import com.skythees.bowEngine.math.vector.Matrix4f;
 import com.skythees.bowEngine.math.vector.Vector3f;
+import com.skythees.bowEngine.render.shaders.Material;
 
 import java.util.HashMap;
 
@@ -24,6 +25,10 @@ public class Shader {
 
     public void bind() {
         glUseProgram(program);
+    }
+
+    public void updateUniforms(Matrix4f worldMatrix, Matrix4f projectedMatrix, Material material) {
+
     }
 
     public void addUniform(String uniform) {

@@ -5,10 +5,24 @@ import com.skythees.bowEngine.render.Vertex;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class DataUtil {
     public static FloatBuffer createFloatBuffer(int size) {
         return BufferUtils.createFloatBuffer(size);
+    }
+
+    public static IntBuffer createIntBuffer(int size) {
+        return BufferUtils.createIntBuffer(size);
+    }
+
+    public static IntBuffer createFlippedBuffer(int... values) {
+        IntBuffer buffer = createIntBuffer(values.length);
+        buffer.put(values);
+        buffer.flip();
+        return buffer;
     }
 
     public static FloatBuffer createFlippedBuffer(Vertex[] vertices) {
@@ -18,6 +32,9 @@ public class DataUtil {
             buffer.put(vertex.getPos().getX());
             buffer.put(vertex.getPos().getY());
             buffer.put(vertex.getPos().getZ());
+            buffer.put(vertex.getTexturePos().getX());
+            buffer.put(vertex.getTexturePos().getY());
+
         }
 
         buffer.flip();
@@ -37,5 +54,25 @@ public class DataUtil {
         buffer.flip();
 
         return buffer;
+    }
+
+    public static String[] removeEmptyStrings(String[] tokens) {
+        ArrayList<String> tokenList = new ArrayList<>();
+
+        for (final String token : tokens) {
+            if (!Objects.equals(token, "")) {
+                tokenList.add(token);
+            }
+        }
+        return tokenList.toArray(new String[tokenList.size()]);
+    }
+
+    public static int[] toIntArray(Integer[] indexData) {
+        int[] result = new int[indexData.length];
+        int counter = 0;
+        for (final Integer integer : indexData) {
+            result[counter++] = integer;
+        }
+        return result;
     }
 }

@@ -8,20 +8,44 @@ public class Matrix4f {
     }
 
     public Matrix4f initIdentity() {
-        for (int x : new int[]{0, 1, 2, 3}) {
-            for (int y : new int[]{0, 1, 2, 3}) {
-                matrix[x][y] = y == x ? 1 : 0;
-            }
-        }
+        matrix[0][0] = 1;
+        matrix[0][1] = 0;
+        matrix[0][2] = 0;
+        matrix[0][3] = 0;
+        matrix[1][0] = 0;
+        matrix[1][1] = 1;
+        matrix[1][2] = 0;
+        matrix[1][3] = 0;
+        matrix[2][0] = 0;
+        matrix[2][1] = 0;
+        matrix[2][2] = 1;
+        matrix[2][3] = 0;
+        matrix[3][0] = 0;
+        matrix[3][1] = 0;
+        matrix[3][2] = 0;
+        matrix[3][3] = 1;
+
         return this;
     }
 
     public Matrix4f initTranslation(float x, float y, float z) {
-        for (int tmpX : new int[]{0, 1, 2, 3}) {
-            for (int tmpY : new int[]{0, 1, 2, 3}) {
-                matrix[tmpX][tmpY] = tmpY == 3 ? (tmpX == 0 ? x : (tmpX == 1 ? y : (tmpX == 2 ? z : 1))) : (tmpY == tmpX ? 1 : 0);
-            }
-        }
+        matrix[0][0] = 1;
+        matrix[0][1] = 0;
+        matrix[0][2] = 0;
+        matrix[0][3] = x;
+        matrix[1][0] = 0;
+        matrix[1][1] = 1;
+        matrix[1][2] = 0;
+        matrix[1][3] = y;
+        matrix[2][0] = 0;
+        matrix[2][1] = 0;
+        matrix[2][2] = 1;
+        matrix[2][3] = z;
+        matrix[3][0] = 0;
+        matrix[3][1] = 0;
+        matrix[3][2] = 0;
+        matrix[3][3] = 1;
+
         return this;
     }
 
@@ -111,6 +135,63 @@ public class Matrix4f {
         return this;
     }
 
+    public Matrix4f initProjection(float fow, float width, float height, float clipNear, float clipFar) {
+
+        float aspectRatio = width / height;
+        float fowAngle = (float) Math.tan(Math.toRadians(fow / 2));
+        float clipRange = clipNear - clipFar;
+
+        matrix[0][0] = 1 / (fowAngle * aspectRatio);
+        matrix[0][1] = 0;
+        matrix[0][2] = 0;
+        matrix[0][3] = 0;
+        matrix[1][0] = 0;
+        matrix[1][1] = 1 / fowAngle;
+        matrix[1][2] = 0;
+        matrix[1][3] = 0;
+        matrix[2][0] = 0;
+        matrix[2][1] = 0;
+        matrix[2][2] = (-clipNear - clipFar) / clipRange;
+        matrix[2][3] = 2 * clipFar * clipNear / clipRange;
+        matrix[3][0] = 0;
+        matrix[3][1] = 0;
+        matrix[3][2] = 1;
+        matrix[3][3] = 0;
+
+        return this;
+    }
+
+    public Matrix4f initCamera(Vector3f forward, Vector3f up) {
+
+        Vector3f f = forward;
+        f.normalized();
+
+        Vector3f r = up;
+        r.normalized();
+        r = r.cross(f);
+
+        Vector3f u = f.cross(r);
+
+        matrix[0][0] = r.getX();
+        matrix[0][1] = r.getY();
+        matrix[0][2] = r.getZ();
+        matrix[0][3] = 0;
+        matrix[1][0] = u.getX();
+        matrix[1][1] = u.getY();
+        matrix[1][2] = u.getZ();
+        matrix[1][3] = 0;
+        matrix[2][0] = f.getX();
+        matrix[2][1] = f.getY();
+        matrix[2][2] = f.getZ();
+        matrix[2][3] = 0;
+        matrix[3][0] = 0;
+        matrix[3][1] = 0;
+        matrix[3][2] = 0;
+        matrix[3][3] = 1;
+
+        return this;
+    }
+
     public Matrix4f mul(Matrix4f r) {
         Matrix4f res = new Matrix4f();
 
@@ -127,7 +208,13 @@ public class Matrix4f {
     }
 
     public float[][] getMatrix() {
-        return matrix;
+        float[][] result = new float[4][4];
+
+        for (final int posX : new int[]{0, 1, 2, 3})
+            for (final int posY : new int[]{0, 1, 2, 3})
+                result[posX][posY] = matrix[posX][posY];
+
+        return result;
     }
 
     public void setMatrix(float[][] matrix) {

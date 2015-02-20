@@ -1,4 +1,4 @@
-package com.skythees.bowEngine;
+package com.skythees.bowEngine.display;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
