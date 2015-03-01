@@ -12,6 +12,10 @@ public class Material {
         this.color = color;
     }
 
+    public Material(Texture texture) {
+        this(texture, new Vector3f(0.5f, 0.5f, 0.5f));
+    }
+
     public Texture getTexture() {
         return texture;
     }

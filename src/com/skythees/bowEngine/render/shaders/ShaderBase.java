@@ -19,10 +19,11 @@ public class ShaderBase extends Shader {
 
     @Override
     public void updateUniforms(Matrix4f worldMatrix, Matrix4f projectedMatrix, Material material) {
-        if (material.getTexture() != null)
+        if (material.getTexture() != null) {
             material.getTexture().bind();
-        else
+        } else {
             RenderUtil.unbindTextures();
+        }
 
         setUniform("transform", projectedMatrix);
         setUniform("color", material.getColor());

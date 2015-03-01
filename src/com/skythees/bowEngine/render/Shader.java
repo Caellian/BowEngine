@@ -10,7 +10,7 @@ import java.util.HashMap;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL32.GL_GEOMETRY_SHADER;
 
-public class Shader {
+public abstract class Shader {
     private int program;
     private HashMap<String, Integer> uniforms = new HashMap<>();
 
@@ -27,9 +27,7 @@ public class Shader {
         glUseProgram(program);
     }
 
-    public void updateUniforms(Matrix4f worldMatrix, Matrix4f projectedMatrix, Material material) {
-
-    }
+    public abstract void updateUniforms(Matrix4f worldMatrix, Matrix4f projectedMatrix, Material material);
 
     public void addUniform(String uniform) {
         int uniformLocation = glGetUniformLocation(program, uniform);
