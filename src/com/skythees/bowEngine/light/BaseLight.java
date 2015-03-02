@@ -16,26 +16,32 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.managers;
+package com.skythees.bowEngine.light;
 
-public class Time 
-{
-	public static final long SECOND = 1000000000L;
-	
-	private static double delta;
-	
-	public static long getTime()
-	{
-		return System.nanoTime();
-	}
-	
-	public static double getDelta()
-	{
-		return delta;
-	}
-	
-	public static void setDelta(double delta)
-	{
-		Time.delta = delta;
-	}
+import com.skythees.bowEngine.math.vector.Vector3f;
+
+public class BaseLight {
+    float intensity;
+    private Vector3f color;
+
+    public BaseLight(Vector3f color, float intensity) {
+        this.color = color;
+        this.intensity = intensity;
+    }
+
+    public Vector3f getColor() {
+        return color;
+    }
+
+    public void setColor(Vector3f color) {
+        this.color = color;
+    }
+
+    public float getIntensity() {
+        return intensity;
+    }
+
+    public void setIntensity(float intensity) {
+        this.intensity = intensity;
+    }
 }
