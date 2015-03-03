@@ -16,37 +16,25 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.light;
+package com.skythees.bowEngine.lib;
 
-import com.skythees.bowEngine.math.vector.Vector3f;
+import java.net.URL;
 
 /**
- * Created on 02.03.15
+ * Created on 03.03.15.
  */
-public class DirectionalLight {
-    private BaseLight base;
-    private Vector3f direction;
-
-    public DirectionalLight(BaseLight base, Vector3f direction) {
-        this.base = base;
-        this.direction = direction.normalized();
-    }
-
-    public BaseLight getBase() {
-        return base;
-    }
-
+public class Reference {
     @SuppressWarnings("UnusedDeclaration")
-    public void setBase(BaseLight base) {
-        this.base = base;
-    }
-
-    public Vector3f getDirection() {
-        return direction;
-    }
-
+    public static final String ENGINE_NAME = "Bow Engine";
     @SuppressWarnings("UnusedDeclaration")
-    public void setDirection(Vector3f direction) {
-        this.direction = direction;
+    public static final String ENGINE_ID = "bow_engine";
+    @SuppressWarnings("UnusedDeclaration")
+    public static final String ENGINE_VERSION = "0.0.1";
+    @SuppressWarnings("UnusedDeclaration")
+    public static final String AUTHOR = "Skythees";
+
+    @SuppressWarnings("SameParameterValue")
+    public static URL getURLPath(String path) {
+        return Reference.class.getClassLoader().getResource(path);
     }
 }

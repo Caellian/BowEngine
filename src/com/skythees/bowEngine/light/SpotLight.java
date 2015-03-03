@@ -21,24 +21,18 @@ package com.skythees.bowEngine.light;
 import com.skythees.bowEngine.math.vector.Vector3f;
 
 /**
- * Created on 02.03.15
+ * Created on 03.03.15.
  */
-public class DirectionalLight {
-    private BaseLight base;
+public class SpotLight extends PointLight {
+
     private Vector3f direction;
-
-    public DirectionalLight(BaseLight base, Vector3f direction) {
-        this.base = base;
-        this.direction = direction.normalized();
-    }
-
-    public BaseLight getBase() {
-        return base;
-    }
+    private float cutoff;
 
     @SuppressWarnings("UnusedDeclaration")
-    public void setBase(BaseLight base) {
-        this.base = base;
+    public SpotLight(PointLight baseLight, Vector3f direction, float cutoff) {
+        super(new BaseLight(baseLight.getColor(), baseLight.getIntensity()), baseLight.getAttenuation(), baseLight.getPosition(), baseLight.getRange());
+        this.direction = direction.normalized();
+        this.cutoff = cutoff;
     }
 
     public Vector3f getDirection() {
@@ -47,6 +41,15 @@ public class DirectionalLight {
 
     @SuppressWarnings("UnusedDeclaration")
     public void setDirection(Vector3f direction) {
-        this.direction = direction;
+        this.direction = direction.normalized();
+    }
+
+    public float getCutoff() {
+        return cutoff;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public void setCutoff(float cutoff) {
+        this.cutoff = cutoff;
     }
 }

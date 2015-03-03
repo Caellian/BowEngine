@@ -22,14 +22,19 @@ import com.skythees.bowEngine.math.vector.Vector2f;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-public class Input 
-{
+@SuppressWarnings("UnusedDeclaration")
+public class Input {
+    @SuppressWarnings("WeakerAccess")
     public static final int NUM_KEY_CODES = 256;
+    @SuppressWarnings("WeakerAccess")
     public static final int NUM_MOUSE_BUTTONS = 5;
 
+    @SuppressWarnings("CanBeFinal")
     private static boolean[] lastKeys = new boolean[NUM_KEY_CODES];
+    @SuppressWarnings("CanBeFinal")
     private static boolean[] lastMouse = new boolean[NUM_MOUSE_BUTTONS];
 
+    @SuppressWarnings("UnusedDeclaration")
     public static void update() {
         for (int i = 0; i < NUM_KEY_CODES; i++)
             lastKeys[i] = getKey(i);
@@ -42,34 +47,42 @@ public class Input
         return Keyboard.isKeyDown(keyCode);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static boolean getKeyDown(int keyCode) {
         return getKey(keyCode) && !lastKeys[keyCode];
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static boolean getKeyUp(int keyCode) {
         return !getKey(keyCode) && lastKeys[keyCode];
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static boolean getMouse(int mouseButton) {
         return Mouse.isButtonDown(mouseButton);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static boolean getMouseDown(int mouseButton) {
         return getMouse(mouseButton) && !lastMouse[mouseButton];
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static boolean getMouseUp(int mouseButton) {
         return !getMouse(mouseButton) && lastMouse[mouseButton];
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static Vector2f getMousePosition() {
         return new Vector2f(Mouse.getX(), Mouse.getY());
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static void setMousePosition(Vector2f pos) {
         Mouse.setCursorPosition((int) pos.getX(), (int) pos.getY());
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static void setCursor(boolean enabled) {
         Mouse.setGrabbed(!enabled);
     }

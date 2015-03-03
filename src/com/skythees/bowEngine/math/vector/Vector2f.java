@@ -22,25 +22,30 @@ public class Vector2f {
     private float x;
     private float y;
 
+    @SuppressWarnings("UnusedDeclaration")
     public Vector2f(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public float length() {
         return (float) Math.sqrt(x * x + y * y);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public float dot(Vector2f r) {
         return x * r.getX() + y * r.getY();
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Vector2f normalized() {
         float length = length();
 
         return new Vector2f(x / length, y / length);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Vector2f rotate(float angle) {
         double rad = Math.toRadians(angle);
         double cos = Math.cos(rad);
@@ -49,38 +54,47 @@ public class Vector2f {
         return new Vector2f((float) (x * cos - y * sin), (float) (x * sin + y * cos));
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Vector2f add(Vector2f r) {
         return new Vector2f(x + r.getX(), y + r.getY());
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Vector2f add(float r) {
         return new Vector2f(x + r, y + r);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Vector2f sub(Vector2f r) {
         return new Vector2f(x - r.getX(), y - r.getY());
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Vector2f sub(float r) {
         return new Vector2f(x - r, y - r);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Vector2f mul(Vector2f r) {
         return new Vector2f(x * r.getX(), y * r.getY());
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Vector2f mul(float r) {
         return new Vector2f(x * r, y * r);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Vector2f div(Vector2f r) {
         return new Vector2f(x / r.getX(), y / r.getY());
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Vector2f div(float r) {
         return new Vector2f(x / r, y / r);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Vector2f abs() {
         return new Vector2f(Math.abs(x), Math.abs(y));
     }
@@ -93,6 +107,7 @@ public class Vector2f {
         return x;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setX(float x) {
         this.x = x;
     }
@@ -101,6 +116,7 @@ public class Vector2f {
         return y;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setY(float y) {
         this.y = y;
     }

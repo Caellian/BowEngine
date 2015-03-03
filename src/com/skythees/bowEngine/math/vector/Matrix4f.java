@@ -25,6 +25,7 @@ public class Matrix4f {
         matrix = new float[4][4];
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Matrix4f initIdentity() {
         matrix[0][0] = 1;
         matrix[0][1] = 0;
@@ -181,14 +182,13 @@ public class Matrix4f {
 
     public Matrix4f initCamera(Vector3f forward, Vector3f up) {
 
-        Vector3f f = forward;
-        f.normalized();
+        Vector3f forward0 = forward.normalized();
 
         Vector3f r = up;
         r.normalized();
-        r = r.cross(f);
+        r = r.cross(forward0);
 
-        Vector3f u = f.cross(r);
+        Vector3f u = forward0.cross(r);
 
         matrix[0][0] = r.getX();
         matrix[0][1] = r.getY();
@@ -198,9 +198,9 @@ public class Matrix4f {
         matrix[1][1] = u.getY();
         matrix[1][2] = u.getZ();
         matrix[1][3] = 0;
-        matrix[2][0] = f.getX();
-        matrix[2][1] = f.getY();
-        matrix[2][2] = f.getZ();
+        matrix[2][0] = forward0.getX();
+        matrix[2][1] = forward0.getY();
+        matrix[2][2] = forward0.getZ();
         matrix[2][3] = 0;
         matrix[3][0] = 0;
         matrix[3][1] = 0;
@@ -225,6 +225,7 @@ public class Matrix4f {
         return res;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public float[][] getMatrix() {
         float[][] result = new float[4][4];
 
@@ -235,6 +236,7 @@ public class Matrix4f {
         return result;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setMatrix(float[][] matrix) {
         this.matrix = matrix;
     }
@@ -243,6 +245,7 @@ public class Matrix4f {
         return matrix[x][y];
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void set(int x, int y, float value) {
         matrix[x][y] = value;
     }

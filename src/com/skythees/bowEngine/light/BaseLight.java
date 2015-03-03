@@ -20,7 +20,11 @@ package com.skythees.bowEngine.light;
 
 import com.skythees.bowEngine.math.vector.Vector3f;
 
+/**
+ * Created on 02.03.15
+ */
 public class BaseLight {
+    @SuppressWarnings("WeakerAccess")
     float intensity;
     private Vector3f color;
 
@@ -33,6 +37,7 @@ public class BaseLight {
         return color;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setColor(Vector3f color) {
         this.color = color;
     }
@@ -41,6 +46,7 @@ public class BaseLight {
         return intensity;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setIntensity(float intensity) {
         this.intensity = intensity;
     }

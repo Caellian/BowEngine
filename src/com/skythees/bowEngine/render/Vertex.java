@@ -32,10 +32,12 @@ public class Vertex {
         this(pos, new Vector2f(0, 0));
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Vertex(Vector3f pos, Vector2f texturePos) {
         this(pos, texturePos, new Vector3f(0, 0, 0));
     }
 
+    @SuppressWarnings({"UnusedDeclaration", "WeakerAccess"})
     public Vertex(Vector3f pos, Vector2f texturePos, Vector3f normal) {
         this.pos = pos;
         this.texturePos = texturePos;
@@ -46,6 +48,7 @@ public class Vertex {
         return pos;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setPos(Vector3f pos) {
         this.pos = pos;
     }
@@ -54,6 +57,7 @@ public class Vertex {
         return texturePos;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setTexturePos(Vector2f texturePos) {
         this.texturePos = texturePos;
     }

@@ -26,6 +26,13 @@ public class Material {
     private float specularIntensity;
     private float specularExponent;
 
+
+    @SuppressWarnings({"UnusedDeclaration", "UnusedParameters"})
+    public Material(Texture texture, float specularIntensity, float specularExponent) {
+        this(texture, new Vector3f(0.5f, 0.5f, 0.5f), 2, 32);
+    }
+
+    @SuppressWarnings({"WeakerAccess", "SameParameterValue"})
     public Material(Texture texture, Vector3f color, float specularIntensity, float specularExponent) {
         this.texture = texture;
         this.color = color;
@@ -33,10 +40,12 @@ public class Material {
         this.specularExponent = specularExponent;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public Material(Texture texture, Vector3f color) {
         this(texture, color, 2, 32);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Material(Texture texture) {
         this(texture, new Vector3f(0.5f, 0.5f, 0.5f));
     }
@@ -45,6 +54,7 @@ public class Material {
         return texture;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setTexture(Texture texture) {
         this.texture = texture;
     }
@@ -53,6 +63,7 @@ public class Material {
         return color;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setColor(Vector3f color) {
         this.color = color;
     }
@@ -61,6 +72,7 @@ public class Material {
         return specularIntensity;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setSpecularIntensity(float specularIntensity) {
         this.specularIntensity = specularIntensity;
     }
@@ -69,6 +81,7 @@ public class Material {
         return specularExponent;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setSpecularExponent(float specularExponent) {
         this.specularExponent = specularExponent;
     }

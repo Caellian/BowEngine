@@ -18,24 +18,23 @@
 
 package com.skythees.bowEngine.managers;
 
-public class Time 
-{
-	public static final long SECOND = 1000000000L;
-	
-	private static double delta;
-	
-	public static long getTime()
-	{
-		return System.nanoTime();
-	}
-	
-	public static double getDelta()
-	{
-		return delta;
-	}
-	
-	public static void setDelta(double delta)
-	{
-		Time.delta = delta;
-	}
+public class Time {
+    @SuppressWarnings("UnusedDeclaration")
+    public static final long SECOND = 1000000000L;
+
+    private static double delta;
+
+    @SuppressWarnings("UnusedDeclaration")
+    public static long getTime() {
+        return System.nanoTime();
+    }
+
+    public static double getDelta() {
+        return delta;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public static void setDelta(double delta) {
+        Time.delta = delta;
+    }
 }

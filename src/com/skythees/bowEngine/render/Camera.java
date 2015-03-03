@@ -26,14 +26,17 @@ import org.lwjgl.input.Keyboard;
 public class Camera {
     private static final Vector3f yAxis = new Vector3f(0, 1, 0);
 
+    @SuppressWarnings("WeakerAccess")
     public Vector3f pos;
     private Vector3f forward;
     private Vector3f up;
 
+    @SuppressWarnings("UnusedDeclaration")
     public Camera() {
         this(new Vector3f(0, 0, 0), new Vector3f(0, 0, 1), new Vector3f(0, 1, 0));
     }
 
+    @SuppressWarnings("WeakerAccess")
     public Camera(Vector3f pos, Vector3f forward, Vector3f up) {
         this.pos = pos;
         this.forward = forward;
@@ -43,6 +46,7 @@ public class Camera {
         forward.normalized();
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void input() {
         float moveAmount = (float) (10 * Time.getDelta());
         float rotationAmount = (float) (100 * Time.getDelta());
@@ -74,28 +78,33 @@ public class Camera {
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void move(Vector3f dir, float amount) {
         pos = pos.add(dir.mul(amount));
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void rotateY(float angle) {
         Vector3f hAxis = yAxis.cross(forward).normalized();
         forward = forward.rotated(angle, yAxis).normalized();
         up = forward.cross(hAxis).normalized();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void rotateX(float angle) {
         Vector3f hAxis = yAxis.cross(forward).normalized();
         forward = forward.rotated(angle, hAxis).normalized();
         up = forward.cross(hAxis).normalized();
     }
 
+    @SuppressWarnings("WeakerAccess")
     public Vector3f getLeft() {
         Vector3f left = up.cross(forward);
         left.normalized();
         return left;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public Vector3f getRight() {
         Vector3f right = forward.cross(up);
         right.normalized();
@@ -106,6 +115,7 @@ public class Camera {
         return pos;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setPos(Vector3f pos) {
         this.pos = pos;
     }
@@ -114,6 +124,7 @@ public class Camera {
         return up;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setUp(Vector3f up) {
         this.up = up;
     }
@@ -122,6 +133,7 @@ public class Camera {
         return forward;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setForward(Vector3f forward) {
         this.forward = forward;
     }

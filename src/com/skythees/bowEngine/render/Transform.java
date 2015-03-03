@@ -34,12 +34,14 @@ public class Transform {
     private Vector3f rotation;
     private Vector3f scale;
 
+    @SuppressWarnings("UnusedDeclaration")
     public Transform() {
         translation = new Vector3f(0, 0, 0);
         rotation = new Vector3f(0, 0, 0);
         scale = new Vector3f(1, 1, 1);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static void setProjection(float fow, float width, float height, float clipNear, float clipFar) {
         Transform.fow = fow;
         Transform.width = width;
@@ -52,6 +54,7 @@ public class Transform {
         return camera;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static void setCamera(Camera camera) {
         Transform.camera = camera;
     }
@@ -64,6 +67,7 @@ public class Transform {
         return translationMatrix.mul(rotationMatrix.mul(scaleMatrix));
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Matrix4f getProjectedTransformation() {
         Matrix4f transformationMatrix = getTransformation();
         Matrix4f projectionMatrix = new Matrix4f().initProjection(fow, width, height, clipNear, clipFar);
@@ -73,38 +77,47 @@ public class Transform {
         return projectionMatrix.mul(cameraRotation.mul(cameraTranslation.mul(transformationMatrix)));
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Vector3f getTranslation() {
         return translation;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setTranslation(Vector3f translation) {
         this.translation = translation;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setTranslation(float x, float y, float z) {
         this.translation = new Vector3f(x, y, z);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Vector3f getRotation() {
         return rotation;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setRotation(Vector3f rotation) {
         this.rotation = rotation;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setRotation(float x, float y, float z) {
         this.rotation = new Vector3f(x, y, z);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public Vector3f getScale() {
         return scale;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setScale(Vector3f scale) {
         this.scale = scale;
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setScale(float x, float y, float z) {
         this.scale = new Vector3f(x, y, z);
     }

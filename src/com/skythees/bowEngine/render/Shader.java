@@ -18,19 +18,25 @@
 
 package com.skythees.bowEngine.render;
 
+import com.skythees.bowEngine.lib.Reference;
 import com.skythees.bowEngine.managers.DataUtil;
 import com.skythees.bowEngine.math.vector.Matrix4f;
 import com.skythees.bowEngine.math.vector.Vector3f;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.HashMap;
 
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL32.GL_GEOMETRY_SHADER;
 
 public abstract class Shader {
-    private int program;
+    private final int program;
+    @SuppressWarnings("CanBeFinal")
     private HashMap<String, Integer> uniforms = new HashMap<>();
 
+    @SuppressWarnings("WeakerAccess")
     public Shader() {
         program = glCreateProgram();
 
@@ -40,12 +46,58 @@ public abstract class Shader {
         }
     }
 
+    protected static String loadInternalShader(String shader) {
+        StringBuilder shaderSource = new StringBuilder();
+        BufferedReader shaderReader;
+        try {
+            File shaderFile = new File(Reference.getURLPath("resources/shaders/") + shader);
+            shaderReader = new BufferedReader(new FileReader(shaderFile));
+            String line;
+
+            while ((line = shaderReader.readLine()) != null) {
+                shaderSource.append(line).append("\n");
+            }
+
+            shaderReader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        return shaderSource.toString();
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public static String loadShader(String shader) {
+        StringBuilder shaderSource = new StringBuilder();
+        BufferedReader shaderReader;
+        try {
+            File shaderFile = new File("./resources/shaders/" + shader);
+            shaderReader = new BufferedReader(new FileReader(shaderFile));
+            String line;
+
+            while ((line = shaderReader.readLine()) != null) {
+                shaderSource.append(line).append("\n");
+            }
+
+            shaderReader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        return shaderSource.toString();
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
     public void bind() {
         glUseProgram(program);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public abstract void updateUniforms(Matrix4f worldMatrix, Matrix4f projectedMatrix, Material material);
 
+    @SuppressWarnings("WeakerAccess")
     public void addUniform(String uniform) {
         int uniformLocation = glGetUniformLocation(program, uniform);
 
@@ -58,18 +110,22 @@ public abstract class Shader {
         uniforms.put(uniform, uniformLocation);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void addVertexShader(String text) {
         addProgram(text, GL_VERTEX_SHADER);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void addGeometryShader(String text) {
         addProgram(text, GL_GEOMETRY_SHADER);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void addFragmentShader(String text) {
         addProgram(text, GL_FRAGMENT_SHADER);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void compileShader() {
         glLinkProgram(program);
 
@@ -105,18 +161,22 @@ public abstract class Shader {
         glAttachShader(program, shader);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void setUniform(String uniformName, int value) {
         glUniform1i(uniforms.get(uniformName), value);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void setUniform(String uniformName, float value) {
         glUniform1f(uniforms.get(uniformName), value);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void setUniform(String uniformName, Vector3f value) {
         glUniform3f(uniforms.get(uniformName), value.getX(), value.getY(), value.getZ());
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void setUniform(String uniformName, Matrix4f value) {
         glUniformMatrix4(uniforms.get(uniformName), true, DataUtil.createFlippedBuffer(value));
     }

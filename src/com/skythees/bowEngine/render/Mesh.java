@@ -21,6 +21,12 @@ package com.skythees.bowEngine.render;
 import com.skythees.bowEngine.managers.DataUtil;
 import com.skythees.bowEngine.math.vector.Vector3f;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Objects;
+
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
@@ -30,17 +36,90 @@ public class Mesh {
     private int ibo;
     private int size;
 
-    public Mesh() {
+    @SuppressWarnings("UnusedDeclaration")
+    public Mesh(String fileName) {
+        initMeshData();
+        loadMesh(fileName);
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public Mesh(Vertex[] vertices, int[] indices) {
+        this(vertices, indices, false);
+    }
+
+    @SuppressWarnings({"SameParameterValue", "WeakerAccess"})
+    public Mesh(Vertex[] vertices, int[] indices, boolean calcNormals) {
+        initMeshData();
+        addVertices(vertices, indices, calcNormals);
+    }
+
+    private void initMeshData() {
         vbo = glGenBuffers();
         ibo = glGenBuffers();
         size = 0;
     }
 
-    public void addVertices(Vertex[] vertices, int[] indices) {
-        addVertices(vertices, indices, false);
+    //    @SuppressWarnings("UnusedDeclaration")
+//    public Mesh() {
+//
+//    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    private void loadMesh(String mesh) {
+        String[] nameArray = mesh.split("\\.");
+        String ext = nameArray[nameArray.length - 1];
+        if (!(Objects.equals(ext, "obj"))) {
+            System.err.println("Error: Mesh data file format not supported:" + ext);
+            new Exception().printStackTrace();
+            System.exit(1);
+        }
+        ArrayList<Vertex> vertices = new ArrayList<>();
+        ArrayList<Integer> indices = new ArrayList<>();
+
+        BufferedReader meshReader;
+
+        try {
+            File meshFile = new File("./resources/models/" + mesh);
+            meshReader = new BufferedReader(new FileReader(meshFile));
+            String line;
+
+            while ((line = meshReader.readLine()) != null) {
+                String[] tokens = line.split(" ");
+                tokens = DataUtil.removeEmptyStrings(tokens);
+
+                if (tokens.length == 0 || tokens[0].equals("#")) {
+                    continue;
+                }
+                if (tokens[0].equals("v")) {
+                    vertices.add(new Vertex(new Vector3f(Float.valueOf(tokens[1]),
+                            Float.valueOf(tokens[2]),
+                            Float.valueOf(tokens[3]))));
+                } else if (tokens[0].equals("f")) {
+                    indices.add(Integer.parseInt(tokens[1].split("/")[0]) - 1);
+                    indices.add(Integer.parseInt(tokens[2].split("/")[0]) - 1);
+                    indices.add(Integer.parseInt(tokens[3].split("/")[0]) - 1);
+                    if (tokens.length > 4) {
+                        indices.add(Integer.parseInt(tokens[1].split("/")[0]) - 1);
+                        indices.add(Integer.parseInt(tokens[2].split("/")[0]) - 1);
+                        indices.add(Integer.parseInt(tokens[4].split("/")[0]) - 1);
+                    }
+                }
+            }
+
+            meshReader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        Vertex[] vertexData = vertices.toArray(new Vertex[vertices.size()]);
+        Integer[] indexData = indices.toArray(new Integer[indices.size()]);
+
+        addVertices(vertexData, DataUtil.toIntArray(indexData), true);
     }
 
-    public void addVertices(Vertex[] vertices, int[] indices, boolean calcNormals) {
+    @SuppressWarnings("UnusedDeclaration")
+    private void addVertices(Vertex[] vertices, int[] indices, boolean calcNormals) {
         if (calcNormals) {
             calcNormals(vertices, indices);
         }
@@ -54,6 +133,7 @@ public class Mesh {
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, DataUtil.createFlippedBuffer(indices), GL_STATIC_DRAW);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public void draw() {
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);

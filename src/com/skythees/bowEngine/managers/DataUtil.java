@@ -28,10 +28,12 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class DataUtil {
+    @SuppressWarnings("WeakerAccess")
     public static FloatBuffer createFloatBuffer(int size) {
         return BufferUtils.createFloatBuffer(size);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static IntBuffer createIntBuffer(int size) {
         return BufferUtils.createIntBuffer(size);
     }

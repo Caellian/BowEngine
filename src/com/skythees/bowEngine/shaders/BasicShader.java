@@ -16,28 +16,29 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.render.shaders;
+package com.skythees.bowEngine.shaders;
 
-import com.skythees.bowEngine.managers.ResourceLoader;
 import com.skythees.bowEngine.math.vector.Matrix4f;
 import com.skythees.bowEngine.render.Material;
 import com.skythees.bowEngine.render.RenderUtil;
 import com.skythees.bowEngine.render.Shader;
 
+@SuppressWarnings("UnusedDeclaration")
 public class BasicShader extends Shader {
-    private static final BasicShader instance = new BasicShader("basic");
+    private static final BasicShader instance = new BasicShader();
 
-    private BasicShader(String shaderName) {
+    private BasicShader() {
         super();
 
-        addVertexShader(ResourceLoader.loadShader(shaderName + ".vsh"));
-        addFragmentShader(ResourceLoader.loadShader(shaderName + ".fsh"));
+        addVertexShader(loadInternalShader("basic.vsh"));
+        addFragmentShader(loadInternalShader("basic.fsh"));
         compileShader();
 
         addUniform("transform");
         addUniform("color");
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public static BasicShader getInstance() {
         return instance;
     }

@@ -18,35 +18,45 @@
 
 package com.skythees.bowEngine.light;
 
-import com.skythees.bowEngine.math.vector.Vector3f;
-
 /**
- * Created on 02.03.15
+ * Created on 02.03.15.
  */
-public class DirectionalLight {
-    private BaseLight base;
-    private Vector3f direction;
+public class Attenuation {
+    private float constant;
+    private float linear;
+    private float exponent;
 
-    public DirectionalLight(BaseLight base, Vector3f direction) {
-        this.base = base;
-        this.direction = direction.normalized();
+    @SuppressWarnings("UnusedDeclaration")
+    public Attenuation(float constant, float linear, float exponent) {
+        this.constant = constant;
+        this.linear = linear;
+        this.exponent = exponent;
     }
 
-    public BaseLight getBase() {
-        return base;
+    public float getConstant() {
+        return constant;
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public void setBase(BaseLight base) {
-        this.base = base;
+    public void setConstant(float constant) {
+        this.constant = constant;
     }
 
-    public Vector3f getDirection() {
-        return direction;
+    public float getLinear() {
+        return linear;
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public void setDirection(Vector3f direction) {
-        this.direction = direction;
+    public void setLinear(float linear) {
+        this.linear = linear;
+    }
+
+    public float getExponent() {
+        return exponent;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public void setExponent(float exponent) {
+        this.exponent = exponent;
     }
 }

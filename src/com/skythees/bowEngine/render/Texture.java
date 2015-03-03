@@ -18,20 +18,47 @@
 
 package com.skythees.bowEngine.render;
 
+import org.newdawn.slick.opengl.TextureLoader;
+
+import java.io.File;
+import java.io.FileInputStream;
+
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glBindTexture;
 
 public class Texture {
-    private int id;
+    private final int id;
 
+    public Texture(String fileName) {
+        this(loadTexture(fileName));
+    }
+
+    @SuppressWarnings("WeakerAccess")
     public Texture(int id) {
         this.id = id;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public static int loadTexture(String texture) {
+        String[] nameArray = texture.split("\\.");
+        String ext = nameArray[nameArray.length - 1];
+
+        try {
+            File textureFile = new File("./resources/textures/" + texture);
+            return TextureLoader.getTexture(ext, new FileInputStream(textureFile)).getTextureID();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        return 0;
     }
 
     public void bind() {
         glBindTexture(GL_TEXTURE_2D, id);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public int getID() {
         return id;
     }
