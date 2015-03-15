@@ -59,11 +59,6 @@ public class Mesh {
         size = 0;
     }
 
-    //    @SuppressWarnings("UnusedDeclaration")
-//    public Mesh() {
-//
-//    }
-
     @SuppressWarnings("UnusedDeclaration")
     private void loadMesh(String mesh) {
         String[] nameArray = mesh.split("\\.");

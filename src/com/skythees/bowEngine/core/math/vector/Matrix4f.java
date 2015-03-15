@@ -178,6 +178,31 @@ public class Matrix4f {
         return this;
     }
 
+    public Matrix4f initOrthographic(float left, float right, float bottom, float top, float near, float far) {
+        float width = right - left;
+        float height = top - bottom;
+        float depth = far - near;
+
+        matrix[0][0] = 2 / width;
+        matrix[0][1] = 0;
+        matrix[0][2] = 0;
+        matrix[0][3] = -(right + left) / width;
+        matrix[1][0] = 0;
+        matrix[1][1] = 2 / height;
+        matrix[1][2] = 0;
+        matrix[1][3] = -(top + bottom) / height;
+        matrix[2][0] = 0;
+        matrix[2][1] = 0;
+        matrix[2][2] = -2 / depth;
+        matrix[2][3] = -(far + near) / depth;
+        matrix[3][0] = 0;
+        matrix[3][1] = 0;
+        matrix[3][2] = 0;
+        matrix[3][3] = 1;
+
+        return this;
+    }
+
     public Matrix4f initRotation(Vector3f forward, Vector3f up) {
 
         Vector3f forward0 = forward.normalized();

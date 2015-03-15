@@ -28,7 +28,7 @@ public class RenderingEngine {
 
         glEnable(GL_TEXTURE_2D);
 
-        mainCamera = new Camera((float) Math.toRadians(70.0f), (float) Window.getWidth() / (float) Window.getHeight(), 0.01f, 1000.0f);
+        mainCamera = new Camera((float) Math.toRadians(70.0f), (float) Window.getWidth() / (float) Window.getHeight(), 0.001f, 1000.0f);
     }
 
     @SuppressWarnings("UnusedDeclaration")
@@ -56,8 +56,8 @@ public class RenderingEngine {
         return glGetString(GL_VERSION);
     }
 
-    public void tmpInput() {
-        getMainCamera().freeCamInput();
+    public void tmpInput(float delta) {
+        getMainCamera().freeCamInput(delta);
     }
 
     public void render(GameObject object) {

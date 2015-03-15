@@ -18,6 +18,7 @@
 
 package com.skythees.bowEngine.render.display;
 
+import com.skythees.bowEngine.core.math.vector.Vector2f;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -86,5 +87,9 @@ public class Window {
         } catch (LWJGLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Vector2f centerPosition() {
+        return new Vector2f(getWidth() / 2, getHeight() / 2);
     }
 }

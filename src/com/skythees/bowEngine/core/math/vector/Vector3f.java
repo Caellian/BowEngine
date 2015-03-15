@@ -69,6 +69,40 @@ public class Vector3f {
         return new Vector3f(w.getX(), w.getY(), w.getZ());
     }
 
+    public Vector3f lerp(Vector3f dest, Vector3f lerpFactor) {
+        return dest.sub(this).mul(lerpFactor).add(this);
+    }
+
+    @SuppressWarnings("SuspiciousNameCombination")
+    public Vector2f getXY() {
+        return new Vector2f(x, y);
+    }
+
+    @SuppressWarnings("SuspiciousNameCombination")
+    public Vector2f getYZ() {
+        return new Vector2f(y, z);
+    }
+
+    @SuppressWarnings("SuspiciousNameCombination")
+    public Vector2f getZX() {
+        return new Vector2f(z, x);
+    }
+
+    @SuppressWarnings("SuspiciousNameCombination")
+    public Vector2f getYX() {
+        return new Vector2f(y, x);
+    }
+
+    @SuppressWarnings("SuspiciousNameCombination")
+    public Vector2f getZY() {
+        return new Vector2f(z, y);
+    }
+
+    @SuppressWarnings("SuspiciousNameCombination")
+    public Vector2f getXZ() {
+        return new Vector2f(x, z);
+    }
+
     public Vector3f add(Vector3f r) {
         return new Vector3f(x + r.getX(), y + r.getY(), z + r.getZ());
     }
@@ -136,5 +170,17 @@ public class Vector3f {
     @SuppressWarnings("UnusedDeclaration")
     public void setZ(float z) {
         this.z = z;
+    }
+
+    public boolean equals(Vector3f compared) {
+        return this == compared || compared != null && Float.compare(compared.x, x) == 0 && Float.compare(compared.y, y) == 0 && Float.compare(compared.z, z) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (x != +0.0f ? Float.floatToIntBits(x) : 0);
+        result = 31 * result + (y != +0.0f ? Float.floatToIntBits(y) : 0);
+        result = 31 * result + (z != +0.0f ? Float.floatToIntBits(z) : 0);
+        return result;
     }
 }

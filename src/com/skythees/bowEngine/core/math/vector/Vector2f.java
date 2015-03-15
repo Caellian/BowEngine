@@ -54,6 +54,14 @@ public class Vector2f {
         return new Vector2f((float) (x * cos - y * sin), (float) (x * sin + y * cos));
     }
 
+    public float cross(Vector2f r) {
+        return x * r.getY() - y * r.getX();
+    }
+
+    public Vector2f lerp(Vector2f dest, Vector2f lerpFactor) {
+        return dest.sub(this).mul(lerpFactor).add(this);
+    }
+
     @SuppressWarnings("UnusedDeclaration")
     public Vector2f add(Vector2f r) {
         return new Vector2f(x + r.getX(), y + r.getY());
@@ -119,5 +127,9 @@ public class Vector2f {
     @SuppressWarnings("UnusedDeclaration")
     public void setY(float y) {
         this.y = y;
+    }
+
+    public boolean equals(Vector2f compared) {
+        return this == compared || compared != null && Float.compare(compared.x, x) == 0 && Float.compare(compared.y, y) == 0;
     }
 }

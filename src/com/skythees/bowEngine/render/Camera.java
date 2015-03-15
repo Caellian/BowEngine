@@ -19,9 +19,10 @@
 package com.skythees.bowEngine.render;
 
 import com.skythees.bowEngine.core.math.vector.Matrix4f;
+import com.skythees.bowEngine.core.math.vector.Vector2f;
 import com.skythees.bowEngine.core.math.vector.Vector3f;
-import com.skythees.bowEngine.core.util.Time;
 import com.skythees.bowEngine.core.util.input.InputHelper;
+import com.skythees.bowEngine.render.display.Window;
 import org.lwjgl.input.Keyboard;
 
 public class Camera {
@@ -29,6 +30,7 @@ public class Camera {
 
     @SuppressWarnings("WeakerAccess")
     public Vector3f pos;
+    boolean mouseLocked = false;
     private Vector3f forward;
     private Vector3f up;
     private Matrix4f projection;
@@ -48,9 +50,19 @@ public class Camera {
         return projection.mul(cameraRotation.mul(cameraTranslation));
     }
 
-    public void freeCamInput() {
-        float moveAmount = (float) (10 * Time.getDelta());
-        float rotationAmount = (float) (100 * Time.getDelta());
+    public void freeCamInput(float delta) {
+        float sensitivity = 0.5f;
+        float moveAmount = 10 * delta;
+
+        if (InputHelper.getKey(Keyboard.KEY_ESCAPE)) {
+            InputHelper.setCursor(true);
+            mouseLocked = false;
+        }
+        if (InputHelper.getMouseDown(0)) {
+            InputHelper.setMousePosition(Window.centerPosition());
+            InputHelper.setCursor(false);
+            mouseLocked = true;
+        }
 
         if (InputHelper.getKey(Keyboard.KEY_W)) {
             move(getForward(), InputHelper.getKey(Keyboard.KEY_LCONTROL) ? moveAmount * 5 : moveAmount);
@@ -65,17 +77,16 @@ public class Camera {
             move(getRight(), -(InputHelper.getKey(Keyboard.KEY_LCONTROL) ? moveAmount * 5 : moveAmount));
         }
 
-        if (InputHelper.getKey(Keyboard.KEY_UP)) {
-            rotateX(-rotationAmount);
-        }
-        if (InputHelper.getKey(Keyboard.KEY_LEFT)) {
-            rotateY(-rotationAmount);
-        }
-        if (InputHelper.getKey(Keyboard.KEY_DOWN)) {
-            rotateX(rotationAmount);
-        }
-        if (InputHelper.getKey(Keyboard.KEY_RIGHT)) {
-            rotateY(rotationAmount);
+        if (mouseLocked) {
+            Vector2f deltaPos = InputHelper.getMousePosition().sub(Window.centerPosition());
+            boolean rotY = deltaPos.getX() != 0;
+            boolean rotX = deltaPos.getY() != 0;
+            if (rotY)
+                rotateY(deltaPos.getX() * sensitivity);
+            if (rotX)
+                rotateX(-deltaPos.getY() * sensitivity);
+            if (rotY || rotX)
+                InputHelper.setMousePosition(Window.centerPosition());
         }
     }
 
