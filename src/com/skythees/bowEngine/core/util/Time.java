@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.managers;
+package com.skythees.bowEngine.core.util;
 
 public class Time {
     @SuppressWarnings("UnusedDeclaration")

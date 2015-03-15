@@ -18,8 +18,8 @@
 
 package com.skythees.bowEngine.render;
 
-import com.skythees.bowEngine.managers.DataUtil;
-import com.skythees.bowEngine.math.vector.Vector3f;
+import com.skythees.bowEngine.core.math.vector.Vector3f;
+import com.skythees.bowEngine.core.util.helpers.DataUtil;
 
 import java.io.BufferedReader;
 import java.io.File;

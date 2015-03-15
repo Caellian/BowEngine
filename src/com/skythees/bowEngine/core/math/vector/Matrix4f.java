@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.math.vector;
+package com.skythees.bowEngine.core.math.vector;
 
 public class Matrix4f {
     private float[][] matrix;
@@ -154,10 +154,8 @@ public class Matrix4f {
         return this;
     }
 
-    public Matrix4f initProjection(float fow, float width, float height, float clipNear, float clipFar) {
-
-        float aspectRatio = width / height;
-        float fowAngle = (float) Math.tan(Math.toRadians(fow / 2));
+    public Matrix4f initPerspective(float fow, float aspectRatio, float clipNear, float clipFar) {
+        float fowAngle = (float) Math.tan(fow / 2);
         float clipRange = clipNear - clipFar;
 
         matrix[0][0] = 1 / (fowAngle * aspectRatio);
@@ -180,7 +178,7 @@ public class Matrix4f {
         return this;
     }
 
-    public Matrix4f initCamera(Vector3f forward, Vector3f up) {
+    public Matrix4f initRotation(Vector3f forward, Vector3f up) {
 
         Vector3f forward0 = forward.normalized();
 

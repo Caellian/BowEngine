@@ -16,14 +16,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.managers;
+package com.skythees.bowEngine.core.util.input;
 
-import com.skythees.bowEngine.math.vector.Vector2f;
+import com.skythees.bowEngine.core.math.vector.Vector2f;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 @SuppressWarnings("UnusedDeclaration")
-public class Input {
+public class InputHelper {
     @SuppressWarnings("WeakerAccess")
     public static final int NUM_KEY_CODES = 256;
     @SuppressWarnings("WeakerAccess")

@@ -18,9 +18,10 @@
 
 package com.skythees.bowEngine.render;
 
-import com.skythees.bowEngine.managers.Input;
-import com.skythees.bowEngine.managers.Time;
-import com.skythees.bowEngine.math.vector.Vector3f;
+import com.skythees.bowEngine.core.math.vector.Matrix4f;
+import com.skythees.bowEngine.core.math.vector.Vector3f;
+import com.skythees.bowEngine.core.util.Time;
+import com.skythees.bowEngine.core.util.input.InputHelper;
 import org.lwjgl.input.Keyboard;
 
 public class Camera {
@@ -30,50 +31,50 @@ public class Camera {
     public Vector3f pos;
     private Vector3f forward;
     private Vector3f up;
-
-    @SuppressWarnings("UnusedDeclaration")
-    public Camera() {
-        this(new Vector3f(0, 0, 0), new Vector3f(0, 0, 1), new Vector3f(0, 1, 0));
-    }
+    private Matrix4f projection;
 
     @SuppressWarnings("WeakerAccess")
-    public Camera(Vector3f pos, Vector3f forward, Vector3f up) {
-        this.pos = pos;
-        this.forward = forward;
-        this.up = up;
-
-        up.normalized();
-        forward.normalized();
+    public Camera(float fov, float aspectRatio, float zNear, float zFar) {
+        this.pos = new Vector3f(0, 0, 0);
+        this.forward = new Vector3f(0, 0, 1).normalized();
+        this.up = new Vector3f(0, 1, 0).normalized();
+        this.projection = new Matrix4f().initPerspective(fov, aspectRatio, zNear, zFar);
     }
 
-    @SuppressWarnings("UnusedDeclaration")
-    public void input() {
+    public Matrix4f getViewProjection() {
+        Matrix4f cameraRotation = new Matrix4f().initRotation(forward, up);
+        Matrix4f cameraTranslation = new Matrix4f().initTranslation(-pos.getX(), -pos.getY(), -pos.getZ());
+
+        return projection.mul(cameraRotation.mul(cameraTranslation));
+    }
+
+    public void freeCamInput() {
         float moveAmount = (float) (10 * Time.getDelta());
         float rotationAmount = (float) (100 * Time.getDelta());
 
-        if (Input.getKey(Keyboard.KEY_W)) {
-            move(getForward(), Input.getKey(Keyboard.KEY_LCONTROL) ? moveAmount * 5 : moveAmount);
+        if (InputHelper.getKey(Keyboard.KEY_W)) {
+            move(getForward(), InputHelper.getKey(Keyboard.KEY_LCONTROL) ? moveAmount * 5 : moveAmount);
         }
-        if (Input.getKey(Keyboard.KEY_A)) {
-            move(getLeft(), -(Input.getKey(Keyboard.KEY_LCONTROL) ? moveAmount * 5 : moveAmount));
+        if (InputHelper.getKey(Keyboard.KEY_A)) {
+            move(getLeft(), -(InputHelper.getKey(Keyboard.KEY_LCONTROL) ? moveAmount * 5 : moveAmount));
         }
-        if (Input.getKey(Keyboard.KEY_S)) {
-            move(getForward(), -(Input.getKey(Keyboard.KEY_LCONTROL) ? moveAmount * 5 : moveAmount));
+        if (InputHelper.getKey(Keyboard.KEY_S)) {
+            move(getForward(), -(InputHelper.getKey(Keyboard.KEY_LCONTROL) ? moveAmount * 5 : moveAmount));
         }
-        if (Input.getKey(Keyboard.KEY_D)) {
-            move(getRight(), -(Input.getKey(Keyboard.KEY_LCONTROL) ? moveAmount * 5 : moveAmount));
+        if (InputHelper.getKey(Keyboard.KEY_D)) {
+            move(getRight(), -(InputHelper.getKey(Keyboard.KEY_LCONTROL) ? moveAmount * 5 : moveAmount));
         }
 
-        if (Input.getKey(Keyboard.KEY_UP)) {
+        if (InputHelper.getKey(Keyboard.KEY_UP)) {
             rotateX(-rotationAmount);
         }
-        if (Input.getKey(Keyboard.KEY_LEFT)) {
+        if (InputHelper.getKey(Keyboard.KEY_LEFT)) {
             rotateY(-rotationAmount);
         }
-        if (Input.getKey(Keyboard.KEY_DOWN)) {
+        if (InputHelper.getKey(Keyboard.KEY_DOWN)) {
             rotateX(rotationAmount);
         }
-        if (Input.getKey(Keyboard.KEY_RIGHT)) {
+        if (InputHelper.getKey(Keyboard.KEY_RIGHT)) {
             rotateY(rotationAmount);
         }
     }
@@ -112,7 +113,7 @@ public class Camera {
     }
 
     public Vector3f getPos() {
-        return pos;
+        return this.pos;
     }
 
     @SuppressWarnings("UnusedDeclaration")

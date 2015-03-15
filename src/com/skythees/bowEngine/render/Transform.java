@@ -18,18 +18,10 @@
 
 package com.skythees.bowEngine.render;
 
-import com.skythees.bowEngine.math.vector.Matrix4f;
-import com.skythees.bowEngine.math.vector.Vector3f;
+import com.skythees.bowEngine.core.math.vector.Matrix4f;
+import com.skythees.bowEngine.core.math.vector.Vector3f;
 
 public class Transform {
-    private static Camera camera;
-
-    private static float clipNear;
-    private static float clipFar;
-    private static float width;
-    private static float height;
-    private static float fow;
-
     private Vector3f translation;
     private Vector3f rotation;
     private Vector3f scale;
@@ -41,40 +33,12 @@ public class Transform {
         scale = new Vector3f(1, 1, 1);
     }
 
-    @SuppressWarnings("UnusedDeclaration")
-    public static void setProjection(float fow, float width, float height, float clipNear, float clipFar) {
-        Transform.fow = fow;
-        Transform.width = width;
-        Transform.height = height;
-        Transform.clipNear = clipNear;
-        Transform.clipFar = clipFar;
-    }
-
-    public static Camera getCamera() {
-        return camera;
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
-    public static void setCamera(Camera camera) {
-        Transform.camera = camera;
-    }
-
     public Matrix4f getTransformation() {
         Matrix4f translationMatrix = new Matrix4f().initTranslation(translation.getX(), translation.getY(), translation.getZ());
         Matrix4f rotationMatrix = new Matrix4f().initRotation(rotation.getX(), rotation.getY(), rotation.getZ());
         Matrix4f scaleMatrix = new Matrix4f().initScale(scale.getX(), scale.getY(), scale.getZ());
 
         return translationMatrix.mul(rotationMatrix.mul(scaleMatrix));
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
-    public Matrix4f getProjectedTransformation() {
-        Matrix4f transformationMatrix = getTransformation();
-        Matrix4f projectionMatrix = new Matrix4f().initProjection(fow, width, height, clipNear, clipFar);
-        Matrix4f cameraRotation = new Matrix4f().initCamera(camera.getForward(), camera.getUp());
-        Matrix4f cameraTranslation = new Matrix4f().initTranslation(-camera.getPos().getX(), -camera.getPos().getY(), -camera.getPos().getZ());
-
-        return projectionMatrix.mul(cameraRotation.mul(cameraTranslation.mul(transformationMatrix)));
     }
 
     @SuppressWarnings("UnusedDeclaration")

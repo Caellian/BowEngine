@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.math.vector;
+package com.skythees.bowEngine.core.math.vector;
 
 public class Vector3f {
     private float x;

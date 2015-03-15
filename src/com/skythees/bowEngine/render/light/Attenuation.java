@@ -16,38 +16,47 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.light;
-
-import com.skythees.bowEngine.math.vector.Vector3f;
+package com.skythees.bowEngine.render.light;
 
 /**
- * Created on 02.03.15
+ * Created on 02.03.15.
  */
-public class BaseLight {
-    @SuppressWarnings("WeakerAccess")
-    float intensity;
-    private Vector3f color;
+public class Attenuation {
+    private float constant;
+    private float linear;
+    private float exponent;
 
-    public BaseLight(Vector3f color, float intensity) {
-        this.color = color;
-        this.intensity = intensity;
+    @SuppressWarnings("UnusedDeclaration")
+    public Attenuation(float constant, float linear, float exponent) {
+        this.constant = constant;
+        this.linear = linear;
+        this.exponent = exponent;
     }
 
-    public Vector3f getColor() {
-        return color;
+    public float getConstant() {
+        return constant;
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public void setColor(Vector3f color) {
-        this.color = color;
+    public void setConstant(float constant) {
+        this.constant = constant;
     }
 
-    public float getIntensity() {
-        return intensity;
+    public float getLinear() {
+        return linear;
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public void setIntensity(float intensity) {
-        this.intensity = intensity;
+    public void setLinear(float linear) {
+        this.linear = linear;
+    }
+
+    public float getExponent() {
+        return exponent;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public void setExponent(float exponent) {
+        this.exponent = exponent;
     }
 }

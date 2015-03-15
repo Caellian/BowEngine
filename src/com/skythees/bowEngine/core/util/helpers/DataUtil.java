@@ -16,26 +16,95 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.managers;
+package com.skythees.bowEngine.core.util.helpers;
 
-import com.skythees.bowEngine.math.vector.Matrix4f;
+import com.skythees.bowEngine.core.math.vector.Matrix4f;
 import com.skythees.bowEngine.render.Vertex;
-import org.lwjgl.BufferUtils;
 
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
+import java.nio.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class DataUtil {
-    @SuppressWarnings("WeakerAccess")
-    public static FloatBuffer createFloatBuffer(int size) {
-        return BufferUtils.createFloatBuffer(size);
+
+    /*
+    Copied over some BufferUtils methods to make the engine run faster.
+     */
+
+    /**
+     * Construct a direct native-ordered bytebuffer with the specified size.
+     *
+     * @param size The size, in bytes
+     * @return a ByteBuffer
+     */
+    public static ByteBuffer createByteBuffer(int size) {
+        return ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder());
     }
 
-    @SuppressWarnings("WeakerAccess")
+    /**
+     * Construct a direct native-order shortbuffer with the specified number
+     * of elements.
+     *
+     * @param size The size, in shorts
+     * @return a ShortBuffer
+     */
+    public static ShortBuffer createShortBuffer(int size) {
+        return createByteBuffer(size << 1).asShortBuffer();
+    }
+
+    /**
+     * Construct a direct native-order charbuffer with the specified number
+     * of elements.
+     *
+     * @param size The size, in chars
+     * @return an CharBuffer
+     */
+    public static CharBuffer createCharBuffer(int size) {
+        return createByteBuffer(size << 1).asCharBuffer();
+    }
+
+    /**
+     * Construct a direct native-order intbuffer with the specified number
+     * of elements.
+     *
+     * @param size The size, in ints
+     * @return an IntBuffer
+     */
     public static IntBuffer createIntBuffer(int size) {
-        return BufferUtils.createIntBuffer(size);
+        return createByteBuffer(size << 2).asIntBuffer();
+    }
+
+    /**
+     * Construct a direct native-order longbuffer with the specified number
+     * of elements.
+     *
+     * @param size The size, in longs
+     * @return an LongBuffer
+     */
+    public static LongBuffer createLongBuffer(int size) {
+        return createByteBuffer(size << 3).asLongBuffer();
+    }
+
+    /**
+     * Construct a direct native-order floatbuffer with the specified number
+     * of elements.
+     *
+     * @param size The size, in floats
+     * @return a FloatBuffer
+     */
+    public static FloatBuffer createFloatBuffer(int size) {
+        return createByteBuffer(size << 2).asFloatBuffer();
+    }
+
+    /**
+     * Construct a direct native-order doublebuffer with the specified number
+     * of elements.
+     *
+     * @param size The size, in floats
+     * @return a FloatBuffer
+     */
+    public static DoubleBuffer createDoubleBuffer(int size) {
+        return createByteBuffer(size << 3).asDoubleBuffer();
     }
 
     public static IntBuffer createFlippedBuffer(int... values) {

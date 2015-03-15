@@ -16,13 +16,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.display;
+package com.skythees.bowEngine.render.display;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.util.Dimension;
 
 @SuppressWarnings({"WeakerAccess", "UnusedDeclaration"})
 public class Window {
@@ -69,5 +70,21 @@ public class Window {
     @SuppressWarnings("UnusedDeclaration")
     public static String getTitle() {
         return Display.getTitle();
+    }
+
+    public static void setFullscreen(boolean fullscreen) {
+        try {
+            Display.setFullscreen(fullscreen);
+        } catch (LWJGLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void setDimensions(Dimension dimensions) {
+        try {
+            Display.setDisplayMode(new DisplayMode(dimensions.getWidth(), dimensions.getHeight()));
+        } catch (LWJGLException e) {
+            e.printStackTrace();
+        }
     }
 }

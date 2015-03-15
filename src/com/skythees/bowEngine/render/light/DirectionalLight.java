@@ -16,23 +16,29 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.light;
+package com.skythees.bowEngine.render.light;
 
-import com.skythees.bowEngine.math.vector.Vector3f;
+import com.skythees.bowEngine.core.math.vector.Vector3f;
 
 /**
- * Created on 03.03.15.
+ * Created on 02.03.15
  */
-public class SpotLight extends PointLight {
-
+public class DirectionalLight {
+    private BaseLight base;
     private Vector3f direction;
-    private float cutoff;
+
+    public DirectionalLight(BaseLight base, Vector3f direction) {
+        this.base = base;
+        this.direction = direction.normalized();
+    }
+
+    public BaseLight getBase() {
+        return base;
+    }
 
     @SuppressWarnings("UnusedDeclaration")
-    public SpotLight(PointLight baseLight, Vector3f direction, float cutoff) {
-        super(new BaseLight(baseLight.getColor(), baseLight.getIntensity()), baseLight.getAttenuation(), baseLight.getPosition(), baseLight.getRange());
-        this.direction = direction.normalized();
-        this.cutoff = cutoff;
+    public void setBase(BaseLight base) {
+        this.base = base;
     }
 
     public Vector3f getDirection() {
@@ -41,15 +47,6 @@ public class SpotLight extends PointLight {
 
     @SuppressWarnings("UnusedDeclaration")
     public void setDirection(Vector3f direction) {
-        this.direction = direction.normalized();
-    }
-
-    public float getCutoff() {
-        return cutoff;
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
-    public void setCutoff(float cutoff) {
-        this.cutoff = cutoff;
+        this.direction = direction;
     }
 }

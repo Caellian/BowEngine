@@ -18,10 +18,9 @@
 
 package com.skythees.bowEngine.render;
 
-import com.skythees.bowEngine.lib.Reference;
-import com.skythees.bowEngine.managers.DataUtil;
-import com.skythees.bowEngine.math.vector.Matrix4f;
-import com.skythees.bowEngine.math.vector.Vector3f;
+import com.skythees.bowEngine.core.math.vector.Matrix4f;
+import com.skythees.bowEngine.core.math.vector.Vector3f;
+import com.skythees.bowEngine.core.util.helpers.DataUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,8 +31,9 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL32.GL_GEOMETRY_SHADER;
 
 public abstract class Shader {
+
     private final int program;
-    @SuppressWarnings("CanBeFinal")
+    private RenderingEngine renderingEngine;
     private HashMap<String, Integer> uniforms = new HashMap<>();
 
     @SuppressWarnings("WeakerAccess")
@@ -50,7 +50,9 @@ public abstract class Shader {
         StringBuilder shaderSource = new StringBuilder();
         BufferedReader shaderReader;
         try {
-            File shaderFile = new File(Reference.getURLPath("resources/shaders/") + shader);
+            File shaderFile = new File("resources/shaders/" + shader);
+            System.out.println(shaderFile.getAbsolutePath());
+//            File shaderFile = new File(Reference.getURLPath("resources/shaders/") + shader);
             shaderReader = new BufferedReader(new FileReader(shaderFile));
             String line;
 
@@ -72,7 +74,7 @@ public abstract class Shader {
         StringBuilder shaderSource = new StringBuilder();
         BufferedReader shaderReader;
         try {
-            File shaderFile = new File("./resources/shaders/" + shader);
+            File shaderFile = new File("resources/shaders/" + shader);
             shaderReader = new BufferedReader(new FileReader(shaderFile));
             String line;
 
@@ -95,7 +97,7 @@ public abstract class Shader {
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public abstract void updateUniforms(Matrix4f worldMatrix, Matrix4f projectedMatrix, Material material);
+    public abstract void updateUniforms(Transform transform, Material material);
 
     @SuppressWarnings("WeakerAccess")
     public void addUniform(String uniform) {
@@ -179,5 +181,13 @@ public abstract class Shader {
     @SuppressWarnings("WeakerAccess")
     public void setUniform(String uniformName, Matrix4f value) {
         glUniformMatrix4(uniforms.get(uniformName), true, DataUtil.createFlippedBuffer(value));
+    }
+
+    public RenderingEngine getRenderingEngine() {
+        return renderingEngine;
+    }
+
+    public void setRenderingEngine(RenderingEngine renderingEngine) {
+        this.renderingEngine = renderingEngine;
     }
 }

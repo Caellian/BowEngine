@@ -16,25 +16,40 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.lib;
+package com.skythees.bowEngine.render.light;
 
-import java.net.URL;
+import com.skythees.bowEngine.core.math.vector.Vector3f;
 
 /**
  * Created on 03.03.15.
  */
-public class Reference {
-    @SuppressWarnings("UnusedDeclaration")
-    public static final String ENGINE_NAME = "Bow Engine";
-    @SuppressWarnings("UnusedDeclaration")
-    public static final String ENGINE_ID = "bow_engine";
-    @SuppressWarnings("UnusedDeclaration")
-    public static final String ENGINE_VERSION = "0.0.1";
-    @SuppressWarnings("UnusedDeclaration")
-    public static final String AUTHOR = "Skythees";
+public class SpotLight extends PointLight {
 
-    @SuppressWarnings("SameParameterValue")
-    public static URL getURLPath(String path) {
-        return Reference.class.getClassLoader().getResource(path);
+    private Vector3f direction;
+    private float cutoff;
+
+    @SuppressWarnings("UnusedDeclaration")
+    public SpotLight(PointLight baseLight, Vector3f direction, float cutoff) {
+        super(new BaseLight(baseLight.getColor(), baseLight.getIntensity()), baseLight.getAttenuation(), baseLight.getPosition(), baseLight.getRange());
+        this.direction = direction.normalized();
+        this.cutoff = cutoff;
+    }
+
+    public Vector3f getDirection() {
+        return direction;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public void setDirection(Vector3f direction) {
+        this.direction = direction.normalized();
+    }
+
+    public float getCutoff() {
+        return cutoff;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public void setCutoff(float cutoff) {
+        this.cutoff = cutoff;
     }
 }

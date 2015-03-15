@@ -18,10 +18,10 @@
 
 package com.skythees.bowEngine.shaders;
 
-import com.skythees.bowEngine.math.vector.Matrix4f;
+import com.skythees.bowEngine.core.math.vector.Matrix4f;
 import com.skythees.bowEngine.render.Material;
-import com.skythees.bowEngine.render.RenderUtil;
 import com.skythees.bowEngine.render.Shader;
+import com.skythees.bowEngine.render.Transform;
 
 @SuppressWarnings("UnusedDeclaration")
 public class BasicShader extends Shader {
@@ -44,12 +44,11 @@ public class BasicShader extends Shader {
     }
 
     @Override
-    public void updateUniforms(Matrix4f worldMatrix, Matrix4f projectedMatrix, Material material) {
-        if (material.getTexture() != null) {
-            material.getTexture().bind();
-        } else {
-            RenderUtil.unbindTextures();
-        }
+    public void updateUniforms(Transform transform, Material material) {
+        Matrix4f worldMatrix = transform.getTransformation();
+        Matrix4f projectedMatrix = getRenderingEngine().getMainCamera().getViewProjection().mul(worldMatrix);
+
+        material.getTexture().bind();
 
         setUniform("transform", projectedMatrix);
         setUniform("color", material.getColor());

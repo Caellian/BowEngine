@@ -18,17 +18,16 @@
 
 package com.skythees.bowEngine.shaders;
 
-import com.skythees.bowEngine.light.BaseLight;
-import com.skythees.bowEngine.light.DirectionalLight;
-import com.skythees.bowEngine.light.PointLight;
-import com.skythees.bowEngine.light.SpotLight;
-import com.skythees.bowEngine.managers.DataUtil;
-import com.skythees.bowEngine.math.vector.Matrix4f;
-import com.skythees.bowEngine.math.vector.Vector3f;
+import com.skythees.bowEngine.core.math.vector.Matrix4f;
+import com.skythees.bowEngine.core.math.vector.Vector3f;
+import com.skythees.bowEngine.core.util.helpers.DataUtil;
 import com.skythees.bowEngine.render.Material;
-import com.skythees.bowEngine.render.RenderUtil;
 import com.skythees.bowEngine.render.Shader;
 import com.skythees.bowEngine.render.Transform;
+import com.skythees.bowEngine.render.light.BaseLight;
+import com.skythees.bowEngine.render.light.DirectionalLight;
+import com.skythees.bowEngine.render.light.PointLight;
+import com.skythees.bowEngine.render.light.SpotLight;
 
 import java.util.Objects;
 
@@ -152,12 +151,11 @@ public class PhongShader extends Shader {
     }
 
     @Override
-    public void updateUniforms(Matrix4f worldMatrix, Matrix4f projectedMatrix, Material material) {
-        if (material.getTexture() != null) {
-            material.getTexture().bind();
-        } else {
-            RenderUtil.unbindTextures();
-        }
+    public void updateUniforms(Transform transform, Material material) {
+        Matrix4f worldMatrix = transform.getTransformation();
+        Matrix4f projectedMatrix = getRenderingEngine().getMainCamera().getViewProjection().mul(worldMatrix);
+
+        material.getTexture().bind();
 
         setUniform("transformProjected", projectedMatrix);
         setUniform("transform", worldMatrix);
@@ -179,7 +177,7 @@ public class PhongShader extends Shader {
         setUniform("specularIntensity", material.getSpecularIntensity());
         setUniform("specularExponent", material.getSpecularExponent());
 
-        setUniform("eyePos", Transform.getCamera().getPos());
+        setUniform("eyePos", getRenderingEngine().getMainCamera().getPos());
     }
 
     @SuppressWarnings("WeakerAccess")
