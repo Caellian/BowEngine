@@ -1,5 +1,6 @@
-package com.skythees.bowEngine.core;
+package com.skythees.bowEngine.core.components;
 
+import com.skythees.bowEngine.render.RenderingEngine;
 import com.skythees.bowEngine.render.Shader;
 import com.skythees.bowEngine.render.Transform;
 
@@ -15,5 +16,9 @@ public abstract class GameComponent {
     }
 
     public void render(Transform transform, Shader shader) {
+    }
+
+    public void addToRenderingEngine(RenderingEngine renderingEngine) {
+
     }
 }

@@ -104,7 +104,7 @@ public abstract class Shader {
         int uniformLocation = glGetUniformLocation(program, uniform);
 
         if (uniformLocation == 0xFFFFFFFF) {
-            System.err.println("Error: Could not find uniform:" + uniform);
+            System.err.println("Error: Could not find uniform: " + uniform);
             new Exception().printStackTrace();
             System.exit(1);
         }
@@ -125,6 +125,10 @@ public abstract class Shader {
     @SuppressWarnings("WeakerAccess")
     public void addFragmentShader(String text) {
         addProgram(text, GL_FRAGMENT_SHADER);
+    }
+
+    public void setAttributeLocation(String attributeName, int location) {
+        glBindAttribLocation(program, location, attributeName);
     }
 
     @SuppressWarnings("WeakerAccess")

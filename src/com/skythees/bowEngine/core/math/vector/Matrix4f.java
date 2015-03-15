@@ -154,16 +154,16 @@ public class Matrix4f {
         return this;
     }
 
-    public Matrix4f initPerspective(float fow, float aspectRatio, float clipNear, float clipFar) {
-        float fowAngle = (float) Math.tan(fow / 2);
+    public Matrix4f initPerspective(float fov, float aspectRatio, float clipNear, float clipFar) {
+        float fowAngle = (float) Math.tan(fov / 2);
         float clipRange = clipNear - clipFar;
 
-        matrix[0][0] = 1 / (fowAngle * aspectRatio);
+        matrix[0][0] = 1.0f / (fowAngle * aspectRatio);
         matrix[0][1] = 0;
         matrix[0][2] = 0;
         matrix[0][3] = 0;
         matrix[1][0] = 0;
-        matrix[1][1] = 1 / fowAngle;
+        matrix[1][1] = 1.0f / fowAngle;
         matrix[1][2] = 0;
         matrix[1][3] = 0;
         matrix[2][0] = 0;
@@ -205,13 +205,12 @@ public class Matrix4f {
 
     public Matrix4f initRotation(Vector3f forward, Vector3f up) {
 
-        Vector3f forward0 = forward.normalized();
+        Vector3f f = forward.normalized();
 
-        Vector3f r = up;
-        r.normalized();
-        r = r.cross(forward0);
+        Vector3f r = up.normalized();
+        r = r.cross(f);
 
-        Vector3f u = forward0.cross(r);
+        Vector3f u = f.cross(r);
 
         matrix[0][0] = r.getX();
         matrix[0][1] = r.getY();
@@ -221,9 +220,9 @@ public class Matrix4f {
         matrix[1][1] = u.getY();
         matrix[1][2] = u.getZ();
         matrix[1][3] = 0;
-        matrix[2][0] = forward0.getX();
-        matrix[2][1] = forward0.getY();
-        matrix[2][2] = forward0.getZ();
+        matrix[2][0] = f.getX();
+        matrix[2][1] = f.getY();
+        matrix[2][2] = f.getZ();
         matrix[2][3] = 0;
         matrix[3][0] = 0;
         matrix[3][1] = 0;

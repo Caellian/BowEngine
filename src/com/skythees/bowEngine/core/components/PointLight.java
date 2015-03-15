@@ -16,25 +16,41 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.render.light;
+package com.skythees.bowEngine.core.components;
 
 import com.skythees.bowEngine.core.math.vector.Vector3f;
+import com.skythees.bowEngine.render.RenderingEngine;
+import com.skythees.bowEngine.render.light.Attenuation;
 
 /**
  * Created on 02.03.15.
  */
-public class PointLight extends BaseLight {
+public class PointLight extends GameComponent {
 
+    private BaseLight baseLight;
     private Attenuation attenuation;
     private Vector3f position;
 
     private float range;
 
     public PointLight(BaseLight baseLight, Attenuation attenuation, Vector3f position, float range) {
-        super(baseLight.getColor(), baseLight.getIntensity());
+        this.baseLight = baseLight;
         this.attenuation = attenuation;
         this.position = position;
         this.range = range;
+    }
+
+    @Override
+    public void addToRenderingEngine(RenderingEngine renderingEngine) {
+        renderingEngine.addPointLight(this);
+    }
+
+    public BaseLight getBaseLight() {
+        return baseLight;
+    }
+
+    public void setBaseLight(BaseLight baseLight) {
+        this.baseLight = baseLight;
     }
 
     public Attenuation getAttenuation() {

@@ -16,20 +16,26 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.render.light;
+package com.skythees.bowEngine.core.components;
 
 import com.skythees.bowEngine.core.math.vector.Vector3f;
+import com.skythees.bowEngine.render.RenderingEngine;
 
 /**
  * Created on 02.03.15
  */
-public class DirectionalLight {
+public class DirectionalLight extends GameComponent {
     private BaseLight base;
     private Vector3f direction;
 
     public DirectionalLight(BaseLight base, Vector3f direction) {
         this.base = base;
         this.direction = direction.normalized();
+    }
+
+    @Override
+    public void addToRenderingEngine(RenderingEngine renderingEngine) {
+        renderingEngine.addDirectionalLight(this);
     }
 
     public BaseLight getBase() {

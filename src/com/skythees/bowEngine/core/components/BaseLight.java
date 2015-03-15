@@ -16,17 +16,18 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.render.light;
+package com.skythees.bowEngine.core.components;
 
 import com.skythees.bowEngine.core.math.vector.Vector3f;
 
 /**
  * Created on 02.03.15
  */
-public class BaseLight {
+public class BaseLight extends GameComponent {
     @SuppressWarnings("WeakerAccess")
     float intensity;
     private Vector3f color;
+//    private Shader shader;
 
     public BaseLight(Vector3f color, float intensity) {
         this.color = color;

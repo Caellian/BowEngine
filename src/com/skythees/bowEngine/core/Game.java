@@ -1,5 +1,7 @@
 package com.skythees.bowEngine.core;
 
+import com.skythees.bowEngine.core.components.GameObject;
+
 /**
  * Created on 15.3.2015. at 0:53.
  */

@@ -16,23 +16,38 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.render.light;
+package com.skythees.bowEngine.core.components;
 
 import com.skythees.bowEngine.core.math.vector.Vector3f;
+import com.skythees.bowEngine.render.RenderingEngine;
 
 /**
  * Created on 03.03.15.
  */
-public class SpotLight extends PointLight {
+public class SpotLight extends GameComponent {
+    PointLight pointLight;
 
     private Vector3f direction;
     private float cutoff;
 
     @SuppressWarnings("UnusedDeclaration")
-    public SpotLight(PointLight baseLight, Vector3f direction, float cutoff) {
-        super(new BaseLight(baseLight.getColor(), baseLight.getIntensity()), baseLight.getAttenuation(), baseLight.getPosition(), baseLight.getRange());
+    public SpotLight(PointLight pointLight, Vector3f direction, float cutoff) {
+        this.pointLight = pointLight;
         this.direction = direction.normalized();
         this.cutoff = cutoff;
+    }
+
+    @Override
+    public void addToRenderingEngine(RenderingEngine renderingEngine) {
+        renderingEngine.addSpotLight(this);
+    }
+
+    public PointLight getPointLight() {
+        return pointLight;
+    }
+
+    public void setPointLight(PointLight pointLight) {
+        this.pointLight = pointLight;
     }
 
     public Vector3f getDirection() {

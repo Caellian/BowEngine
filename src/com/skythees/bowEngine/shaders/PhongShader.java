@@ -18,16 +18,16 @@
 
 package com.skythees.bowEngine.shaders;
 
+import com.skythees.bowEngine.core.components.BaseLight;
+import com.skythees.bowEngine.core.components.DirectionalLight;
+import com.skythees.bowEngine.core.components.PointLight;
+import com.skythees.bowEngine.core.components.SpotLight;
 import com.skythees.bowEngine.core.math.vector.Matrix4f;
 import com.skythees.bowEngine.core.math.vector.Vector3f;
 import com.skythees.bowEngine.core.util.helpers.DataUtil;
 import com.skythees.bowEngine.render.Material;
 import com.skythees.bowEngine.render.Shader;
 import com.skythees.bowEngine.render.Transform;
-import com.skythees.bowEngine.render.light.BaseLight;
-import com.skythees.bowEngine.render.light.DirectionalLight;
-import com.skythees.bowEngine.render.light.PointLight;
-import com.skythees.bowEngine.render.light.SpotLight;
 
 import java.util.Objects;
 
@@ -182,14 +182,14 @@ public class PhongShader extends Shader {
 
     @SuppressWarnings("WeakerAccess")
     public void setUniform(String uniformName, SpotLight spotLight) {
-        setUniform(uniformName + ".pointLight", new PointLight(new BaseLight(spotLight.getColor(), spotLight.getIntensity()), spotLight.getAttenuation(), spotLight.getPosition(), spotLight.getRange()));
+        setUniform(uniformName + ".pointLight", spotLight.getPointLight());
         setUniform(uniformName + ".direction", spotLight.getDirection());
         setUniform(uniformName + ".cutoff", spotLight.getCutoff());
     }
 
     @SuppressWarnings("WeakerAccess")
     public void setUniform(String uniformName, PointLight pointLight) {
-        setUniform(uniformName + ".base", new BaseLight(pointLight.getColor(), pointLight.getIntensity()));
+        setUniform(uniformName + ".base", pointLight.getBaseLight());
         setUniform(uniformName + ".attenuation.constant", pointLight.getAttenuation().getConstant());
         setUniform(uniformName + ".attenuation.linear", pointLight.getAttenuation().getLinear());
         setUniform(uniformName + ".attenuation.exponent", pointLight.getAttenuation().getExponent());

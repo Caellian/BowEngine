@@ -47,7 +47,7 @@ public class CoreEngine {
         isRunning = true;
 
         int frames = 0;
-        double frameCounter = 0;
+        float frameCounter = 0;
 
         game.init();
 
@@ -78,7 +78,7 @@ public class CoreEngine {
 
                 game.update((float) frametime);
 
-                if (frameCounter >= 1) {
+                if (frameCounter >= 1f) {
                     System.out.println(frames);
                     frames = 0;
                     frameCounter = 0;

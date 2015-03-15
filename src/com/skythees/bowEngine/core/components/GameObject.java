@@ -1,5 +1,6 @@
-package com.skythees.bowEngine.core;
+package com.skythees.bowEngine.core.components;
 
+import com.skythees.bowEngine.render.RenderingEngine;
 import com.skythees.bowEngine.render.Shader;
 import com.skythees.bowEngine.render.Transform;
 
@@ -19,12 +20,14 @@ public class GameObject {
         this.transform = new Transform();
     }
 
-    public void addChild(GameObject child) {
+    public GameObject addChild(GameObject child) {
         children.add(child);
+        return this;
     }
 
-    public void addComponent(GameComponent component) {
+    public GameObject addComponent(GameComponent component) {
         components.add(component);
+        return this;
     }
 
     public void input(float delta) {
@@ -32,7 +35,7 @@ public class GameObject {
             component.input(transform, delta);
         }
         for (GameObject child : children) {
-            child.update(delta);
+            child.input(delta);
         }
     }
 
@@ -51,6 +54,15 @@ public class GameObject {
         }
         for (GameObject child : children) {
             child.render(shader);
+        }
+    }
+
+    public void addToRenderingEngine(RenderingEngine renderingEngine) {
+        for (GameComponent component : components) {
+            component.addToRenderingEngine(renderingEngine);
+        }
+        for (GameObject child : children) {
+            child.addToRenderingEngine(renderingEngine);
         }
     }
 

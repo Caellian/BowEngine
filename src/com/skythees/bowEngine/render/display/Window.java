@@ -73,14 +73,6 @@ public class Window {
         return Display.getTitle();
     }
 
-    public static void setFullscreen(boolean fullscreen) {
-        try {
-            Display.setFullscreen(fullscreen);
-        } catch (LWJGLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void setDimensions(Dimension dimensions) {
         try {
             Display.setDisplayMode(new DisplayMode(dimensions.getWidth(), dimensions.getHeight()));

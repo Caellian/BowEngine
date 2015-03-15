@@ -111,16 +111,12 @@ public class Camera {
 
     @SuppressWarnings("WeakerAccess")
     public Vector3f getLeft() {
-        Vector3f left = up.cross(forward);
-        left.normalized();
-        return left;
+        return up.cross(forward).normalized();
     }
 
     @SuppressWarnings("WeakerAccess")
     public Vector3f getRight() {
-        Vector3f right = forward.cross(up);
-        right.normalized();
-        return right;
+        return forward.cross(up).normalized();
     }
 
     public Vector3f getPos() {
