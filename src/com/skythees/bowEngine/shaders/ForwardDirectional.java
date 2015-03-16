@@ -1,11 +1,10 @@
 package com.skythees.bowEngine.shaders;
 
-import com.skythees.bowEngine.core.components.BaseLight;
-import com.skythees.bowEngine.core.components.DirectionalLight;
 import com.skythees.bowEngine.core.math.vector.Matrix4f;
 import com.skythees.bowEngine.render.Material;
 import com.skythees.bowEngine.render.Shader;
 import com.skythees.bowEngine.render.Transform;
+import com.skythees.bowEngine.render.components.light.DirectionalLight;
 
 /**
  * Created on 15.3.2015. at 19:42.
@@ -55,16 +54,6 @@ public class ForwardDirectional extends Shader {
         setUniform("specularExponent", material.getSpecularExponent());
 
         setUniform("eyePos", getRenderingEngine().getMainCamera().getPos());
-        setUniform("directionalLight", getRenderingEngine().getActiveDirectionalLight());
-    }
-
-    public void setUniform(String uniformName, DirectionalLight directionalLight) {
-        setUniform(uniformName + ".base", directionalLight.getBase());
-        setUniform(uniformName + ".direction", directionalLight.getDirection());
-    }
-
-    public void setUniform(String uniformName, BaseLight baseLight) {
-        setUniform(uniformName + ".color", baseLight.getColor());
-        setUniform(uniformName + ".intensity", baseLight.getIntensity());
+        setUniformDirectionalLight("directionalLight", (DirectionalLight) getRenderingEngine().getActiveLight());
     }
 }

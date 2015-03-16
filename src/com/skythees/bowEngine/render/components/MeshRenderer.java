@@ -1,5 +1,6 @@
-package com.skythees.bowEngine.core.components;
+package com.skythees.bowEngine.render.components;
 
+import com.skythees.bowEngine.core.components.GameComponent;
 import com.skythees.bowEngine.render.Material;
 import com.skythees.bowEngine.render.Mesh;
 import com.skythees.bowEngine.render.Shader;

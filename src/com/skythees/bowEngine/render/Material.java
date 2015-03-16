@@ -29,7 +29,7 @@ public class Material {
 
     @SuppressWarnings({"UnusedDeclaration", "UnusedParameters"})
     public Material(Texture texture, float specularIntensity, float specularExponent) {
-        this(texture, new Vector3f(0.5f, 0.5f, 0.5f), 2, 32);
+        this(texture, new Vector3f(0.5f, 0.5f, 0.5f), specularIntensity, specularExponent);
     }
 
     @SuppressWarnings({"WeakerAccess", "SameParameterValue"})

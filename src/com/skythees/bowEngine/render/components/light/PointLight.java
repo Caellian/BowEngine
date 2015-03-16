@@ -16,28 +16,55 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.render.light;
+package com.skythees.bowEngine.render.components.light;
+
+import com.skythees.bowEngine.core.math.vector.Vector3f;
+import com.skythees.bowEngine.shaders.ForwardPoint;
 
 /**
  * Created on 02.03.15.
  */
-public class Attenuation {
+public class PointLight extends BaseLight {
+
+    private Vector3f position;
     private float constant;
     private float linear;
     private float exponent;
+    private float range;
 
-    @SuppressWarnings("UnusedDeclaration")
-    public Attenuation(float constant, float linear, float exponent) {
+    public PointLight(Vector3f color, float intensity, Vector3f position, float constant, float linear, float exponent, float range) {
+        super(color, intensity);
+        this.position = position;
         this.constant = constant;
         this.linear = linear;
         this.exponent = exponent;
+        this.range = range;
+
+        setShader(ForwardPoint.getInstance());
+    }
+
+    public Vector3f getPosition() {
+        return position;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public void setPosition(Vector3f position) {
+        this.position = position;
+    }
+
+    public float getRange() {
+        return range;
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public void setRange(float range) {
+        this.range = range;
     }
 
     public float getConstant() {
         return constant;
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public void setConstant(float constant) {
         this.constant = constant;
     }
@@ -46,7 +73,6 @@ public class Attenuation {
         return linear;
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public void setLinear(float linear) {
         this.linear = linear;
     }
@@ -55,7 +81,6 @@ public class Attenuation {
         return exponent;
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public void setExponent(float exponent) {
         this.exponent = exponent;
     }

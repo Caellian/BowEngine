@@ -21,6 +21,10 @@ package com.skythees.bowEngine.render;
 import com.skythees.bowEngine.core.math.vector.Matrix4f;
 import com.skythees.bowEngine.core.math.vector.Vector3f;
 import com.skythees.bowEngine.core.util.helpers.DataUtil;
+import com.skythees.bowEngine.render.components.light.BaseLight;
+import com.skythees.bowEngine.render.components.light.DirectionalLight;
+import com.skythees.bowEngine.render.components.light.PointLight;
+import com.skythees.bowEngine.render.components.light.SpotLight;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -167,31 +171,52 @@ public abstract class Shader {
         glAttachShader(program, shader);
     }
 
-    @SuppressWarnings("UnusedDeclaration")
-    public void setUniform(String uniformName, int value) {
-        glUniform1i(uniforms.get(uniformName), value);
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    public void setUniform(String uniformName, float value) {
-        glUniform1f(uniforms.get(uniformName), value);
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    public void setUniform(String uniformName, Vector3f value) {
-        glUniform3f(uniforms.get(uniformName), value.getX(), value.getY(), value.getZ());
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    public void setUniform(String uniformName, Matrix4f value) {
-        glUniformMatrix4(uniforms.get(uniformName), true, DataUtil.createFlippedBuffer(value));
-    }
-
     public RenderingEngine getRenderingEngine() {
         return renderingEngine;
     }
 
     public void setRenderingEngine(RenderingEngine renderingEngine) {
         this.renderingEngine = renderingEngine;
+    }
+
+    public void setUniform(String uniformName, int value) {
+        glUniform1i(uniforms.get(uniformName), value);
+    }
+
+    public void setUniform(String uniformName, float value) {
+        glUniform1f(uniforms.get(uniformName), value);
+    }
+
+    public void setUniform(String uniformName, Vector3f value) {
+        glUniform3f(uniforms.get(uniformName), value.getX(), value.getY(), value.getZ());
+    }
+
+    public void setUniform(String uniformName, Matrix4f value) {
+        glUniformMatrix4(uniforms.get(uniformName), true, DataUtil.createFlippedBuffer(value));
+    }
+
+    public void setUniformBaseLight(String uniformName, BaseLight baseLight) {
+        setUniform(uniformName + ".color", baseLight.getColor());
+        setUniform(uniformName + ".intensity", baseLight.getIntensity());
+    }
+
+    public void setUniformDirectionalLight(String uniformName, DirectionalLight directionalLight) {
+        setUniformBaseLight(uniformName + ".base", directionalLight);
+        setUniform(uniformName + ".direction", directionalLight.getDirection());
+    }
+
+    public void setUniformPointLight(String uniformName, PointLight pointLight) {
+        setUniformBaseLight(uniformName + ".base", pointLight);
+        setUniform(uniformName + ".attenuation.constant", pointLight.getConstant());
+        setUniform(uniformName + ".attenuation.linear", pointLight.getLinear());
+        setUniform(uniformName + ".attenuation.exponent", pointLight.getExponent());
+        setUniform(uniformName + ".position", pointLight.getPosition());
+        setUniform(uniformName + ".range", pointLight.getRange());
+    }
+
+    public void setUniformSpotLight(String uniformName, SpotLight spotLight) {
+        setUniformPointLight(uniformName + ".pointLight", spotLight);
+        setUniform(uniformName + ".direction", spotLight.getDirection());
+        setUniform(uniformName + ".cutoff", spotLight.getCutoff());
     }
 }

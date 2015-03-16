@@ -23,7 +23,6 @@ import com.skythees.bowEngine.render.Material;
 import com.skythees.bowEngine.render.Shader;
 import com.skythees.bowEngine.render.Transform;
 
-@SuppressWarnings("UnusedDeclaration")
 public class BasicShader extends Shader {
     private static final BasicShader instance = new BasicShader();
 
