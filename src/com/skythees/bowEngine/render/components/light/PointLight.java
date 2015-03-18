@@ -26,30 +26,21 @@ import com.skythees.bowEngine.shaders.ForwardPoint;
  */
 public class PointLight extends BaseLight {
 
-    private Vector3f position;
-    private float constant;
-    private float linear;
-    private float exponent;
+    private static final int COLOR_DEPTH = 256;
+
+    private Vector3f attenuation;
     private float range;
 
-    public PointLight(Vector3f color, float intensity, Vector3f position, float constant, float linear, float exponent, float range) {
+    public PointLight(Vector3f color, float intensity, Vector3f attenuation) {
         super(color, intensity);
-        this.position = position;
-        this.constant = constant;
-        this.linear = linear;
-        this.exponent = exponent;
-        this.range = range;
+        this.attenuation = attenuation;
+
+        float a = attenuation.getZ();
+        float b = attenuation.getY();
+        float c = attenuation.getX() - COLOR_DEPTH * getIntensity() * getColor().max();
+        this.range = (float) (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
 
         setShader(ForwardPoint.getInstance());
-    }
-
-    public Vector3f getPosition() {
-        return position;
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
-    public void setPosition(Vector3f position) {
-        this.position = position;
     }
 
     public float getRange() {
@@ -62,26 +53,26 @@ public class PointLight extends BaseLight {
     }
 
     public float getConstant() {
-        return constant;
+        return this.attenuation.getX();
     }
 
     public void setConstant(float constant) {
-        this.constant = constant;
+        this.attenuation.setX(constant);
     }
 
     public float getLinear() {
-        return linear;
+        return this.attenuation.getY();
     }
 
     public void setLinear(float linear) {
-        this.linear = linear;
+        this.attenuation.setY(linear);
     }
 
     public float getExponent() {
-        return exponent;
+        return this.attenuation.getZ();
     }
 
     public void setExponent(float exponent) {
-        this.exponent = exponent;
+        this.attenuation.setZ(exponent);
     }
 }

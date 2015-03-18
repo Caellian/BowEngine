@@ -34,6 +34,10 @@ public class Vector3f {
         return (float) Math.sqrt(x * x + y * y + z * z);
     }
 
+    public float max() {
+        return Math.max(x, Math.max(y, z));
+    }
+
     @SuppressWarnings("UnusedDeclaration")
     public float dot(Vector3f r) {
         return x * r.getX() + y * r.getY() + z * r.getZ();
@@ -53,19 +57,15 @@ public class Vector3f {
         return new Vector3f(x / length, y / length, z / length);
     }
 
-    public Vector3f rotated(float angle, Vector3f axis) {
-        float sinHalfAngle = (float) Math.sin(Math.toRadians(angle / 2));
-        float cosHalfAngle = (float) Math.cos(Math.toRadians(angle / 2));
+    public Vector3f rotate(Vector3f axis, float angle) {
+        float sinAngle = (float) Math.sin(-angle);
+        float cosAngle = (float) Math.cos(-angle);
+        return this.cross(axis.mul(sinAngle)).add((this.mul(cosAngle)).add(axis.mul(this.dot(axis.mul(1 - cosAngle)))));
+    }
 
-        float rX = axis.getX() * sinHalfAngle;
-        float rY = axis.getY() * sinHalfAngle;
-        float rZ = axis.getZ() * sinHalfAngle;
-
-        Quaternion rotation = new Quaternion(rX, rY, rZ, cosHalfAngle);
-        Quaternion conjugate = rotation.conjugate();
-
+    public Vector3f rotate(Quaternion rotation) {
+        Quaternion conjugate = rotation.conjugated();
         Quaternion w = rotation.mul(this).mul(conjugate);
-
         return new Vector3f(w.getX(), w.getY(), w.getZ());
     }
 
@@ -101,6 +101,12 @@ public class Vector3f {
     @SuppressWarnings("SuspiciousNameCombination")
     public Vector2f getXZ() {
         return new Vector2f(x, z);
+    }
+
+    public void set(float x, float y, float z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     public Vector3f add(Vector3f r) {

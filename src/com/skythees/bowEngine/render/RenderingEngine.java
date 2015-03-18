@@ -2,8 +2,8 @@ package com.skythees.bowEngine.render;
 
 import com.skythees.bowEngine.core.components.GameObject;
 import com.skythees.bowEngine.core.math.vector.Vector3f;
+import com.skythees.bowEngine.render.components.Camera;
 import com.skythees.bowEngine.render.components.light.BaseLight;
-import com.skythees.bowEngine.render.display.Window;
 import com.skythees.bowEngine.shaders.ForwardAmbient;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class RenderingEngine {
 
         glEnable(GL_TEXTURE_2D);
 
-        mainCamera = new Camera((float) Math.toRadians(70f), (float) Window.getWidth() / (float) Window.getHeight(), 0.001f, 1000.0f);
+//        mainCamera = new Camera((float) Math.toRadians(70f), (float) Window.getWidth() / (float) Window.getHeight(), 0.001f, 1000.0f);
     }
 
     @SuppressWarnings("UnusedDeclaration")
@@ -63,10 +63,6 @@ public class RenderingEngine {
 
     public Vector3f getAmbientLight() {
         return ambientLight;
-    }
-
-    public void tmpInput(float delta) {
-        getMainCamera().freeCamInput(delta);
     }
 
     public void addLight(BaseLight light) {
@@ -107,7 +103,7 @@ public class RenderingEngine {
         return mainCamera;
     }
 
-    public void setMainCamera(Camera mainCamera) {
-        this.mainCamera = mainCamera;
+    public void addCamera(Camera camera) {
+        this.mainCamera = camera;
     }
 }

@@ -73,7 +73,6 @@ public class CoreEngine {
                     stop();
 
                 game.input((float) frametime);
-                renderingEngine.tmpInput((float) frametime);
                 InputHelper.update();
 
                 game.update((float) frametime);

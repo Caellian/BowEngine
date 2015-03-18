@@ -9,13 +9,27 @@ import com.skythees.bowEngine.render.Transform;
  */
 public abstract class GameComponent {
 
-    public void input(Transform transform, float delta) {
+    private GameObject parent;
+
+    public void input(float delta) {
     }
 
-    public void update(Transform transform, float delta) {
+    public void update(float delta) {
     }
 
-    public void render(Transform transform, Shader shader) {
+    public void render(Shader shader) {
+    }
+
+    public GameObject getParent() {
+        return parent;
+    }
+
+    public void setParent(GameObject parent) {
+        this.parent = parent;
+    }
+
+    public Transform getTransform() {
+        return parent.getTransform();
     }
 
     public void addToRenderingEngine(RenderingEngine renderingEngine) {

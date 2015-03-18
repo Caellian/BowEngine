@@ -59,7 +59,7 @@ public class ForwardSpot extends Shader {
         setUniform("specularIntensity", material.getSpecularIntensity());
         setUniform("specularExponent", material.getSpecularExponent());
 
-        setUniform("eyePos", getRenderingEngine().getMainCamera().getPos());
+        setUniform("eyePos", getRenderingEngine().getMainCamera().getTransform().getPos());
         setUniformSpotLight("spotLight", (SpotLight) getRenderingEngine().getActiveLight());
     }
 }

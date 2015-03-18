@@ -210,7 +210,7 @@ public abstract class Shader {
         setUniform(uniformName + ".attenuation.constant", pointLight.getConstant());
         setUniform(uniformName + ".attenuation.linear", pointLight.getLinear());
         setUniform(uniformName + ".attenuation.exponent", pointLight.getExponent());
-        setUniform(uniformName + ".position", pointLight.getPosition());
+        setUniform(uniformName + ".position", pointLight.getTransform().getPos());
         setUniform(uniformName + ".range", pointLight.getRange());
     }
 

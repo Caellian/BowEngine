@@ -25,24 +25,17 @@ import com.skythees.bowEngine.shaders.ForwardSpot;
  * Created on 03.03.15.
  */
 public class SpotLight extends PointLight {
-    private Vector3f direction;
     private float cutoff;
 
-    public SpotLight(Vector3f color, float intensity, Vector3f position, float constant, float linear, float exponent, float range, Vector3f direction, float cutoff) {
-        super(color, intensity, position, constant, linear, exponent, range);
-        this.direction = direction;
+    public SpotLight(Vector3f color, float intensity, Vector3f attenuation, float cutoff) {
+        super(color, intensity, attenuation); //TODO: Calculate
         this.cutoff = cutoff;
 
         setShader(ForwardSpot.getInstance());
     }
 
     public Vector3f getDirection() {
-        return direction;
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
-    public void setDirection(Vector3f direction) {
-        this.direction = direction.normalized();
+        return getTransform().getRot().getForward();
     }
 
     public float getCutoff() {
