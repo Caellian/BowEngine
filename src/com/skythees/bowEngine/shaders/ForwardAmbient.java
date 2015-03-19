@@ -1,9 +1,9 @@
 package com.skythees.bowEngine.shaders;
 
+import com.skythees.bowEngine.core.Transform;
 import com.skythees.bowEngine.core.math.vector.Matrix4f;
 import com.skythees.bowEngine.render.Material;
 import com.skythees.bowEngine.render.Shader;
-import com.skythees.bowEngine.render.Transform;
 
 /**
  * Created on 15.3.2015. at 19:16.

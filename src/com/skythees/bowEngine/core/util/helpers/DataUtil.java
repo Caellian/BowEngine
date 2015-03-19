@@ -18,8 +18,8 @@
 
 package com.skythees.bowEngine.core.util.helpers;
 
+import com.skythees.bowEngine.core.Vertex;
 import com.skythees.bowEngine.core.math.vector.Matrix4f;
-import com.skythees.bowEngine.render.Vertex;
 
 import java.nio.*;
 import java.util.ArrayList;

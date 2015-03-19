@@ -1,8 +1,8 @@
 package com.skythees.bowEngine.core.components;
 
+import com.skythees.bowEngine.core.Transform;
 import com.skythees.bowEngine.render.RenderingEngine;
 import com.skythees.bowEngine.render.Shader;
-import com.skythees.bowEngine.render.Transform;
 
 import java.util.ArrayList;
 
@@ -22,6 +22,7 @@ public class GameObject {
 
     public GameObject addChild(GameObject child) {
         children.add(child);
+        child.getTransform().setParent(transform);
         return this;
     }
 
@@ -32,6 +33,8 @@ public class GameObject {
     }
 
     public void input(float delta) {
+        transform.update();
+
         for (GameComponent component : components) {
             component.input(delta);
         }

@@ -18,6 +18,7 @@
 
 package com.skythees.bowEngine.render;
 
+import com.skythees.bowEngine.core.Vertex;
 import com.skythees.bowEngine.core.math.vector.Vector3f;
 import com.skythees.bowEngine.core.util.helpers.DataUtil;
 

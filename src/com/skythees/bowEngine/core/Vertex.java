@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.render;
+package com.skythees.bowEngine.core;
 
 import com.skythees.bowEngine.core.math.vector.Vector2f;
 import com.skythees.bowEngine.core.math.vector.Vector3f;

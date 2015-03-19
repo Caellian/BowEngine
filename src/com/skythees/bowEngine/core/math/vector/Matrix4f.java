@@ -233,6 +233,12 @@ public class Matrix4f {
         return this;
     }
 
+    public Vector3f transform(Vector3f r) {
+        return new Vector3f(matrix[0][0] * r.getX() + matrix[0][1] * r.getY() + matrix[0][2] * r.getZ() + matrix[0][3],
+                matrix[1][0] * r.getX() + matrix[1][1] * r.getY() + matrix[1][2] * r.getZ() + matrix[1][3],
+                matrix[2][0] * r.getX() + matrix[2][1] * r.getY() + matrix[2][2] * r.getZ() + matrix[2][3]);
+    }
+
     public Matrix4f mul(Matrix4f r) {
         Matrix4f res = new Matrix4f();
 

@@ -18,10 +18,10 @@
 
 package com.skythees.bowEngine.shaders;
 
+import com.skythees.bowEngine.core.Transform;
 import com.skythees.bowEngine.core.math.vector.Matrix4f;
 import com.skythees.bowEngine.render.Material;
 import com.skythees.bowEngine.render.Shader;
-import com.skythees.bowEngine.render.Transform;
 
 public class BasicShader extends Shader {
     private static final BasicShader instance = new BasicShader();

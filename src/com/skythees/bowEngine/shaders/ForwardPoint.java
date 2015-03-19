@@ -1,9 +1,9 @@
 package com.skythees.bowEngine.shaders;
 
+import com.skythees.bowEngine.core.Transform;
 import com.skythees.bowEngine.core.math.vector.Matrix4f;
 import com.skythees.bowEngine.render.Material;
 import com.skythees.bowEngine.render.Shader;
-import com.skythees.bowEngine.render.Transform;
 import com.skythees.bowEngine.render.components.light.PointLight;
 
 /**
@@ -56,7 +56,7 @@ public class ForwardPoint extends Shader {
         setUniform("specularIntensity", material.getSpecularIntensity());
         setUniform("specularExponent", material.getSpecularExponent());
 
-        setUniform("eyePos", getRenderingEngine().getMainCamera().getTransform().getPos());
+        setUniform("eyePos", getRenderingEngine().getMainCamera().getTransform().getTransformedPosition());
         setUniformPointLight("pointLight", (PointLight) getRenderingEngine().getActiveLight());
     }
 }

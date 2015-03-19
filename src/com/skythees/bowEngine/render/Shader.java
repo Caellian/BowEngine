@@ -18,6 +18,7 @@
 
 package com.skythees.bowEngine.render;
 
+import com.skythees.bowEngine.core.Transform;
 import com.skythees.bowEngine.core.math.vector.Matrix4f;
 import com.skythees.bowEngine.core.math.vector.Vector3f;
 import com.skythees.bowEngine.core.util.helpers.DataUtil;
@@ -210,7 +211,7 @@ public abstract class Shader {
         setUniform(uniformName + ".attenuation.constant", pointLight.getConstant());
         setUniform(uniformName + ".attenuation.linear", pointLight.getLinear());
         setUniform(uniformName + ".attenuation.exponent", pointLight.getExponent());
-        setUniform(uniformName + ".position", pointLight.getTransform().getPos());
+        setUniform(uniformName + ".position", pointLight.getTransform().getTransformedPosition());
         setUniform(uniformName + ".range", pointLight.getRange());
     }
 

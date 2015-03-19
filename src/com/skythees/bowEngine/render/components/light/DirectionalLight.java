@@ -25,21 +25,14 @@ import com.skythees.bowEngine.shaders.ForwardDirectional;
  * Created on 02.03.15
  */
 public class DirectionalLight extends BaseLight {
-    private Vector3f direction;
 
-    public DirectionalLight(Vector3f color, float intensity, Vector3f direction) {
+    public DirectionalLight(Vector3f color, float intensity) {
         super(color, intensity);
-        this.direction = direction;
 
         this.setShader(ForwardDirectional.getInstance());
     }
 
     public Vector3f getDirection() {
-        return direction;
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
-    public void setDirection(Vector3f direction) {
-        this.direction = direction;
+        return getTransform().getTransformedRotation().getForward();
     }
 }

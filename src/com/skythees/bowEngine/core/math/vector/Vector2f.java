@@ -66,6 +66,20 @@ public class Vector2f {
         return dest.sub(this).mul(lerpFactor).add(this);
     }
 
+    public Vector2f set(float x, float y) {
+        this.x = x;
+        this.y = y;
+
+        return this;
+    }
+
+    public Vector2f set(Vector2f r) {
+        this.x = r.getX();
+        this.y = r.getY();
+
+        return this;
+    }
+
     @SuppressWarnings("UnusedDeclaration")
     public Vector2f add(Vector2f r) {
         return new Vector2f(x + r.getX(), y + r.getY());

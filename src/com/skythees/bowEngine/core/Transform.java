@@ -16,22 +16,47 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.render;
+package com.skythees.bowEngine.core;
 
 import com.skythees.bowEngine.core.math.vector.Matrix4f;
 import com.skythees.bowEngine.core.math.vector.Quaternion;
 import com.skythees.bowEngine.core.math.vector.Vector3f;
 
 public class Transform {
+    Matrix4f parentMatrix;
+    private Transform parent;
     private Vector3f pos;
     private Quaternion rot;
     private Vector3f scale;
+
+    private Vector3f oldPos;
+    private Quaternion oldRot;
+    private Vector3f oldScale;
 
     @SuppressWarnings("UnusedDeclaration")
     public Transform() {
         pos = new Vector3f(0, 0, 0);
         rot = new Quaternion(0, 0, 0, 1);
         scale = new Vector3f(1, 1, 1);
+
+        parentMatrix = new Matrix4f().initIdentity();
+    }
+
+    public void update() {
+        if (oldPos != null) {
+            oldPos.set(pos);
+            oldRot.set(rot);
+            oldScale.set(scale);
+        } else {
+            oldPos = new Vector3f(0, 0, 0).set(pos).add(1f);
+            oldRot = new Quaternion(0, 0, 0, 0).set(rot);
+            oldScale = new Vector3f(0, 0, 0).set(scale).add(1f);
+        }
+    }
+
+    public boolean hasChanged() {
+
+        return parent != null && parent.hasChanged() || pos.equals(oldPos) || rot.equals(oldRot) || scale.equals(oldScale);
     }
 
     public Matrix4f getTransformation() {
@@ -39,7 +64,31 @@ public class Transform {
         Matrix4f rotationMatrix = rot.toRotationMatrix();
         Matrix4f scaleMatrix = new Matrix4f().initScale(scale.getX(), scale.getY(), scale.getZ());
 
-        return translationMatrix.mul(rotationMatrix.mul(scaleMatrix));
+        return getParentMatrix().mul(translationMatrix.mul(rotationMatrix.mul(scaleMatrix)));
+    }
+
+    private Matrix4f getParentMatrix() {
+        if (parent != null && parent.hasChanged())
+            parentMatrix = parent.getTransformation();
+        return parentMatrix;
+    }
+
+    public void setParent(Transform parent) {
+        this.parent = parent;
+    }
+
+    public Vector3f getTransformedPosition() {
+        return getParentMatrix().transform(pos);
+    }
+
+    public Quaternion getTransformedRotation() {
+        Quaternion parentRotation = new Quaternion(0, 0, 0, 1);
+
+        if (parent != null) {
+            parentRotation = parent.getTransformedRotation();
+        }
+
+        return parentRotation.mul(rot);
     }
 
     public void rotate(Vector3f axis, float angle) {
