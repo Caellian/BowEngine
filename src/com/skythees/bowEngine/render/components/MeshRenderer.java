@@ -3,6 +3,7 @@ package com.skythees.bowEngine.render.components;
 import com.skythees.bowEngine.core.components.GameComponent;
 import com.skythees.bowEngine.render.Material;
 import com.skythees.bowEngine.render.Mesh;
+import com.skythees.bowEngine.render.RenderingEngine;
 import com.skythees.bowEngine.render.Shader;
 
 /**
@@ -19,9 +20,9 @@ public class MeshRenderer extends GameComponent {
     }
 
     @Override
-    public void render(Shader shader) {
+    public void render(Shader shader, RenderingEngine renderingEngine) {
         shader.bind();
-        shader.updateUniforms(getTransform(), material);
+        shader.updateUniforms(getTransform(), material, renderingEngine);
         mesh.draw();
     }
 }

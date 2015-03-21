@@ -18,71 +18,77 @@
 
 package com.skythees.bowEngine.render;
 
-import com.skythees.bowEngine.core.math.vector.Vector3f;
+import com.skythees.bowEngine.core.math.Vector3f;
+
+import java.util.HashMap;
 
 public class Material {
-    private Texture texture;
-    private Vector3f color;
-    private float specularIntensity;
-    private float specularExponent;
+    private HashMap<String, Texture> textureHashMap;
+    private HashMap<String, Vector3f> vector3fHashMap;
+    private HashMap<String, Float> floatHashMap;
 
-
-    @SuppressWarnings({"UnusedDeclaration", "UnusedParameters"})
-    public Material(Texture texture, float specularIntensity, float specularExponent) {
-        this(texture, new Vector3f(0.5f, 0.5f, 0.5f), specularIntensity, specularExponent);
+    public Material() {
+        textureHashMap = new HashMap<>();
+        vector3fHashMap = new HashMap<>();
+        floatHashMap = new HashMap<>();
     }
 
-    @SuppressWarnings({"WeakerAccess", "SameParameterValue"})
-    public Material(Texture texture, Vector3f color, float specularIntensity, float specularExponent) {
-        this.texture = texture;
-        this.color = color;
-        this.specularIntensity = specularIntensity;
-        this.specularExponent = specularExponent;
+    public Material addTexture(String name, Texture texture) {
+        textureHashMap.put(name, texture);
+        return this;
     }
 
-    @SuppressWarnings("WeakerAccess")
-    public Material(Texture texture, Vector3f color) {
-        this(texture, color, 2, 32);
+    public Texture getTexture(String name) {
+        Texture result = textureHashMap.get(name);
+        return result != null ? result : new Texture(0);
     }
 
-    @SuppressWarnings("UnusedDeclaration")
-    public Material(Texture texture) {
-        this(texture, new Vector3f(0.5f, 0.5f, 0.5f));
+    public Texture removeTexture(String name) {
+        return textureHashMap.remove(name);
     }
 
-    public Texture getTexture() {
-        return texture;
+    public Material clearTextures() {
+        textureHashMap.clear();
+        return this;
     }
 
-    @SuppressWarnings("UnusedDeclaration")
-    public void setTexture(Texture texture) {
-        this.texture = texture;
+    public Material addVector3f(String name, Vector3f texture) {
+        vector3fHashMap.put(name, texture);
+        return this;
     }
 
-    public Vector3f getColor() {
-        return color;
+    public Vector3f getVector3f(String name) {
+        Vector3f result = vector3fHashMap.get(name);
+        return result != null ? result : new Vector3f(0, 0, 0);
     }
 
-    @SuppressWarnings("UnusedDeclaration")
-    public void setColor(Vector3f color) {
-        this.color = color;
+    public Vector3f removeVector3f(String name) {
+        return vector3fHashMap.remove(name);
     }
 
-    public float getSpecularIntensity() {
-        return specularIntensity;
+    public Material clearVector3f() {
+        vector3fHashMap.clear();
+        return this;
     }
 
-    @SuppressWarnings("UnusedDeclaration")
-    public void setSpecularIntensity(float specularIntensity) {
-        this.specularIntensity = specularIntensity;
+    public Material addFloat(String name, Float texture) {
+        floatHashMap.put(name, texture);
+        return this;
     }
 
-    public float getSpecularExponent() {
-        return specularExponent;
+    public Float getFloat(String name) {
+        Float result = floatHashMap.get(name);
+        return result != null ? result : 0;
     }
 
-    @SuppressWarnings("UnusedDeclaration")
-    public void setSpecularExponent(float specularExponent) {
-        this.specularExponent = specularExponent;
+    public Float removeFloat(String name) {
+        return floatHashMap.remove(name);
     }
+
+    public Material clearFloats() {
+        floatHashMap.clear();
+        return this;
+    }
+
+
 }

@@ -2,6 +2,7 @@ package com.skythees.bowEngine.core;
 
 import com.skythees.bowEngine.core.util.Time;
 import com.skythees.bowEngine.core.util.input.InputHelper;
+import com.skythees.bowEngine.physics.PhysicsEngine;
 import com.skythees.bowEngine.render.RenderingEngine;
 import com.skythees.bowEngine.render.display.Window;
 import org.lwjgl.util.Dimension;
@@ -11,6 +12,7 @@ public class CoreEngine {
     private final Game game;
     private boolean isRunning;
     private RenderingEngine renderingEngine;
+    private PhysicsEngine physicsEngine;
     private int width;
     private int height;
     private double frametime;
@@ -21,12 +23,12 @@ public class CoreEngine {
         this.width = width;
         this.height = height;
         this.frametime = 1.0 / framerate;
-
     }
 
     public void createWindow(String title) {
         Window.createWindow(width, height, title);
         this.renderingEngine = new RenderingEngine();
+        this.physicsEngine = new PhysicsEngine();
     }
 
     public void start() {
@@ -84,7 +86,7 @@ public class CoreEngine {
                 }
             }
             if (render) {
-                renderingEngine.render(game.getRootObject());
+                game.render(renderingEngine);
                 Window.render();
                 frames++;
             } else {

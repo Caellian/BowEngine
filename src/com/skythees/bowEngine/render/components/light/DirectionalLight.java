@@ -18,7 +18,7 @@
 
 package com.skythees.bowEngine.render.components.light;
 
-import com.skythees.bowEngine.core.math.vector.Vector3f;
+import com.skythees.bowEngine.core.math.Vector3f;
 import com.skythees.bowEngine.shaders.ForwardDirectional;
 
 /**

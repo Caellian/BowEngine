@@ -18,7 +18,7 @@
 
 package com.skythees.bowEngine.render.display;
 
-import com.skythees.bowEngine.core.math.vector.Vector2f;
+import com.skythees.bowEngine.core.math.Vector2f;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;

@@ -1,8 +1,9 @@
 package com.skythees.bowEngine.shaders;
 
 import com.skythees.bowEngine.core.Transform;
-import com.skythees.bowEngine.core.math.vector.Matrix4f;
+import com.skythees.bowEngine.core.math.Matrix4f;
 import com.skythees.bowEngine.render.Material;
+import com.skythees.bowEngine.render.RenderingEngine;
 import com.skythees.bowEngine.render.Shader;
 
 /**
@@ -32,12 +33,12 @@ public class ForwardAmbient extends Shader {
     }
 
     @Override
-    public void updateUniforms(Transform transform, Material material) {
+    public void updateUniforms(Transform transform, Material material, RenderingEngine renderingEngine) {
         Matrix4f worldMatrix = transform.getTransformation();
-        Matrix4f projectedMatrix = getRenderingEngine().getMainCamera().getViewProjection().mul(worldMatrix);
-        material.getTexture().bind();
+        Matrix4f projectedMatrix = renderingEngine.getMainCamera().getViewProjection().mul(worldMatrix);
+        material.getTexture("diffuse").bind();
 
         setUniform("MVP", projectedMatrix);
-        setUniform("ambientIntensity", getRenderingEngine().getAmbientLight());
+        setUniform("ambientIntensity", renderingEngine.getAmbientLight());
     }
 }

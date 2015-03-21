@@ -19,9 +19,9 @@
 package com.skythees.bowEngine.render.components;
 
 import com.skythees.bowEngine.core.components.GameComponent;
-import com.skythees.bowEngine.core.math.vector.Matrix4f;
-import com.skythees.bowEngine.core.math.vector.Vector2f;
-import com.skythees.bowEngine.core.math.vector.Vector3f;
+import com.skythees.bowEngine.core.math.Matrix4f;
+import com.skythees.bowEngine.core.math.Vector2f;
+import com.skythees.bowEngine.core.math.Vector3f;
 import com.skythees.bowEngine.core.util.input.InputHelper;
 import com.skythees.bowEngine.render.RenderingEngine;
 import com.skythees.bowEngine.render.display.Window;

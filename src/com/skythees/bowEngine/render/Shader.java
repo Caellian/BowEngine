@@ -19,8 +19,8 @@
 package com.skythees.bowEngine.render;
 
 import com.skythees.bowEngine.core.Transform;
-import com.skythees.bowEngine.core.math.vector.Matrix4f;
-import com.skythees.bowEngine.core.math.vector.Vector3f;
+import com.skythees.bowEngine.core.math.Matrix4f;
+import com.skythees.bowEngine.core.math.Vector3f;
 import com.skythees.bowEngine.core.util.helpers.DataUtil;
 import com.skythees.bowEngine.render.components.light.BaseLight;
 import com.skythees.bowEngine.render.components.light.DirectionalLight;
@@ -38,7 +38,6 @@ import static org.lwjgl.opengl.GL32.GL_GEOMETRY_SHADER;
 public abstract class Shader {
 
     private final int program;
-    private RenderingEngine renderingEngine;
     private HashMap<String, Integer> uniforms = new HashMap<>();
 
     @SuppressWarnings("WeakerAccess")
@@ -102,7 +101,7 @@ public abstract class Shader {
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public abstract void updateUniforms(Transform transform, Material material);
+    public abstract void updateUniforms(Transform transform, Material material, RenderingEngine renderingEngine);
 
     @SuppressWarnings("WeakerAccess")
     public void addUniform(String uniform) {
@@ -170,14 +169,6 @@ public abstract class Shader {
         }
 
         glAttachShader(program, shader);
-    }
-
-    public RenderingEngine getRenderingEngine() {
-        return renderingEngine;
-    }
-
-    public void setRenderingEngine(RenderingEngine renderingEngine) {
-        this.renderingEngine = renderingEngine;
     }
 
     public void setUniform(String uniformName, int value) {

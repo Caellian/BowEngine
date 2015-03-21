@@ -1,6 +1,7 @@
 package com.skythees.bowEngine.core;
 
 import com.skythees.bowEngine.core.components.GameObject;
+import com.skythees.bowEngine.render.RenderingEngine;
 
 /**
  * Created on 15.3.2015. at 0:53.
@@ -13,14 +14,19 @@ public abstract class Game {
     }
 
     public void input(float delta) {
-        getRootObject().input(delta);
+        root.input(delta);
     }
 
     public void update(float delta) {
-        getRootObject().update(delta);
+        root.update(delta);
     }
 
-    public GameObject getRootObject() {
-        return root;
+    public Game addObject(GameObject gameObject) {
+        root.addChild(gameObject);
+        return this;
+    }
+
+    public void render(RenderingEngine renderingEngine) {
+        renderingEngine.render(root);
     }
 }

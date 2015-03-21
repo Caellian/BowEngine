@@ -19,17 +19,14 @@
 package com.skythees.bowEngine.core.util.helpers;
 
 import com.skythees.bowEngine.core.Vertex;
-import com.skythees.bowEngine.core.math.vector.Matrix4f;
+import com.skythees.bowEngine.core.math.Matrix4f;
 
 import java.nio.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class DataUtil {
-
-    /*
-    Copied over some BufferUtils methods to make the engine run faster.
-     */
+//    Copied over some BufferUtils methods to make the engine run faster.
 
     /**
      * Construct a direct native-ordered bytebuffer with the specified size.

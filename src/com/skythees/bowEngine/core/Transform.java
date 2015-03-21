@@ -18,9 +18,9 @@
 
 package com.skythees.bowEngine.core;
 
-import com.skythees.bowEngine.core.math.vector.Matrix4f;
-import com.skythees.bowEngine.core.math.vector.Quaternion;
-import com.skythees.bowEngine.core.math.vector.Vector3f;
+import com.skythees.bowEngine.core.math.Matrix4f;
+import com.skythees.bowEngine.core.math.Quaternion;
+import com.skythees.bowEngine.core.math.Vector3f;
 
 public class Transform {
     Matrix4f parentMatrix;

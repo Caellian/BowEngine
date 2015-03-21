@@ -16,19 +16,17 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.core.math.vector;
+package com.skythees.bowEngine.core.math;
 
 public class Vector2f {
     private float x;
     private float y;
 
-    @SuppressWarnings("UnusedDeclaration")
     public Vector2f(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
-    @SuppressWarnings("WeakerAccess")
     public float length() {
         return (float) Math.sqrt(x * x + y * y);
     }
@@ -37,19 +35,16 @@ public class Vector2f {
         return Math.max(x, y);
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public float dot(Vector2f r) {
         return x * r.getX() + y * r.getY();
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public Vector2f normalized() {
         float length = length();
 
         return new Vector2f(x / length, y / length);
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public Vector2f rotate(float angle) {
         double rad = Math.toRadians(angle);
         double cos = Math.cos(rad);
@@ -79,61 +74,46 @@ public class Vector2f {
 
         return this;
     }
-
-    @SuppressWarnings("UnusedDeclaration")
     public Vector2f add(Vector2f r) {
         return new Vector2f(x + r.getX(), y + r.getY());
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public Vector2f add(float r) {
         return new Vector2f(x + r, y + r);
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public Vector2f sub(Vector2f r) {
         return new Vector2f(x - r.getX(), y - r.getY());
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public Vector2f sub(float r) {
         return new Vector2f(x - r, y - r);
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public Vector2f mul(Vector2f r) {
         return new Vector2f(x * r.getX(), y * r.getY());
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public Vector2f mul(float r) {
         return new Vector2f(x * r, y * r);
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public Vector2f div(Vector2f r) {
         return new Vector2f(x / r.getX(), y / r.getY());
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public Vector2f div(float r) {
         return new Vector2f(x / r, y / r);
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public Vector2f abs() {
         return new Vector2f(Math.abs(x), Math.abs(y));
-    }
-
-    public String toString() {
-        return "(" + x + " " + y + ")";
     }
 
     public float getX() {
         return x;
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public void setX(float x) {
         this.x = x;
     }
@@ -142,12 +122,15 @@ public class Vector2f {
         return y;
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public void setY(float y) {
         this.y = y;
     }
 
     public boolean equals(Vector2f compared) {
         return this == compared || compared != null && Float.compare(compared.x, x) == 0 && Float.compare(compared.y, y) == 0;
+    }
+
+    public String toString() {
+        return "(" + x + " " + y + ")";
     }
 }

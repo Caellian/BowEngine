@@ -18,8 +18,8 @@
 
 package com.skythees.bowEngine.core;
 
-import com.skythees.bowEngine.core.math.vector.Vector2f;
-import com.skythees.bowEngine.core.math.vector.Vector3f;
+import com.skythees.bowEngine.core.math.Vector2f;
+import com.skythees.bowEngine.core.math.Vector3f;
 
 public class Vertex {
     public static final int SIZE = 8;

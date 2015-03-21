@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.core.math.vector;
+package com.skythees.bowEngine.core.math;
 
 public class Vector3f {
     private float x;
@@ -198,5 +198,10 @@ public class Vector3f {
         result = 31 * result + (y != +0.0f ? Float.floatToIntBits(y) : 0);
         result = 31 * result + (z != +0.0f ? Float.floatToIntBits(z) : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + x + " " + y + " " + z + ")";
     }
 }

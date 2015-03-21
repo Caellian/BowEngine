@@ -1,7 +1,7 @@
 package com.skythees.bowEngine.render;
 
 import com.skythees.bowEngine.core.components.GameObject;
-import com.skythees.bowEngine.core.math.vector.Vector3f;
+import com.skythees.bowEngine.core.math.Vector3f;
 import com.skythees.bowEngine.render.components.Camera;
 import com.skythees.bowEngine.render.components.light.BaseLight;
 import com.skythees.bowEngine.shaders.ForwardAmbient;
@@ -32,8 +32,6 @@ public class RenderingEngine {
         glEnable(GL_DEPTH_CLAMP);
 
         glEnable(GL_TEXTURE_2D);
-
-//        mainCamera = new Camera((float) Math.toRadians(70f), (float) Window.getWidth() / (float) Window.getHeight(), 0.001f, 1000.0f);
     }
 
     @SuppressWarnings("UnusedDeclaration")
@@ -76,18 +74,16 @@ public class RenderingEngine {
         object.addToRenderingEngine(this);
 
         Shader forwardAmbient = ForwardAmbient.getInstance();
-        forwardAmbient.setRenderingEngine(this);
 
-        object.render(forwardAmbient);
+        object.render(forwardAmbient, this);
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE);
         glDepthMask(false);
         glDepthFunc(GL_EQUAL);
 
         for (BaseLight light : lights) {
-            light.getShader().setRenderingEngine(this);
             activeLight = light;
-            object.render(light.getShader());
+            object.render(light.getShader(), this);
         }
 
         glDepthFunc(GL_LESS);
