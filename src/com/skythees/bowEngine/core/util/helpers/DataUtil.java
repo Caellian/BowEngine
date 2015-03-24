@@ -1,25 +1,25 @@
 /*
- * Software developed by Skythees
- * Copyright (C) 2015 Skythees
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ Bow Engine, modular game engine
+ Copyright (C) 2015 Skythees
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.skythees.bowEngine.core.util.helpers;
 
-import com.skythees.bowEngine.core.Vertex;
 import com.skythees.bowEngine.core.math.Matrix4f;
+import com.skythees.bowEngine.render.Vertex;
 
 import java.nio.*;
 import java.util.ArrayList;
@@ -27,16 +27,6 @@ import java.util.Objects;
 
 public class DataUtil {
 //    Copied over some BufferUtils methods to make the engine run faster.
-
-    /**
-     * Construct a direct native-ordered bytebuffer with the specified size.
-     *
-     * @param size The size, in bytes
-     * @return a ByteBuffer
-     */
-    public static ByteBuffer createByteBuffer(int size) {
-        return ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder());
-    }
 
     /**
      * Construct a direct native-order shortbuffer with the specified number
@@ -50,6 +40,17 @@ public class DataUtil {
     }
 
     /**
+     * Construct a direct native-ordered bytebuffer with the specified size.
+     *
+     * @param size The size, in bytes
+     * @return a ByteBuffer
+     */
+    public static ByteBuffer createByteBuffer(int size)
+    {
+	    return ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder());
+    }
+
+	/**
      * Construct a direct native-order charbuffer with the specified number
      * of elements.
      *
@@ -61,17 +62,6 @@ public class DataUtil {
     }
 
     /**
-     * Construct a direct native-order intbuffer with the specified number
-     * of elements.
-     *
-     * @param size The size, in ints
-     * @return an IntBuffer
-     */
-    public static IntBuffer createIntBuffer(int size) {
-        return createByteBuffer(size << 2).asIntBuffer();
-    }
-
-    /**
      * Construct a direct native-order longbuffer with the specified number
      * of elements.
      *
@@ -80,17 +70,6 @@ public class DataUtil {
      */
     public static LongBuffer createLongBuffer(int size) {
         return createByteBuffer(size << 3).asLongBuffer();
-    }
-
-    /**
-     * Construct a direct native-order floatbuffer with the specified number
-     * of elements.
-     *
-     * @param size The size, in floats
-     * @return a FloatBuffer
-     */
-    public static FloatBuffer createFloatBuffer(int size) {
-        return createByteBuffer(size << 2).asFloatBuffer();
     }
 
     /**
@@ -111,6 +90,20 @@ public class DataUtil {
         return buffer;
     }
 
+	/**
+	 * Construct a direct native-order intbuffer with the specified number
+	 * of elements.
+	 *
+	 * @param size
+	 * 		  The size, in ints
+	 *
+	 * @return an IntBuffer
+	 */
+	public static IntBuffer createIntBuffer(int size)
+	{
+		return createByteBuffer(size << 2).asIntBuffer();
+	}
+
     public static FloatBuffer createFlippedBuffer(Vertex[] vertices) {
         FloatBuffer buffer = createFloatBuffer(vertices.length * Vertex.SIZE);
 
@@ -129,6 +122,20 @@ public class DataUtil {
 
         return buffer;
     }
+
+	/**
+	 * Construct a direct native-order floatbuffer with the specified number
+	 * of elements.
+	 *
+	 * @param size
+	 * 		  The size, in floats
+	 *
+	 * @return a FloatBuffer
+	 */
+	public static FloatBuffer createFloatBuffer(int size)
+	{
+		return createByteBuffer(size << 2).asFloatBuffer();
+	}
 
     public static FloatBuffer createFlippedBuffer(Matrix4f matrix) {
         FloatBuffer buffer = createFloatBuffer(4 * 4);
