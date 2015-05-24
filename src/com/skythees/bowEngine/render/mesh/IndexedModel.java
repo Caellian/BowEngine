@@ -43,6 +43,8 @@ public class IndexedModel
 			Vector3f v1 = positions.get(i1).sub(positions.get(i0));
 			Vector3f v2 = positions.get(i2).sub(positions.get(i0));
 			Vector3f normal = v1.cross(v2).normalized();
+
+			//TODO: Find reason for this mysterious crash.
 			normals.get(i0).set(normals.get(i0).add(normal));
 			normals.get(i1).set(normals.get(i1).add(normal));
 			normals.get(i2).set(normals.get(i2).add(normal));

@@ -35,11 +35,6 @@ public class RenderingEngine {
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public static void clearScreen() {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
     public static void setTextures(boolean enabled) {
         if (enabled)
             glEnable(GL_TEXTURE_2D);
@@ -90,6 +85,12 @@ public class RenderingEngine {
         glDepthMask(true);
         glDisable(GL_BLEND);
     }
+
+	@SuppressWarnings("UnusedDeclaration")
+	public static void clearScreen()
+	{
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	}
 
     public BaseLight getActiveLight() {
         return this.activeLight;

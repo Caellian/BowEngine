@@ -26,6 +26,11 @@ public class GameObject {
         return this;
     }
 
+	public Transform getTransform()
+	{
+		return transform;
+	}
+
     public GameObject addComponent(GameComponent component) {
         components.add(component);
         component.setParent(this);
@@ -68,10 +73,5 @@ public class GameObject {
         for (GameObject child : children) {
             child.addToRenderingEngine(renderingEngine);
         }
-    }
-
-
-    public Transform getTransform() {
-        return transform;
     }
 }

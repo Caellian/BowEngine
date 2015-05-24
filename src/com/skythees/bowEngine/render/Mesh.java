@@ -22,6 +22,7 @@ import com.skythees.bowEngine.core.math.Vector3f;
 import com.skythees.bowEngine.core.util.helpers.DataUtil;
 import com.skythees.bowEngine.render.mesh.IndexedModel;
 import com.skythees.bowEngine.render.mesh.OBJModel;
+import com.skythees.bowEngine.render.resourceManagement.MeshResource;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -32,8 +33,7 @@ import static org.lwjgl.opengl.GL20.*;
 
 public class Mesh
 {
-	private int vbo;
-	private int ibo;
+	private MeshResource buffers;
 	private int size;
 
 	@SuppressWarnings("UnusedDeclaration")
@@ -45,8 +45,7 @@ public class Mesh
 
 	private void initMeshData()
 	{
-		vbo = glGenBuffers();
-		ibo = glGenBuffers();
+		buffers = new MeshResource();
 		size = 0;
 	}
 
@@ -90,10 +89,10 @@ public class Mesh
 
 		size = indices.length;
 
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBindBuffer(GL_ARRAY_BUFFER, buffers.getVbo());
 		glBufferData(GL_ARRAY_BUFFER, DataUtil.createFlippedBuffer(vertices), GL_STATIC_DRAW);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers.getIbo());
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, DataUtil.createFlippedBuffer(indices), GL_STATIC_DRAW);
 	}
 
@@ -141,12 +140,12 @@ public class Mesh
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
 
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBindBuffer(GL_ARRAY_BUFFER, buffers.getVbo());
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.SIZE * 4, 0);
 		glVertexAttribPointer(1, 2, GL_FLOAT, false, Vertex.SIZE * 4, 12);
 		glVertexAttribPointer(2, 3, GL_FLOAT, false, Vertex.SIZE * 4, 20);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers.getIbo());
 		glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
 
 		glDisableVertexAttribArray(0);
