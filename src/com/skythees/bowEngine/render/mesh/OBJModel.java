@@ -42,7 +42,7 @@ public class OBJModel extends IndexedModel
 		BufferedReader meshReader;
 		try
 		{
-			File meshFile = new File("./resources/models/" + fileName);
+			File meshFile = new File(fileName);
 			meshReader = new BufferedReader(new FileReader(meshFile));
 			String line;
 
@@ -156,14 +156,12 @@ public class OBJModel extends IndexedModel
 			if (normalModelIndex == null)
 			{
 				normalModelIndex = normalModel.getPositions().size();
-				normalIndexMap.put(currentIndex.vertexIndex, normalModel.getPositions().size());
+				normalIndexMap.put(currentIndex.getVertexIndex(), normalModelIndex);
 
 				normalModel.getPositions().add(currentPosition);
 				normalModel.getTextureCoordinates().add(currentTextureCoordinate);
-				if (hasNormals)
-				{
-					normalModel.getNormals().add(currentNormal);
-				}
+				normalModel.getNormals().add(currentNormal);
+				normalModel.getTangents().add(new Vector3f(0, 0, 0));
 			}
 
 			result.getIndices().add(modelVertexIndex);
@@ -188,6 +186,36 @@ public class OBJModel extends IndexedModel
 		public int vertexIndex;
 		public int textureCoordinateIndex;
 		public int normalIndex;
+
+		public int getVertexIndex()
+		{
+			return vertexIndex;
+		}
+
+		public void setVertexIndex(int vertexIndex)
+		{
+			this.vertexIndex = vertexIndex;
+		}
+
+		public int getTextureCoordinateIndex()
+		{
+			return textureCoordinateIndex;
+		}
+
+		public void setTextureCoordinateIndex(int textureCoordinateIndex)
+		{
+			this.textureCoordinateIndex = textureCoordinateIndex;
+		}
+
+		public int getNormalIndex()
+		{
+			return normalIndex;
+		}
+
+		public void setNormalIndex(int normalIndex)
+		{
+			this.normalIndex = normalIndex;
+		}
 
 		@Override
 		public int hashCode()

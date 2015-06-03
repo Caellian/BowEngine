@@ -31,6 +31,7 @@ public class IndexedModel
 	protected ArrayList<Vector3f> positions          = new ArrayList<>();
 	protected ArrayList<Vector2f> textureCoordinates = new ArrayList<>();
 	protected ArrayList<Vector3f> normals            = new ArrayList<>();
+	protected ArrayList<Vector3f> tangents = new ArrayList<>();
 	protected ArrayList<Integer>  indices            = new ArrayList<>();
 
 	public void calcNormals()
@@ -40,19 +41,67 @@ public class IndexedModel
 			int i0 = indices.get(i);
 			int i1 = indices.get(i + 1);
 			int i2 = indices.get(i + 2);
+
 			Vector3f v1 = positions.get(i1).sub(positions.get(i0));
 			Vector3f v2 = positions.get(i2).sub(positions.get(i0));
+
 			Vector3f normal = v1.cross(v2).normalized();
 
 			//TODO: Find reason for this mysterious crash.
-			normals.get(i0).set(normals.get(i0).add(normal));
-			normals.get(i1).set(normals.get(i1).add(normal));
-			normals.get(i2).set(normals.get(i2).add(normal));
+			normals.set(i0, normals.get(i0).add(normal));
+			normals.set(i1, normals.get(i1).add(normal));
+			normals.set(i2, normals.get(i2).add(normal));
 		}
 		for (Vector3f normal : normals)
 		{
 			normal.set(normal.normalized());
 		}
+	}
+
+	public void calcTangents()
+	{
+		for (int i = 0; i < indices.size(); i += 3)
+		{
+			int i0 = indices.get(i);
+			int i1 = indices.get(i + 1);
+			int i2 = indices.get(i + 2);
+
+			Vector3f edge1 = positions.get(i1).sub(positions.get(i0));
+			Vector3f edge2 = positions.get(i2).sub(positions.get(i0));
+
+			float deltaU1 = textureCoordinates.get(i1).getX() - textureCoordinates.get(i0).getX();
+			float deltaV1 = textureCoordinates.get(i1).getY() - textureCoordinates.get(i0).getY();
+			float deltaU2 = textureCoordinates.get(i2).getX() - textureCoordinates.get(i0).getX();
+			float deltaV2 = textureCoordinates.get(i2).getY() - textureCoordinates.get(i0).getY();
+
+			float dividend = (deltaU1 * deltaV2 - deltaU2 * deltaV1);
+			//TODO: The first 0.0f may need to be changed to 1.0f here.
+			float f = dividend == 0 ? 0.0f : 1.0f / dividend;
+
+			Vector3f tangent = new Vector3f(0, 0, 0);
+			tangent.setX(f * (deltaV2 * edge1.getX() - deltaV1 * edge2.getX()));
+			tangent.setY(f * (deltaV2 * edge1.getY() - deltaV1 * edge2.getY()));
+			tangent.setZ(f * (deltaV2 * edge1.getZ() - deltaV1 * edge2.getZ()));
+
+			tangents.set(i0, tangents.get(i0).add(tangent));
+			tangents.set(i1, tangents.get(i1).add(tangent));
+			tangents.set(i2, tangents.get(i2).add(tangent));
+		}
+
+		for (Vector3f tangent : tangents)
+		{
+			tangent.set(tangent.normalized());
+		}
+	}
+
+	public ArrayList<Vector3f> getTangents()
+	{
+		return tangents;
+	}
+
+	public void setTangents(ArrayList<Vector3f> tangents)
+	{
+		this.tangents = tangents;
 	}
 
 	public ArrayList<Vector3f> getPositions()
