@@ -28,11 +28,25 @@ public class MeshResource
 {
 	private int vbo;
 	private int ibo;
+	private int size;
+	private int refrenceCounter;
 
-	public MeshResource()
+	public MeshResource(int size)
 	{
 		vbo = glGenBuffers();
 		ibo = glGenBuffers();
+		this.size = size;
+	}
+
+	public void increaseReference()
+	{
+		refrenceCounter++;
+	}
+
+	public boolean decreaseReference()
+	{
+		refrenceCounter--;
+		return refrenceCounter == 0;
 	}
 
 	public int getVbo()
@@ -43,6 +57,11 @@ public class MeshResource
 	public int getIbo()
 	{
 		return ibo;
+	}
+
+	public int getSize()
+	{
+		return size;
 	}
 
 	@Override

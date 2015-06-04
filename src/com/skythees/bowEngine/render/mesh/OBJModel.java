@@ -144,11 +144,14 @@ public class OBJModel extends IndexedModel
 			if (modelVertexIndex == null)
 			{
 				modelVertexIndex = result.getPositions().size();
-				resultIndexMap.put(currentIndex, result.getPositions().size());
+				resultIndexMap.put(currentIndex, modelVertexIndex);
 
 				result.getPositions().add(currentPosition);
 				result.getTextureCoordinates().add(currentTextureCoordinate);
-				result.getNormals().add(currentNormal);
+				if (hasNormals)
+				{
+					result.getNormals().add(currentNormal);
+				}
 			}
 
 			Integer normalModelIndex = normalIndexMap.get(currentIndex.vertexIndex);
@@ -241,7 +244,6 @@ public class OBJModel extends IndexedModel
 			OBJIndex objIndex = (OBJIndex) o;
 
 			return normalIndex == objIndex.normalIndex && textureCoordinateIndex == objIndex.textureCoordinateIndex && vertexIndex == objIndex.vertexIndex;
-
 		}
 	}
 }

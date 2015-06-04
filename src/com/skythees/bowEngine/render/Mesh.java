@@ -25,6 +25,7 @@ import com.skythees.bowEngine.render.mesh.OBJModel;
 import com.skythees.bowEngine.render.resourceManagement.MeshResource;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -33,20 +34,25 @@ import static org.lwjgl.opengl.GL20.*;
 
 public class Mesh
 {
-	private MeshResource buffers;
-	private int size;
+	private static HashMap<String, MeshResource> resourceHashMap = new HashMap<>();
+	private MeshResource resource;
+	private String       fileName;
 
 	@SuppressWarnings("UnusedDeclaration")
 	public Mesh(String fileName)
 	{
-		initMeshData();
-		loadMesh(fileName);
-	}
+		this.fileName = fileName;
+		resource = resourceHashMap.get(fileName);
 
-	private void initMeshData()
-	{
-		buffers = new MeshResource();
-		size = 0;
+		if (resource == null)
+		{
+			loadMesh(fileName);
+			resourceHashMap.put(fileName, resource);
+		}
+		else
+		{
+			resource.increaseReference();
+		}
 	}
 
 	@SuppressWarnings("UnusedDeclaration")
@@ -87,12 +93,12 @@ public class Mesh
 			calcNormals(vertices, indices);
 		}
 
-		size = indices.length;
+		resource = new MeshResource(indices.length);
 
-		glBindBuffer(GL_ARRAY_BUFFER, buffers.getVbo());
+		glBindBuffer(GL_ARRAY_BUFFER, resource.getVbo());
 		glBufferData(GL_ARRAY_BUFFER, DataUtil.createFlippedBuffer(vertices), GL_STATIC_DRAW);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers.getIbo());
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, resource.getIbo());
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, DataUtil.createFlippedBuffer(indices), GL_STATIC_DRAW);
 	}
 
@@ -129,7 +135,7 @@ public class Mesh
 	@SuppressWarnings({"SameParameterValue", "WeakerAccess"})
 	public Mesh(Vertex[] vertices, int[] indices, boolean calcNormals)
 	{
-		initMeshData();
+		fileName = "";
 		addVertices(vertices, indices, calcNormals);
 	}
 
@@ -140,16 +146,26 @@ public class Mesh
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
 
-		glBindBuffer(GL_ARRAY_BUFFER, buffers.getVbo());
+		glBindBuffer(GL_ARRAY_BUFFER, resource.getVbo());
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, Vertex.SIZE * 4, 0);
 		glVertexAttribPointer(1, 2, GL_FLOAT, false, Vertex.SIZE * 4, 12);
 		glVertexAttribPointer(2, 3, GL_FLOAT, false, Vertex.SIZE * 4, 20);
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers.getIbo());
-		glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, resource.getIbo());
+		glDrawElements(GL_TRIANGLES, resource.getSize(), GL_UNSIGNED_INT, 0);
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(2);
+	}
+
+	@Override
+	protected void finalize() throws Throwable
+	{
+		super.finalize();
+		if (resource.decreaseReference() && !fileName.isEmpty())
+		{
+			resourceHashMap.remove(fileName);
+		}
 	}
 }
