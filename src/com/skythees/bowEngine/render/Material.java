@@ -39,8 +39,7 @@ public class Material {
     }
 
     public Texture getTexture(String name) {
-        Texture result = textureHashMap.get(name);
-        return result != null ? result : new Texture(0);
+        return textureHashMap.get(name);
     }
 
     public Texture removeTexture(String name) {

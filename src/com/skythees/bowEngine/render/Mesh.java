@@ -44,14 +44,14 @@ public class Mesh
 		this.fileName = fileName;
 		resource = resourceHashMap.get(fileName);
 
-		if (resource == null)
+		if (null != resource)
 		{
-			loadMesh(fileName);
-			resourceHashMap.put(fileName, resource);
+			resource.increaseReference();
 		}
 		else
 		{
-			resource.increaseReference();
+			loadMesh(fileName);
+			resourceHashMap.put(fileName, resource);
 		}
 	}
 

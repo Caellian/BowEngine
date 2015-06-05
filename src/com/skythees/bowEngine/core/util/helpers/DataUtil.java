@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class DataUtil {
-//    Copied over some BufferUtils methods to make the engine run faster.
 
     /**
      * Construct a direct native-order shortbuffer with the specified number
@@ -91,10 +90,10 @@ public class DataUtil {
     }
 
 	/**
-	 * Construct a direct native-order intbuffer with the specified number
-	 * of elements.
-	 *
-	 * @param size
+    * Construct a direct native-order int buffer with the specified number
+    * of elements.
+    *
+    * @param size
 	 * 		  The size, in ints
 	 *
 	 * @return an IntBuffer
