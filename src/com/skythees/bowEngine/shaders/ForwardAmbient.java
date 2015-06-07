@@ -28,28 +28,30 @@ import com.sun.istack.internal.NotNull;
 /**
  * Created on 15.3.2015. at 19:16.
  */
-public class ForwardAmbient extends Shader {
-    private static final ForwardAmbient instance = new ForwardAmbient();
+public class ForwardAmbient extends Shader
+{
+	private static final ForwardAmbient instance = new ForwardAmbient();
 
-   public ForwardAmbient()
-   {
-      super("./resources/shaders/forward-ambient");
-    }
+	private ForwardAmbient()
+	{
+		super("./resources/shaders/forward-ambient");
+	}
 
-   @NotNull
-    @SuppressWarnings("UnusedDeclaration")
-    public static ForwardAmbient getInstance() {
-        return instance;
-    }
+	@NotNull
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
+	public static ForwardAmbient getInstance()
+	{
+		return instance;
+	}
 
-    @Override
-    public void updateUniforms(@NotNull Transform transform, @NotNull Material material, @NotNull RenderingEngine renderingEngine)
-    {
-        Matrix4f worldMatrix = transform.getTransformation();
-        Matrix4f projectedMatrix = renderingEngine.getMainCamera().getViewProjection().mul(worldMatrix);
-        material.getTexture("diffuse").bind();
+	@Override
+	public void updateUniforms(@NotNull Transform transform, @NotNull Material material, @NotNull RenderingEngine renderingEngine)
+	{
+		Matrix4f worldMatrix = transform.getTransformation();
+		Matrix4f projectedMatrix = renderingEngine.getMainCamera().getViewProjection().mul(worldMatrix);
+		material.getTexture("diffuse").bind();
 
-        setUniform("MVP", projectedMatrix);
-        setUniform("ambientIntensity", renderingEngine.getAmbientLight());
-    }
+		setUniform("MVP", projectedMatrix);
+		setUniform("ambientIntensity", renderingEngine.getAmbientLight());
+	}
 }

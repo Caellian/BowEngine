@@ -25,27 +25,33 @@ import com.sun.istack.internal.NotNull;
 /**
  * Created on 03.03.15.
  */
-public class SpotLight extends PointLight {
-    private float cutoff;
+public class SpotLight extends PointLight
+{
+	private float cutoff;
 
-    public SpotLight(Vector3f color, float intensity, Vector3f attenuation, float cutoff) {
-        super(color, intensity, attenuation); //TODO: Calculate
-        this.cutoff = cutoff;
+	@SuppressWarnings("unused")
+	public SpotLight(Vector3f color, float intensity, Vector3f attenuation, float cutoff)
+	{
+		super(color, intensity, attenuation); //TODO: Calculate
+		this.cutoff = cutoff;
 
-        setShader(ForwardSpot.getInstance());
-    }
+		setShader(ForwardSpot.getInstance());
+	}
 
-    @NotNull
-    public Vector3f getDirection() {
-        return getTransform().getTransformedRotation().getForward();
-    }
+	@NotNull
+	public Vector3f getDirection()
+	{
+		return getTransform().getTransformedRotation().getForward();
+	}
 
-    public float getCutoff() {
-        return cutoff;
-    }
+	public float getCutoff()
+	{
+		return cutoff;
+	}
 
-    @SuppressWarnings("UnusedDeclaration")
-    public void setCutoff(float cutoff) {
-        this.cutoff = cutoff;
-    }
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
+	public void setCutoff(float cutoff)
+	{
+		this.cutoff = cutoff;
+	}
 }

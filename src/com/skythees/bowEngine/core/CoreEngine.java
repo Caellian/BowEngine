@@ -25,36 +25,53 @@ import com.skythees.bowEngine.render.RenderingEngine;
 import com.skythees.bowEngine.render.display.Window;
 import org.lwjgl.util.Dimension;
 
-public class CoreEngine {
+public class CoreEngine
+{
 
-    private final Game game;
-    private boolean isRunning;
-    private RenderingEngine renderingEngine;
-    private PhysicsEngine physicsEngine;
-    private int width;
-    private int height;
-    private double frametime;
+	private final Game            game;
+	private       boolean         isRunning;
+	private       RenderingEngine renderingEngine;
+	@SuppressWarnings({"FieldCanBeLocal", "unused"})
+	private       PhysicsEngine   physicsEngine;
+	@SuppressWarnings("CanBeFinal")
+	private       int             width;
+	@SuppressWarnings("CanBeFinal")
+	private       int             height;
+	private       double          frameTime;
 
-    public CoreEngine(int width, int height, int framerate, Game parGame) {
-        isRunning = false;
-        game = parGame;
-        this.width = width;
-        this.height = height;
-        this.frametime = 1.0 / framerate;
-    }
+	@SuppressWarnings("unused")
+	public CoreEngine(int width, int height, int frameRate, Game parGame)
+	{
+		isRunning = false;
+		game = parGame;
+		this.width = width;
+		this.height = height;
+		this.frameTime = 1.0 / frameRate;
+	}
 
-    public void createWindow(String title) {
-        Window.createWindow(width, height, title);
-        this.renderingEngine = new RenderingEngine();
-        this.physicsEngine = new PhysicsEngine();
-    }
+	@SuppressWarnings("unused")
+	public void setFrameRate(int frameRate)
+	{
+		this.frameTime = 1.0 / frameRate;
+	}
 
-    public void start() {
-        if (isRunning)
-            return;
+	@SuppressWarnings("unused")
+	public void createWindow(String title)
+	{
+		Window.createWindow(width, height, title);
+		this.renderingEngine = new RenderingEngine();
+		this.physicsEngine = new PhysicsEngine();
+	}
 
-        run();
-    }
+	@SuppressWarnings("unused")
+	public void start()
+	{
+		if (isRunning)
+		{
+			return;
+		}
+		run();
+	}
 
 	private void run()
 	{
@@ -79,21 +96,21 @@ public class CoreEngine {
 			unprocessedTime += passedTime;
 			frameCounter += passedTime;
 
-			while (unprocessedTime > frametime)
+			while (unprocessedTime > frameTime)
 			{
 				render = true;
 
-				unprocessedTime -= frametime;
+				unprocessedTime -= frameTime;
 
 				if (Window.isCloseRequested())
 				{
 					stop();
 				}
 
-				game.input((float) frametime);
+				game.input((float) frameTime);
 				InputHelper.update();
 
-				game.update((float) frametime);
+				game.update((float) frameTime);
 
 				if (frameCounter >= 1f)
 				{
@@ -122,35 +139,42 @@ public class CoreEngine {
 		cleanUp();
 	}
 
-    public void stop() {
-        if (!isRunning)
-            return;
+	@SuppressWarnings("WeakerAccess")
+	public void stop()
+	{
+		if (!isRunning)
+		{
+			return;
+		}
 
-        isRunning = false;
-    }
+		isRunning = false;
+	}
 
 	private void cleanUp()
 	{
 		Window.dispose();
 	}
 
+	@SuppressWarnings({"EmptyMethod", "unused"})
 	private void render()
 	{
 	}
 
-    public Game getGame() {
-        return game;
-    }
+	@SuppressWarnings("unused")
+	public Game getGame()
+	{
+		return game;
+	}
 
-    public double getFrametime() {
-        return frametime;
-    }
+	@SuppressWarnings("unused")
+	public double getFrameTime()
+	{
+		return frameTime;
+	}
 
-    public void setFramerate(int framerate) {
-        this.frametime = 1.0 / framerate;
-    }
-
-    public void setDimensions(Dimension dimensions) {
-        Window.setDimensions(dimensions);
-    }
+	@SuppressWarnings("unused")
+	public void setDimensions(Dimension dimensions)
+	{
+		Window.setDimensions(dimensions);
+	}
 }

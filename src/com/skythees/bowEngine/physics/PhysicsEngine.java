@@ -5,13 +5,17 @@ import com.skythees.bowEngine.core.components.GameObject;
 /**
  * Created on 19.3.2015. at 22:19.
  */
-public class PhysicsEngine {
+public class PhysicsEngine
+{
+	@SuppressWarnings({"EmptyMethod", "unused"})
+	public void preRender(@SuppressWarnings("UnusedParameters") GameObject rootObject)
+	{
 
-    public void preUpdate(GameObject rootObject) {
+	}
 
-    }
+	@SuppressWarnings({"EmptyMethod", "unused"})
+	public void postRender(@SuppressWarnings("UnusedParameters") GameObject rootObject)
+	{
 
-    public void postUpdate(GameObject rootObject) {
-
-    }
+	}
 }

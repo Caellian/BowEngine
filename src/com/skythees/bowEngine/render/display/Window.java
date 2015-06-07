@@ -28,65 +28,78 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.util.Dimension;
 
 @SuppressWarnings({"WeakerAccess", "UnusedDeclaration"})
-public class Window {
-    @SuppressWarnings("UnusedDeclaration")
-    public static void createWindow(int width, int height, String title) {
-        Display.setTitle(title);
-        try {
-            Display.setDisplayMode(new DisplayMode(width, height));
-            Display.create();
-            Keyboard.create();
-            Mouse.create();
-        } catch (LWJGLException e) {
-            e.printStackTrace();
-        }
-    }
+public class Window
+{
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
+	public static void createWindow(int width, int height, String title)
+	{
+		Display.setTitle(title);
+		try
+		{
+			Display.setDisplayMode(new DisplayMode(width, height));
+			Display.create();
+			Keyboard.create();
+			Mouse.create();
+		} catch (LWJGLException e)
+		{
+			e.printStackTrace();
+		}
+	}
 
-    @SuppressWarnings("UnusedDeclaration")
-    public static void render() {
-        Display.update();
-    }
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
+	public static void render()
+	{
+		Display.update();
+	}
 
-    @SuppressWarnings("UnusedDeclaration")
-    public static void dispose() {
-        Display.destroy();
-        Keyboard.destroy();
-        Mouse.destroy();
-    }
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
+	public static void dispose()
+	{
+		Display.destroy();
+		Keyboard.destroy();
+		Mouse.destroy();
+	}
 
-    @SuppressWarnings("UnusedDeclaration")
-    public static boolean isCloseRequested() {
-        return Display.isCloseRequested();
-    }
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
+	public static boolean isCloseRequested()
+	{
+		return Display.isCloseRequested();
+	}
 
-    @SuppressWarnings("UnusedDeclaration")
-    public static String getTitle() {
-        return Display.getTitle();
-    }
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
+	public static String getTitle()
+	{
+		return Display.getTitle();
+	}
 
-    public static void setDimensions(@NotNull Dimension dimensions)
-    {
-        try {
-            Display.setDisplayMode(new DisplayMode(dimensions.getWidth(), dimensions.getHeight()));
-        } catch (LWJGLException e) {
-            e.printStackTrace();
-        }
-    }
+	@SuppressWarnings("unused")
+	public static void setDimensions(@NotNull Dimension dimensions)
+	{
+		try
+		{
+			Display.setDisplayMode(new DisplayMode(dimensions.getWidth(), dimensions.getHeight()));
+		} catch (LWJGLException e)
+		{
+			e.printStackTrace();
+		}
+	}
 
-    @NotNull
-    public static Vector2f centerPosition() {
-        return new Vector2f(getWidth() / 2, getHeight() / 2);
-    }
+	@SuppressWarnings("unused")
+	@NotNull
+	public static Vector2f centerPosition()
+	{
+		return new Vector2f(getWidth() / 2, getHeight() / 2);
+	}
 
-    @SuppressWarnings("UnusedDeclaration")
-    public static int getWidth()
-    {
-        return Display.getDisplayMode().getWidth();
-    }
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
+	public static int getWidth()
+	{
+		return Display.getDisplayMode().getWidth();
+	}
 
-    @SuppressWarnings("UnusedDeclaration")
-    public static int getHeight()
-    {
-        return Display.getDisplayMode().getHeight();
-    }
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
+	public static int getHeight()
+	{
+		return Display.getDisplayMode().getHeight();
+	}
 }

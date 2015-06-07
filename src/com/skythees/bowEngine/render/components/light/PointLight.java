@@ -25,56 +25,67 @@ import com.sun.istack.internal.NotNull;
 /**
  * Created on 02.03.15.
  */
-public class PointLight extends BaseLight {
+public class PointLight extends BaseLight
+{
+	private static final int COLOR_DEPTH = 256;
 
-    private static final int COLOR_DEPTH = 256;
+	private Vector3f attenuation;
+	private float    range;
 
-    private Vector3f attenuation;
-    private float range;
+	public PointLight(Vector3f color, float intensity, @NotNull Vector3f attenuation)
+	{
+		super(color, intensity);
+		this.attenuation = attenuation;
 
-    public PointLight(Vector3f color, float intensity, @NotNull Vector3f attenuation)
-    {
-        super(color, intensity);
-        this.attenuation = attenuation;
+		float a = attenuation.getZ();
+		float b = attenuation.getY();
+		float c = attenuation.getX() - COLOR_DEPTH * getIntensity() * getColor().max();
+		this.range = (float) (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
 
-        float a = attenuation.getZ();
-        float b = attenuation.getY();
-        float c = attenuation.getX() - COLOR_DEPTH * getIntensity() * getColor().max();
-        this.range = (float) (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
+		setShader(ForwardPoint.getInstance());
+	}
 
-        setShader(ForwardPoint.getInstance());
-    }
+	public float getRange()
+	{
+		return range;
+	}
 
-    public float getRange() {
-        return range;
-    }
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
+	public void setRange(float range)
+	{
+		this.range = range;
+	}
 
-    @SuppressWarnings("UnusedDeclaration")
-    public void setRange(float range) {
-        this.range = range;
-    }
+	public float getConstant()
+	{
+		return this.attenuation.getX();
+	}
 
-    public float getConstant() {
-        return this.attenuation.getX();
-    }
+	@SuppressWarnings("unused")
+	public void setConstant(float constant)
+	{
+		this.attenuation.setX(constant);
+	}
 
-    public void setConstant(float constant) {
-        this.attenuation.setX(constant);
-    }
+	public float getLinear()
+	{
+		return this.attenuation.getY();
+	}
 
-    public float getLinear() {
-        return this.attenuation.getY();
-    }
+	@SuppressWarnings("unused")
+	public void setLinear(float linear)
+	{
+		this.attenuation.setY(linear);
+	}
 
-    public void setLinear(float linear) {
-        this.attenuation.setY(linear);
-    }
+	public float getExponent()
+	{
+		return this.attenuation.getZ();
+	}
 
-    public float getExponent() {
-        return this.attenuation.getZ();
-    }
-
-    public void setExponent(float exponent) {
-        this.attenuation.setZ(exponent);
-    }
+	@SuppressWarnings("unused")
+	public void setExponent(float exponent)
+	{
+		this.attenuation.setZ(exponent);
+	}
 }

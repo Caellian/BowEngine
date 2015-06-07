@@ -23,80 +23,104 @@ import com.sun.istack.internal.NotNull;
 
 import java.util.HashMap;
 
-public class Material {
-    private HashMap<String, Texture> textureHashMap;
-    private HashMap<String, Vector3f> vector3fHashMap;
-    private HashMap<String, Float> floatHashMap;
+public class Material
+{
+	private final HashMap<String, Texture>  textureHashMap;
+	private final HashMap<String, Vector3f> vector3fHashMap;
+	private final HashMap<String, Float>    floatHashMap;
 
-    public Material() {
-        textureHashMap = new HashMap<>();
-        vector3fHashMap = new HashMap<>();
-        floatHashMap = new HashMap<>();
-    }
+	@SuppressWarnings("unused")
+	public Material()
+	{
+		textureHashMap = new HashMap<>();
+		vector3fHashMap = new HashMap<>();
+		floatHashMap = new HashMap<>();
+	}
 
-    @NotNull
-    public Material addTexture(String name, Texture texture) {
-        textureHashMap.put(name, texture);
-        return this;
-    }
+	@SuppressWarnings("unused")
+	@NotNull
+	public Material addTexture(String name, Texture texture)
+	{
+		textureHashMap.put(name, texture);
+		return this;
+	}
 
-    public Texture getTexture(String name) {
-        return textureHashMap.get(name);
-    }
+	public Texture getTexture(@SuppressWarnings("SameParameterValue") String name)
+	{
+		return textureHashMap.get(name);
+	}
 
-    public Texture removeTexture(String name) {
-        return textureHashMap.remove(name);
-    }
+	@SuppressWarnings("unused")
+	public Texture removeTexture(String name)
+	{
+		return textureHashMap.remove(name);
+	}
 
-    @NotNull
-    public Material clearTextures() {
-        textureHashMap.clear();
-        return this;
-    }
+	@SuppressWarnings("unused")
+	@NotNull
+	public Material clearTextures()
+	{
+		textureHashMap.clear();
+		return this;
+	}
 
-    @NotNull
-    public Material addVector3f(String name, Vector3f texture) {
-        vector3fHashMap.put(name, texture);
-        return this;
-    }
+	@SuppressWarnings("unused")
+	@NotNull
+	public Material addVector3f(String name, Vector3f texture)
+	{
+		vector3fHashMap.put(name, texture);
+		return this;
+	}
 
-    @NotNull
-    public Vector3f getVector3f(String name) {
-        Vector3f result = vector3fHashMap.get(name);
-        return result != null ? result : new Vector3f(0, 0, 0);
-    }
+	@SuppressWarnings("unused")
+	@NotNull
+	public Vector3f getVector3f(String name)
+	{
+		Vector3f result = vector3fHashMap.get(name);
+		return result != null ? result : new Vector3f(0, 0, 0);
+	}
 
-    public Vector3f removeVector3f(String name) {
-        return vector3fHashMap.remove(name);
-    }
+	@SuppressWarnings("unused")
+	public Vector3f removeVector3f(String name)
+	{
+		return vector3fHashMap.remove(name);
+	}
 
-    @NotNull
-    public Material clearVector3f() {
-        vector3fHashMap.clear();
-        return this;
-    }
+	@SuppressWarnings("unused")
+	@NotNull
+	public Material clearVector3f()
+	{
+		vector3fHashMap.clear();
+		return this;
+	}
 
-    @NotNull
-    public Material addFloat(String name, Float texture) {
-        floatHashMap.put(name, texture);
-        return this;
-    }
+	@SuppressWarnings("unused")
+	@NotNull
+	public Material addFloat(String name, Float texture)
+	{
+		floatHashMap.put(name, texture);
+		return this;
+	}
 
-    @NotNull
-    public Float getFloat(String name) {
-        Float result = floatHashMap.get(name);
-        return result != null ? result : 0;
-    }
+	@NotNull
+	public Float getFloat(String name)
+	{
+		Float result = floatHashMap.get(name);
+		return result != null ? result : 0;
+	}
 
-    public Float removeFloat(String name) {
-        return floatHashMap.remove(name);
-    }
+	@SuppressWarnings("unused")
+	public Float removeFloat(String name)
+	{
+		return floatHashMap.remove(name);
+	}
 
-    @NotNull
-    public Material clearFloats() {
-        floatHashMap.clear();
-        return this;
-    }
-
+	@SuppressWarnings("unused")
+	@NotNull
+	public Material clearFloats()
+	{
+		floatHashMap.clear();
+		return this;
+	}
 
 }

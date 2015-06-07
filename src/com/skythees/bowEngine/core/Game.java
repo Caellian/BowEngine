@@ -7,8 +7,10 @@ import com.sun.istack.internal.NotNull;
 /**
  * Created on 15.3.2015. at 0:53.
  */
+@SuppressWarnings("unused")
 public abstract class Game
 {
+	@SuppressWarnings("CanBeFinal")
 	@NotNull
 	private GameObject root = new GameObject();
 
@@ -26,6 +28,7 @@ public abstract class Game
 		root.update(delta);
 	}
 
+	@SuppressWarnings("unused")
 	@NotNull
 	public Game addObject(GameObject gameObject)
 	{

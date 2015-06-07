@@ -57,6 +57,7 @@ public class IndexedModel
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public void calcTangents()
 	{
 		for (int i = 0; i < indices.size(); i += 3)
@@ -93,11 +94,13 @@ public class IndexedModel
 		}
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public ArrayList<Vector3f> getTangents()
 	{
 		return tangents;
 	}
 
+	@SuppressWarnings("unused")
 	public void setTangents(ArrayList<Vector3f> tangents)
 	{
 		this.tangents = tangents;
@@ -108,6 +111,7 @@ public class IndexedModel
 		return positions;
 	}
 
+	@SuppressWarnings("unused")
 	public void setPositions(ArrayList<Vector3f> positions)
 	{
 		this.positions = positions;
@@ -118,6 +122,7 @@ public class IndexedModel
 		return textureCoordinates;
 	}
 
+	@SuppressWarnings("unused")
 	public void setTextureCoordinates(ArrayList<Vector2f> textureCoordinates)
 	{
 		this.textureCoordinates = textureCoordinates;
@@ -128,6 +133,7 @@ public class IndexedModel
 		return normals;
 	}
 
+	@SuppressWarnings("unused")
 	public void setNormals(ArrayList<Vector3f> normals)
 	{
 		this.normals = normals;
@@ -138,6 +144,7 @@ public class IndexedModel
 		return indices;
 	}
 
+	@SuppressWarnings("unused")
 	public void setIndices(ArrayList<Integer> indices)
 	{
 		this.indices = indices;

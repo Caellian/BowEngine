@@ -27,46 +27,54 @@ import com.sun.istack.internal.NotNull;
 /**
  * Created on 02.03.15
  */
-public class BaseLight extends GameComponent {
-    @SuppressWarnings("WeakerAccess")
-    float intensity;
-    private Vector3f color;
-    private Shader shader;
+public class BaseLight extends GameComponent
+{
+	@SuppressWarnings("WeakerAccess")
+	float intensity;
+	private Vector3f color;
+	private Shader   shader;
 
-    public BaseLight(Vector3f color, float intensity) {
-        this.color = color;
-        this.intensity = intensity;
-    }
+	BaseLight(Vector3f color, float intensity)
+	{
+		this.color = color;
+		this.intensity = intensity;
+	}
 
-    @Override
-    public void addToRenderingEngine(@NotNull RenderingEngine renderingEngine)
-    {
-        renderingEngine.addLight(this);
-    }
+	@Override
+	public void addToRenderingEngine(@NotNull RenderingEngine renderingEngine)
+	{
+		renderingEngine.addLight(this);
+	}
 
-    public Shader getShader() {
-        return this.shader;
-    }
+	public Shader getShader()
+	{
+		return this.shader;
+	}
 
-    protected void setShader(Shader shader) {
-        this.shader = shader;
-    }
+	void setShader(Shader shader)
+	{
+		this.shader = shader;
+	}
 
-    public Vector3f getColor() {
-        return color;
-    }
+	public Vector3f getColor()
+	{
+		return color;
+	}
 
-    @SuppressWarnings("UnusedDeclaration")
-    public void setColor(Vector3f color) {
-        this.color = color;
-    }
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
+	public void setColor(Vector3f color)
+	{
+		this.color = color;
+	}
 
-    public float getIntensity() {
-        return intensity;
-    }
+	public float getIntensity()
+	{
+		return intensity;
+	}
 
-    @SuppressWarnings("UnusedDeclaration")
-    public void setIntensity(float intensity) {
-        this.intensity = intensity;
-    }
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
+	public void setIntensity(float intensity)
+	{
+		this.intensity = intensity;
+	}
 }

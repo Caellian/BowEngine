@@ -10,73 +10,63 @@ import java.util.ArrayList;
 /**
  * Created on 15.3.2015. at 2:16.
  */
-public class GameObject {
-    private ArrayList<GameObject> children;
-    private ArrayList<GameComponent> components;
-    private Transform transform;
+public class GameObject
+{
+	private final ArrayList<GameObject>    children;
+	private final ArrayList<GameComponent> components;
+	private final Transform                transform;
 
-    public GameObject() {
-        this.children = new ArrayList<>();
-        this.components = new ArrayList<>();
-        this.transform = new Transform();
-    }
+	public GameObject()
+	{
+		this.children = new ArrayList<>();
+		this.components = new ArrayList<>();
+		this.transform = new Transform();
+	}
 
-    @NotNull
-    public GameObject addChild(@NotNull GameObject child)
-    {
-        children.add(child);
-        child.getTransform().setParent(transform);
-        return this;
-    }
+	@NotNull
+	public GameObject addChild(@NotNull GameObject child)
+	{
+		children.add(child);
+		child.getTransform().setParent(transform);
+		return this;
+	}
 
 	public Transform getTransform()
 	{
 		return transform;
 	}
 
-    @NotNull
-    public GameObject addComponent(@NotNull GameComponent component)
-    {
-        components.add(component);
-        component.setParent(this);
-        return this;
-    }
+	@SuppressWarnings("unused")
+	@NotNull
+	public GameObject addComponent(@NotNull GameComponent component)
+	{
+		components.add(component);
+		component.setParent(this);
+		return this;
+	}
 
-    public void input(float delta) {
-        transform.update();
+	public void input(float delta)
+	{
+		transform.update();
+		components.forEach(component->component.input(delta));
+		children.forEach(child->child.input(delta));
+	}
 
-        for (GameComponent component : components) {
-            component.input(delta);
-        }
-        for (GameObject child : children) {
-            child.input(delta);
-        }
-    }
+	public void update(float delta)
+	{
+		components.forEach(component->component.update(delta));
+		children.forEach(child->child.update(delta));
+	}
 
-    public void update(float delta) {
-        for (GameComponent component : components) {
-            component.update(delta);
-        }
-        for (GameObject child : children) {
-            child.update(delta);
-        }
-    }
+	public void render(Shader shader, RenderingEngine renderingEngine)
+	{
+		components.forEach(component->component.render(shader, renderingEngine));
+		children.forEach(child->child.render(shader, renderingEngine));
+	}
 
-    public void render(Shader shader, RenderingEngine renderingEngine) {
-        for (GameComponent component : components) {
-            component.render(shader, renderingEngine);
-        }
-        for (GameObject child : children) {
-            child.render(shader, renderingEngine);
-        }
-    }
-
-    public void addToRenderingEngine(RenderingEngine renderingEngine) {
-        for (GameComponent component : components) {
-            component.addToRenderingEngine(renderingEngine);
-        }
-        for (GameObject child : children) {
-            child.addToRenderingEngine(renderingEngine);
-        }
-    }
+	public void addToRenderingEngine(RenderingEngine renderingEngine)
+	{
+		components.forEach(component->component.addToRenderingEngine(renderingEngine));
+		children.forEach(child->child.addToRenderingEngine(renderingEngine));
+	}
 }

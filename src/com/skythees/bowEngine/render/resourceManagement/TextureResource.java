@@ -7,8 +7,8 @@ import static org.lwjgl.opengl.GL15.glDeleteBuffers;
  */
 public class TextureResource
 {
-	private int id;
-	private int refrenceCounter;
+	private final int id;
+	private       int referenceCounter;
 
 	public TextureResource(int id)
 	{
@@ -17,13 +17,13 @@ public class TextureResource
 
 	public void increaseReference()
 	{
-		refrenceCounter++;
+		referenceCounter++;
 	}
 
 	public boolean decreaseReference()
 	{
-		refrenceCounter--;
-		return refrenceCounter == 0;
+		referenceCounter--;
+		return referenceCounter == 0;
 	}
 
 	public int getId()

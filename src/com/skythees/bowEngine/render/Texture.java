@@ -34,11 +34,12 @@ public class Texture
 {
 	private final static int                              BYTES_PER_PIXEL = 4;
 	@NotNull
-	private static       HashMap<String, TextureResource> resourceHashMap = new HashMap<>();
+	private static final HashMap<String, TextureResource> resourceHashMap = new HashMap<>();
 	@NotNull
 	private final String          fileName;
 	private       TextureResource resource;
 
+	@SuppressWarnings("unused")
 	public Texture(@NotNull String fileName)
 	{
 		this.fileName = fileName;
@@ -55,11 +56,11 @@ public class Texture
 		}
 	}
 
-	@SuppressWarnings("UnusedDeclaration")
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
 	public static int loadTexture(@NotNull String texture)
 	{
 		String[] nameArray = texture.split("\\.");
-		String ext = nameArray[nameArray.length - 1];
+		@SuppressWarnings("UnusedAssignment") String extension = nameArray[nameArray.length - 1];
 
 		try
 		{
@@ -117,6 +118,7 @@ public class Texture
 		glBindTexture(GL_TEXTURE_2D, resource.getId());
 	}
 
+	@SuppressWarnings("unused")
 	public TextureResource getResource()
 	{
 		return resource;

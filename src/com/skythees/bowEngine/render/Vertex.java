@@ -21,52 +21,63 @@ package com.skythees.bowEngine.render;
 import com.skythees.bowEngine.core.math.Vector2f;
 import com.skythees.bowEngine.core.math.Vector3f;
 
-public class Vertex {
-    public static final int SIZE = 8;
+public class Vertex
+{
+	public static final int SIZE = 8;
 
-    private Vector3f pos;
-    private Vector2f texturePos;
-    private Vector3f normal;
+	private Vector3f pos;
+	private Vector2f texturePos;
+	private Vector3f normal;
 
-    public Vertex(Vector3f pos) {
-        this(pos, new Vector2f(0, 0));
-    }
+	@SuppressWarnings("unused")
+	public Vertex(Vector3f pos)
+	{
+		this(pos, new Vector2f(0, 0));
+	}
 
-    @SuppressWarnings("UnusedDeclaration")
-    public Vertex(Vector3f pos, Vector2f texturePos) {
-        this(pos, texturePos, new Vector3f(0, 0, 0));
-    }
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
+	public Vertex(Vector3f pos, Vector2f texturePos)
+	{
+		this(pos, texturePos, new Vector3f(0, 0, 0));
+	}
 
-    @SuppressWarnings({"UnusedDeclaration", "WeakerAccess"})
-    public Vertex(Vector3f pos, Vector2f texturePos, Vector3f normal) {
-        this.pos = pos;
-        this.texturePos = texturePos;
-        this.normal = normal;
-    }
+	@SuppressWarnings({"UnusedDeclaration", "WeakerAccess", "unused"})
+	public Vertex(Vector3f pos, Vector2f texturePos, Vector3f normal)
+	{
+		this.pos = pos;
+		this.texturePos = texturePos;
+		this.normal = normal;
+	}
 
-    public Vector3f getPos() {
-        return pos;
-    }
+	public Vector3f getPos()
+	{
+		return pos;
+	}
 
-    @SuppressWarnings("UnusedDeclaration")
-    public void setPos(Vector3f pos) {
-        this.pos = pos;
-    }
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
+	public void setPos(Vector3f pos)
+	{
+		this.pos = pos;
+	}
 
-    public Vector2f getTexturePos() {
-        return texturePos;
-    }
+	public Vector2f getTexturePos()
+	{
+		return texturePos;
+	}
 
-    @SuppressWarnings("UnusedDeclaration")
-    public void setTexturePos(Vector2f texturePos) {
-        this.texturePos = texturePos;
-    }
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
+	public void setTexturePos(Vector2f texturePos)
+	{
+		this.texturePos = texturePos;
+	}
 
-    public Vector3f getNormal() {
-        return normal;
-    }
+	public Vector3f getNormal()
+	{
+		return normal;
+	}
 
-    public void setNormal(Vector3f normal) {
-        this.normal = normal;
-    }
+	public void setNormal(Vector3f normal)
+	{
+		this.normal = normal;
+	}
 }

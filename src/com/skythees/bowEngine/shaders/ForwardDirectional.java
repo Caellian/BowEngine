@@ -30,46 +30,49 @@ import com.sun.istack.internal.NotNull;
 /**
  * Created on 15.3.2015. at 19:42.
  */
-public class ForwardDirectional extends Shader {
-    private static final ForwardDirectional instance = new ForwardDirectional();
+public class ForwardDirectional extends Shader
+{
+	private static final ForwardDirectional instance = new ForwardDirectional();
 
-   public ForwardDirectional()
-   {
-      super("./resources/shaders/forward-directional");
-    }
+	private ForwardDirectional()
+	{
+		super("./resources/shaders/forward-directional");
+	}
 
-   @NotNull
-    @SuppressWarnings("UnusedDeclaration")
-    public static ForwardDirectional getInstance() {
-        return instance;
-    }
+	@NotNull
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
+	public static ForwardDirectional getInstance()
+	{
+		return instance;
+	}
 
-    @Override
-    public void updateUniforms(@NotNull Transform transform, @NotNull Material material, @NotNull RenderingEngine renderingEngine)
-    {
-        Matrix4f worldMatrix = transform.getTransformation();
-        Matrix4f projectedMatrix = renderingEngine.getMainCamera().getViewProjection().mul(worldMatrix);
-        material.getTexture("diffuse").bind();
+	@Override
+	public void updateUniforms(@NotNull Transform transform, @NotNull Material material, @NotNull RenderingEngine renderingEngine)
+	{
+		Matrix4f worldMatrix = transform.getTransformation();
+		Matrix4f projectedMatrix = renderingEngine.getMainCamera().getViewProjection().mul(worldMatrix);
+		material.getTexture("diffuse").bind();
 
-        setUniform("model", worldMatrix);
-        setUniform("MVP", projectedMatrix);
+		setUniform("model", worldMatrix);
+		setUniform("MVP", projectedMatrix);
 
-        setUniform("specularIntensity", material.getFloat("specularIntensity"));
-       setUniform("specularPower", material.getFloat("specularPower"));
+		setUniform("specularIntensity", material.getFloat("specularIntensity"));
+		setUniform("specularPower", material.getFloat("specularPower"));
 
-        setUniform("eyePos", renderingEngine.getMainCamera().getTransform().getTransformedPosition());
-        setUniformDirectionalLight("directionalLight", (DirectionalLight) renderingEngine.getActiveLight());
-    }
+		setUniform("eyePos", renderingEngine.getMainCamera().getTransform().getTransformedPosition());
+		setUniformDirectionalLight("directionalLight", (DirectionalLight) renderingEngine.getActiveLight());
+	}
 
-   public void setUniformDirectionalLight(String uniformName, @NotNull DirectionalLight directionalLight)
-   {
-      setUniformBaseLight(uniformName + ".base", directionalLight);
-      setUniform(uniformName + ".direction", directionalLight.getDirection());
-   }
+	@SuppressWarnings("WeakerAccess")
+	public void setUniformDirectionalLight(@SuppressWarnings("SameParameterValue") String uniformName, @NotNull DirectionalLight directionalLight)
+	{
+		setUniformBaseLight(uniformName + ".base", directionalLight);
+		setUniform(uniformName + ".direction", directionalLight.getDirection());
+	}
 
-   public void setUniformBaseLight(String uniformName, @NotNull BaseLight baseLight)
-   {
-      setUniform(uniformName + ".color", baseLight.getColor());
-      setUniform(uniformName + ".intensity", baseLight.getIntensity());
-    }
+	private void setUniformBaseLight(String uniformName, @NotNull BaseLight baseLight)
+	{
+		setUniform(uniformName + ".color", baseLight.getColor());
+		setUniform(uniformName + ".intensity", baseLight.getIntensity());
+	}
 }

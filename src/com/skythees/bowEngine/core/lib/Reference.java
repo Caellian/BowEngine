@@ -21,35 +21,44 @@ package com.skythees.bowEngine.core.lib;
 /**
  * Created on 03.03.15.
  */
-public class Reference {
+@SuppressWarnings({"ALL", "unused"})
+public class Reference
+{
+	public class Info
+	{
+		@SuppressWarnings("unused")
+		public static final String ENGINE_NAME    = "Bow Engine";
+		@SuppressWarnings("unused")
+		public static final String ENGINE_ID      = "bow_engine";
+		@SuppressWarnings("unused")
+		public static final String ENGINE_VERSION = "0.0.1";
+		@SuppressWarnings("unused")
+		public static final String AUTHOR         = "Skythees";
+	}
 
-    public class Info
-    {
-        @SuppressWarnings("UnusedDeclaration")
-        public static final String ENGINE_NAME    = "Bow Engine";
-        @SuppressWarnings("UnusedDeclaration")
-        public static final String ENGINE_ID      = "bow_engine";
-        @SuppressWarnings("UnusedDeclaration")
-        public static final String ENGINE_VERSION = "0.0.1";
-        @SuppressWarnings("UnusedDeclaration")
-        public static final String AUTHOR         = "Skythees";
-    }
+	public class FileParsing
+	{
+		@SuppressWarnings("unused")
+		public static final String OPENGL_ATTRIBUTE = "attribute";
+		@SuppressWarnings("unused")
+		public static final String OPENGL_STRUCTURE = "struct";
+		@SuppressWarnings("unused")
+		public static final String OPENGL_UNIFORM   = "uniform";
 
-    public class FileParsing
-    {
-        public static final String OPENGL_ATTRIBUTE = "attribute";
-        public static final String OPENGL_STRUCTURE = "struct";
-        public static final String OPENGL_UNIFORM   = "uniform";
+		@SuppressWarnings("unused")
+		public static final String INCLUDE_DIRECTIVE = "#include";
+	}
 
-        public static final String INCLUDE_DIRECTIVE = "#include";
-    }
+	public class Extensions
+	{
+		@SuppressWarnings("unused")
+		public static final String FRAGMENT_SHADER_EXTENSION = ".fs";
+		@SuppressWarnings("unused")
+		public static final String VERTEX_SHADER_EXTENSION   = ".vs";
+		@SuppressWarnings("unused")
+		public static final String GEOMETRY_SHADER_EXTENSION = ".gs";
 
-    public class Extensions
-    {
-        public static final String FRAGMENT_SHADER_EXTENSION = ".fs";
-        public static final String VERTEX_SHADER_EXTENSION   = ".vs";
-        public static final String GEOMETRY_SHADER_EXTENSION = ".gs";
-
-        public static final String OPENGL_HEADER = ".glh";
-    }
+		@SuppressWarnings("unused")
+		public static final String OPENGL_HEADER = ".glh";
+	}
 }

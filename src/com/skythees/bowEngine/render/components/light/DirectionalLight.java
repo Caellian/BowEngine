@@ -25,16 +25,19 @@ import com.sun.istack.internal.NotNull;
 /**
  * Created on 02.03.15
  */
-public class DirectionalLight extends BaseLight {
+public class DirectionalLight extends BaseLight
+{
+	@SuppressWarnings("unused")
+	public DirectionalLight(Vector3f color, float intensity)
+	{
+		super(color, intensity);
 
-    public DirectionalLight(Vector3f color, float intensity) {
-        super(color, intensity);
+		this.setShader(ForwardDirectional.getInstance());
+	}
 
-        this.setShader(ForwardDirectional.getInstance());
-    }
-
-    @NotNull
-    public Vector3f getDirection() {
-        return getTransform().getTransformedRotation().getForward();
-    }
+	@NotNull
+	public Vector3f getDirection()
+	{
+		return getTransform().getTransformedRotation().getForward();
+	}
 }

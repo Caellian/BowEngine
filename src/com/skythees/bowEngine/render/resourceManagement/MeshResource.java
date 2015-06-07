@@ -26,10 +26,10 @@ import static org.lwjgl.opengl.GL15.glGenBuffers;
  */
 public class MeshResource
 {
-	private int vbo;
-	private int ibo;
-	private int size;
-	private int refrenceCounter;
+	private final int vbo;
+	private final int ibo;
+	private final int size;
+	private       int referenceCounter;
 
 	public MeshResource(int size)
 	{
@@ -40,13 +40,13 @@ public class MeshResource
 
 	public void increaseReference()
 	{
-		refrenceCounter++;
+		referenceCounter++;
 	}
 
 	public boolean decreaseReference()
 	{
-		refrenceCounter--;
-		return refrenceCounter == 0;
+		referenceCounter--;
+		return referenceCounter == 0;
 	}
 
 	public int getVbo()

@@ -36,11 +36,11 @@ import static org.lwjgl.opengl.GL20.*;
 public class Mesh
 {
 	@NotNull
-	private static HashMap<String, MeshResource> resourceHashMap = new HashMap<>();
-	private MeshResource resource;
-	private String       fileName;
+	private static final HashMap<String, MeshResource> resourceHashMap = new HashMap<>();
+	private final String       fileName;
+	private       MeshResource resource;
 
-	@SuppressWarnings("UnusedDeclaration")
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
 	public Mesh(@NotNull String fileName)
 	{
 		this.fileName = fileName;
@@ -57,7 +57,7 @@ public class Mesh
 		}
 	}
 
-	@SuppressWarnings("UnusedDeclaration")
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
 	private void loadMesh(@NotNull String mesh)
 	{
 		String[] nameArray = mesh.split("\\.");
@@ -84,10 +84,10 @@ public class Mesh
 		Vertex[] vertexData = vertices.toArray(new Vertex[vertices.size()]);
 		Integer[] indexData = model.getIndices().toArray(new Integer[model.getIndices().size()]);
 
-		addVertices(vertexData, DataUtil.toIntArray(indexData), false);
+		addVertices(vertexData, DataUtil.toIntPrimitive(indexData), false);
 	}
 
-	@SuppressWarnings("UnusedDeclaration")
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
 	private void addVertices(@NotNull Vertex[] vertices, @NotNull int[] indices, boolean calcNormals)
 	{
 		if (calcNormals)
@@ -128,7 +128,7 @@ public class Mesh
 		}
 	}
 
-	@SuppressWarnings("UnusedDeclaration")
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
 	public Mesh(@NotNull Vertex[] vertices, @NotNull int[] indices)
 	{
 		this(vertices, indices, false);
@@ -141,7 +141,7 @@ public class Mesh
 		addVertices(vertices, indices, calcNormals);
 	}
 
-	@SuppressWarnings("UnusedDeclaration")
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
 	public void draw()
 	{
 		glEnableVertexAttribArray(0);

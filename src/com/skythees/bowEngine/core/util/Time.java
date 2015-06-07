@@ -18,20 +18,13 @@
 
 package com.skythees.bowEngine.core.util;
 
-public class Time {
-    private static final long SECOND = 1000000000L;
+public class Time
+{
+	private static final long SECOND = 1000000000L;
 
-    @SuppressWarnings("UnusedDeclaration")
-    public static double getTime() {
-        return System.nanoTime() / (double) SECOND;
-    }
-
-//    public static double getDelta() {
-//        return delta;
-//    }
-//
-//    @SuppressWarnings("UnusedDeclaration")
-//    public static void setDelta(double delta) {
-//        Time.delta = delta;
-//    }
+	@SuppressWarnings({"UnusedDeclaration", "unused"})
+	public static double getTime()
+	{
+		return System.nanoTime() / (double) SECOND;
+	}
 }

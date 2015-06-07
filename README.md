@@ -1,2 +1,2 @@
 # BowEngine
-Custom extendable engine
+Custom extensible engine

@@ -35,9 +35,9 @@ import java.util.HashMap;
 public class OBJModel extends IndexedModel
 {
 	@NotNull
-	protected ArrayList<OBJIndex> indices              = new ArrayList<>();
-	private   boolean             hasTextureCoorinates = false;
-	private   boolean             hasNormals           = false;
+	private final ArrayList<OBJIndex> indices               = new ArrayList<>();
+	private       boolean             hasTextureCoordinates = false;
+	private       boolean             hasNormals            = false;
 
 	public OBJModel(@NotNull String fileName)
 	{
@@ -97,7 +97,7 @@ public class OBJModel extends IndexedModel
 
 		if (values.length > 1)
 		{
-			hasTextureCoorinates = true;
+			hasTextureCoordinates = true;
 			result.textureCoordinateIndex = Integer.parseInt(values[1]) - 1;
 
 			if (values.length > 2)
@@ -125,7 +125,7 @@ public class OBJModel extends IndexedModel
 			Vector2f currentTextureCoordinate;
 			Vector3f currentNormal;
 
-			if (hasTextureCoorinates)
+			if (hasTextureCoordinates)
 			{
 				currentTextureCoordinate = textureCoordinates.get(currentIndex.textureCoordinateIndex);
 			}
@@ -199,26 +199,31 @@ public class OBJModel extends IndexedModel
 			return vertexIndex;
 		}
 
+		@SuppressWarnings("unused")
 		public void setVertexIndex(int vertexIndex)
 		{
 			this.vertexIndex = vertexIndex;
 		}
 
+		@SuppressWarnings("unused")
 		public int getTextureCoordinateIndex()
 		{
 			return textureCoordinateIndex;
 		}
 
+		@SuppressWarnings("unused")
 		public void setTextureCoordinateIndex(int textureCoordinateIndex)
 		{
 			this.textureCoordinateIndex = textureCoordinateIndex;
 		}
 
+		@SuppressWarnings("unused")
 		public int getNormalIndex()
 		{
 			return normalIndex;
 		}
 
+		@SuppressWarnings("unused")
 		public void setNormalIndex(int normalIndex)
 		{
 			this.normalIndex = normalIndex;

@@ -36,10 +36,11 @@ import static org.lwjgl.opengl.GL32.GL_GEOMETRY_SHADER;
 
 public abstract class Shader
 {
-	private int                      program;
-	private HashMap<String, Integer> uniforms;
+	private final int                      program;
+	@SuppressWarnings("CanBeFinal")
+	private       HashMap<String, Integer> uniforms;
 
-	public Shader(String fileName)
+	protected Shader(String fileName)
 	{
 		program = glCreateProgram();
 		uniforms = new HashMap<>();
@@ -263,6 +264,7 @@ public abstract class Shader
 		addProgram(text, GL_VERTEX_SHADER);
 	}
 
+	@SuppressWarnings("unused")
 	private void addGeometryShader(@NotNull String text)
 	{
 		addProgram(text, GL_GEOMETRY_SHADER);
@@ -319,21 +321,25 @@ public abstract class Shader
 		}
 	}
 
+	@SuppressWarnings("unused")
 	public void setUniform(String uniformName, int value)
 	{
 		glUniform1i(uniforms.get(uniformName), value);
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public void setUniform(String uniformName, float value)
 	{
 		glUniform1f(uniforms.get(uniformName), value);
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public void setUniform(String uniformName, @NotNull Vector3f value)
 	{
 		glUniform3f(uniforms.get(uniformName), value.getX(), value.getY(), value.getZ());
 	}
 
+	@SuppressWarnings("WeakerAccess")
 	public void setUniform(String uniformName, @NotNull Matrix4f value)
 	{
 		glUniformMatrix4(uniforms.get(uniformName), true, DataUtil.createFlippedBuffer(value));
