@@ -19,23 +19,27 @@
 package com.skythees.bowEngine.core.util.input;
 
 import com.skythees.bowEngine.core.math.Vector2f;
+import com.sun.istack.internal.NotNull;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 @SuppressWarnings("UnusedDeclaration")
 public class InputHelper {
     @SuppressWarnings("WeakerAccess")
-    public static final int NUM_KEY_CODES = 256;
+    public static final int NUM_KEY_CODES     = 256;
     @SuppressWarnings("WeakerAccess")
     public static final int NUM_MOUSE_BUTTONS = 5;
 
+    @NotNull
     @SuppressWarnings("CanBeFinal")
-    private static boolean[] lastKeys = new boolean[NUM_KEY_CODES];
+    private static boolean[] lastKeys  = new boolean[NUM_KEY_CODES];
+    @NotNull
     @SuppressWarnings("CanBeFinal")
     private static boolean[] lastMouse = new boolean[NUM_MOUSE_BUTTONS];
 
     @SuppressWarnings("UnusedDeclaration")
-    public static void update() {
+    public static void update()
+    {
         for (int i = 0; i < NUM_KEY_CODES; i++)
             lastKeys[i] = getKey(i);
 
@@ -43,27 +47,32 @@ public class InputHelper {
             lastMouse[i] = getMouse(i);
     }
 
-    public static boolean getKey(int keyCode) {
+    public static boolean getKey(int keyCode)
+    {
         return Keyboard.isKeyDown(keyCode);
     }
 
-    @SuppressWarnings("UnusedDeclaration")
-    public static boolean getKeyDown(int keyCode) {
-        return getKey(keyCode) && !lastKeys[keyCode];
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
-    public static boolean getKeyUp(int keyCode) {
-        return !getKey(keyCode) && lastKeys[keyCode];
-    }
-
     @SuppressWarnings("WeakerAccess")
-    public static boolean getMouse(int mouseButton) {
+    public static boolean getMouse(int mouseButton)
+    {
         return Mouse.isButtonDown(mouseButton);
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public static boolean getMouseDown(int mouseButton) {
+    public static boolean getKeyDown(int keyCode)
+    {
+        return getKey(keyCode) && !lastKeys[keyCode];
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public static boolean getKeyUp(int keyCode)
+    {
+        return !getKey(keyCode) && lastKeys[keyCode];
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public static boolean getMouseDown(int mouseButton)
+    {
         return getMouse(mouseButton) && !lastMouse[mouseButton];
     }
 
@@ -72,13 +81,15 @@ public class InputHelper {
         return !getMouse(mouseButton) && lastMouse[mouseButton];
     }
 
+    @NotNull
     @SuppressWarnings("UnusedDeclaration")
     public static Vector2f getMousePosition() {
         return new Vector2f(Mouse.getX(), Mouse.getY());
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public static void setMousePosition(Vector2f pos) {
+    public static void setMousePosition(@NotNull Vector2f pos)
+    {
         Mouse.setCursorPosition((int) pos.getX(), (int) pos.getY());
     }
 

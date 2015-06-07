@@ -3,6 +3,7 @@ package com.skythees.bowEngine.core.components;
 import com.skythees.bowEngine.core.Transform;
 import com.skythees.bowEngine.render.RenderingEngine;
 import com.skythees.bowEngine.render.Shader;
+import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,9 @@ public class GameObject {
         this.transform = new Transform();
     }
 
-    public GameObject addChild(GameObject child) {
+    @NotNull
+    public GameObject addChild(@NotNull GameObject child)
+    {
         children.add(child);
         child.getTransform().setParent(transform);
         return this;
@@ -31,7 +34,9 @@ public class GameObject {
 		return transform;
 	}
 
-    public GameObject addComponent(GameComponent component) {
+    @NotNull
+    public GameObject addComponent(@NotNull GameComponent component)
+    {
         components.add(component);
         component.setParent(this);
         return this;

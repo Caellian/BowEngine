@@ -20,6 +20,7 @@ package com.skythees.bowEngine.render;
 
 import com.skythees.bowEngine.core.util.helpers.DataUtil;
 import com.skythees.bowEngine.render.resourceManagement.TextureResource;
+import com.sun.istack.internal.NotNull;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -32,11 +33,13 @@ import static org.lwjgl.opengl.GL11.*;
 public class Texture
 {
 	private final static int                              BYTES_PER_PIXEL = 4;
+	@NotNull
 	private static       HashMap<String, TextureResource> resourceHashMap = new HashMap<>();
+	@NotNull
 	private final String          fileName;
 	private       TextureResource resource;
 
-	public Texture(String fileName)
+	public Texture(@NotNull String fileName)
 	{
 		this.fileName = fileName;
 		resource = resourceHashMap.get(fileName);
@@ -53,7 +56,7 @@ public class Texture
 	}
 
 	@SuppressWarnings("UnusedDeclaration")
-	public static int loadTexture(String texture)
+	public static int loadTexture(@NotNull String texture)
 	{
 		String[] nameArray = texture.split("\\.");
 		String ext = nameArray[nameArray.length - 1];

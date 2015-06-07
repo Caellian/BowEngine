@@ -20,6 +20,7 @@ package com.skythees.bowEngine.render.components.light;
 
 import com.skythees.bowEngine.core.math.Vector3f;
 import com.skythees.bowEngine.shaders.ForwardPoint;
+import com.sun.istack.internal.NotNull;
 
 /**
  * Created on 02.03.15.
@@ -31,7 +32,8 @@ public class PointLight extends BaseLight {
     private Vector3f attenuation;
     private float range;
 
-    public PointLight(Vector3f color, float intensity, Vector3f attenuation) {
+    public PointLight(Vector3f color, float intensity, @NotNull Vector3f attenuation)
+    {
         super(color, intensity);
         this.attenuation = attenuation;
 

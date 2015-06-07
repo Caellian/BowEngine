@@ -23,7 +23,10 @@ import com.skythees.bowEngine.core.math.Matrix4f;
 import com.skythees.bowEngine.render.Material;
 import com.skythees.bowEngine.render.RenderingEngine;
 import com.skythees.bowEngine.render.Shader;
+import com.skythees.bowEngine.render.components.light.BaseLight;
+import com.skythees.bowEngine.render.components.light.PointLight;
 import com.skythees.bowEngine.render.components.light.SpotLight;
+import com.sun.istack.internal.NotNull;
 
 /**
  * Created on 15.3.2015. at 19:42.
@@ -32,42 +35,18 @@ public class ForwardSpot extends Shader {
     private static final ForwardSpot instance = new ForwardSpot();
 
     private ForwardSpot() {
-        super();
-
-        addVertexShader(loadInternalShader("forward-spot.vsh"));
-        addFragmentShader(loadInternalShader("forward-spot.fsh"));
-
-	    setAttributeLocation("positions", 0);
-	    setAttributeLocation("texturePos", 1);
-        setAttributeLocation("normal", 2);
-
-        compileShader();
-
-        addUniform("model");
-        addUniform("MVP");
-
-        addUniform("specularIntensity");
-        addUniform("specularExponent");
-        addUniform("eyePos");
-
-        addUniform("spotLight.pointLight.base.color");
-        addUniform("spotLight.pointLight.base.intensity");
-        addUniform("spotLight.pointLight.attenuation.constant");
-        addUniform("spotLight.pointLight.attenuation.linear");
-        addUniform("spotLight.pointLight.attenuation.exponent");
-        addUniform("spotLight.pointLight.position");
-        addUniform("spotLight.pointLight.range");
-        addUniform("spotLight.direction");
-        addUniform("spotLight.cutoff");
+       super("./resources/shaders/forward-spot");
     }
 
+   @NotNull
     @SuppressWarnings("UnusedDeclaration")
     public static ForwardSpot getInstance() {
         return instance;
     }
 
     @Override
-    public void updateUniforms(Transform transform, Material material, RenderingEngine renderingEngine) {
+    public void updateUniforms(@NotNull Transform transform, @NotNull Material material, @NotNull RenderingEngine renderingEngine)
+    {
         Matrix4f worldMatrix = transform.getTransformation();
         Matrix4f projectedMatrix = renderingEngine.getMainCamera().getViewProjection().mul(worldMatrix);
         material.getTexture("diffuse").bind();
@@ -76,9 +55,32 @@ public class ForwardSpot extends Shader {
         setUniform("MVP", projectedMatrix);
 
         setUniform("specularIntensity", material.getFloat("specularIntensity"));
-        setUniform("specularExponent", material.getFloat("specularExponent"));
+       setUniform("specularPower", material.getFloat("specularPower"));
 
         setUniform("eyePos", renderingEngine.getMainCamera().getTransform().getTransformedPosition());
         setUniformSpotLight("spotLight", (SpotLight) renderingEngine.getActiveLight());
+    }
+
+   public void setUniformSpotLight(String uniformName, @NotNull SpotLight spotLight)
+   {
+      setUniformPointLight(uniformName + ".pointLight", spotLight);
+      setUniform(uniformName + ".direction", spotLight.getDirection());
+      setUniform(uniformName + ".cutoff", spotLight.getCutoff());
+   }
+
+   public void setUniformPointLight(String uniformName, @NotNull PointLight pointLight)
+   {
+      setUniformBaseLight(uniformName + ".base", pointLight);
+      setUniform(uniformName + ".attenuation.constant", pointLight.getConstant());
+      setUniform(uniformName + ".attenuation.linear", pointLight.getLinear());
+      setUniform(uniformName + ".attenuation.exponent", pointLight.getExponent());
+      setUniform(uniformName + ".position", pointLight.getTransform().getTransformedPosition());
+      setUniform(uniformName + ".range", pointLight.getRange());
+   }
+
+   public void setUniformBaseLight(String uniformName, @NotNull BaseLight baseLight)
+   {
+      setUniform(uniformName + ".color", baseLight.getColor());
+      setUniform(uniformName + ".intensity", baseLight.getIntensity());
     }
 }

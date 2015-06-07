@@ -20,6 +20,7 @@ package com.skythees.bowEngine.render.components.light;
 
 import com.skythees.bowEngine.core.math.Vector3f;
 import com.skythees.bowEngine.shaders.ForwardDirectional;
+import com.sun.istack.internal.NotNull;
 
 /**
  * Created on 02.03.15
@@ -32,6 +33,7 @@ public class DirectionalLight extends BaseLight {
         this.setShader(ForwardDirectional.getInstance());
     }
 
+    @NotNull
     public Vector3f getDirection() {
         return getTransform().getTransformedRotation().getForward();
     }

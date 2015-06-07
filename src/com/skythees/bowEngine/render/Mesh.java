@@ -23,6 +23,7 @@ import com.skythees.bowEngine.core.util.helpers.DataUtil;
 import com.skythees.bowEngine.render.mesh.IndexedModel;
 import com.skythees.bowEngine.render.mesh.OBJModel;
 import com.skythees.bowEngine.render.resourceManagement.MeshResource;
+import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,12 +35,13 @@ import static org.lwjgl.opengl.GL20.*;
 
 public class Mesh
 {
+	@NotNull
 	private static HashMap<String, MeshResource> resourceHashMap = new HashMap<>();
 	private MeshResource resource;
 	private String       fileName;
 
 	@SuppressWarnings("UnusedDeclaration")
-	public Mesh(String fileName)
+	public Mesh(@NotNull String fileName)
 	{
 		this.fileName = fileName;
 		resource = resourceHashMap.get(fileName);
@@ -56,7 +58,7 @@ public class Mesh
 	}
 
 	@SuppressWarnings("UnusedDeclaration")
-	private void loadMesh(String mesh)
+	private void loadMesh(@NotNull String mesh)
 	{
 		String[] nameArray = mesh.split("\\.");
 		String ext = nameArray[nameArray.length - 1];
@@ -86,7 +88,7 @@ public class Mesh
 	}
 
 	@SuppressWarnings("UnusedDeclaration")
-	private void addVertices(Vertex[] vertices, int[] indices, boolean calcNormals)
+	private void addVertices(@NotNull Vertex[] vertices, @NotNull int[] indices, boolean calcNormals)
 	{
 		if (calcNormals)
 		{
@@ -102,7 +104,7 @@ public class Mesh
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, DataUtil.createFlippedBuffer(indices), GL_STATIC_DRAW);
 	}
 
-	private void calcNormals(Vertex[] vertices, int[] indices)
+	private void calcNormals(@NotNull Vertex[] vertices, @NotNull int[] indices)
 	{
 		for (int count = 0; count < indices.length; count += 3)
 		{
@@ -127,13 +129,13 @@ public class Mesh
 	}
 
 	@SuppressWarnings("UnusedDeclaration")
-	public Mesh(Vertex[] vertices, int[] indices)
+	public Mesh(@NotNull Vertex[] vertices, @NotNull int[] indices)
 	{
 		this(vertices, indices, false);
 	}
 
 	@SuppressWarnings({"SameParameterValue", "WeakerAccess"})
-	public Mesh(Vertex[] vertices, int[] indices, boolean calcNormals)
+	public Mesh(@NotNull Vertex[] vertices, @NotNull int[] indices, boolean calcNormals)
 	{
 		fileName = "";
 		addVertices(vertices, indices, calcNormals);

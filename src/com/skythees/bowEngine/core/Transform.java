@@ -21,6 +21,7 @@ package com.skythees.bowEngine.core;
 import com.skythees.bowEngine.core.math.Matrix4f;
 import com.skythees.bowEngine.core.math.Quaternion;
 import com.skythees.bowEngine.core.math.Vector3f;
+import com.sun.istack.internal.NotNull;
 
 public class Transform {
     Matrix4f parentMatrix;
@@ -59,6 +60,7 @@ public class Transform {
         return parent != null && parent.hasChanged() || pos.equals(oldPos) || rot.equals(oldRot) || scale.equals(oldScale);
     }
 
+    @NotNull
     public Matrix4f getTransformation() {
         Matrix4f translationMatrix = new Matrix4f().initTranslation(pos.getX(), pos.getY(), pos.getZ());
         Matrix4f rotationMatrix = rot.toRotationMatrix();
@@ -77,10 +79,12 @@ public class Transform {
         this.parent = parent;
     }
 
+    @NotNull
     public Vector3f getTransformedPosition() {
         return getParentMatrix().transform(pos);
     }
 
+    @NotNull
     public Quaternion getTransformedRotation() {
         Quaternion parentRotation = new Quaternion(0, 0, 0, 1);
 
@@ -91,7 +95,8 @@ public class Transform {
         return parentRotation.mul(rot);
     }
 
-    public void rotate(Vector3f axis, float angle) {
+    public void rotate(@NotNull Vector3f axis, float angle)
+    {
         rot = new Quaternion(axis, angle).mul(rot).normalized();
     }
 

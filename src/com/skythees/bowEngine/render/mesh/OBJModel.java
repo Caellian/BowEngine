@@ -21,6 +21,7 @@ package com.skythees.bowEngine.render.mesh;
 import com.skythees.bowEngine.core.math.Vector2f;
 import com.skythees.bowEngine.core.math.Vector3f;
 import com.skythees.bowEngine.core.util.helpers.DataUtil;
+import com.sun.istack.internal.NotNull;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,11 +34,12 @@ import java.util.HashMap;
  */
 public class OBJModel extends IndexedModel
 {
+	@NotNull
 	protected ArrayList<OBJIndex> indices              = new ArrayList<>();
 	private   boolean             hasTextureCoorinates = false;
 	private   boolean             hasNormals           = false;
 
-	public OBJModel(String fileName)
+	public OBJModel(@NotNull String fileName)
 	{
 		BufferedReader meshReader;
 		try
@@ -85,7 +87,8 @@ public class OBJModel extends IndexedModel
 		}
 	}
 
-	private OBJIndex parseOBJIndex(String token)
+	@NotNull
+	private OBJIndex parseOBJIndex(@NotNull String token)
 	{
 		String[] values = token.split("/");
 
@@ -107,6 +110,7 @@ public class OBJModel extends IndexedModel
 		return result;
 	}
 
+	@NotNull
 	public IndexedModel toIndexedModel()
 	{
 		IndexedModel result = new IndexedModel();

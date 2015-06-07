@@ -23,6 +23,7 @@ import com.skythees.bowEngine.core.math.Matrix4f;
 import com.skythees.bowEngine.render.Material;
 import com.skythees.bowEngine.render.RenderingEngine;
 import com.skythees.bowEngine.render.Shader;
+import com.sun.istack.internal.NotNull;
 
 /**
  * Created on 15.3.2015. at 19:16.
@@ -30,28 +31,20 @@ import com.skythees.bowEngine.render.Shader;
 public class ForwardAmbient extends Shader {
     private static final ForwardAmbient instance = new ForwardAmbient();
 
-    private ForwardAmbient() {
-        super();
-
-        addVertexShader(loadInternalShader("forward-ambient.vsh"));
-        addFragmentShader(loadInternalShader("forward-ambient.fsh"));
-
-	    setAttributeLocation("positions", 0);
-	    setAttributeLocation("texturePos", 1);
-
-        compileShader();
-
-        addUniform("MVP");
-        addUniform("ambientIntensity");
+   public ForwardAmbient()
+   {
+      super("./resources/shaders/forward-ambient");
     }
 
+   @NotNull
     @SuppressWarnings("UnusedDeclaration")
     public static ForwardAmbient getInstance() {
         return instance;
     }
 
     @Override
-    public void updateUniforms(Transform transform, Material material, RenderingEngine renderingEngine) {
+    public void updateUniforms(@NotNull Transform transform, @NotNull Material material, @NotNull RenderingEngine renderingEngine)
+    {
         Matrix4f worldMatrix = transform.getTransformation();
         Matrix4f projectedMatrix = renderingEngine.getMainCamera().getViewProjection().mul(worldMatrix);
         material.getTexture("diffuse").bind();

@@ -25,6 +25,7 @@ import com.skythees.bowEngine.core.math.Vector3f;
 import com.skythees.bowEngine.core.util.input.InputHelper;
 import com.skythees.bowEngine.render.RenderingEngine;
 import com.skythees.bowEngine.render.display.Window;
+import com.sun.istack.internal.NotNull;
 import org.lwjgl.input.Keyboard;
 
 public class Camera extends GameComponent {
@@ -37,17 +38,13 @@ public class Camera extends GameComponent {
         this.projection = new Matrix4f().initPerspective(fov, aspectRatio, zNear, zFar);
     }
 
+    @NotNull
     public Matrix4f getViewProjection() {
         Matrix4f cameraRotation = getTransform().getTransformedRotation().conjugated().toRotationMatrix();
         Vector3f cameraPos = getTransform().getTransformedPosition().mul(-1);
         Matrix4f cameraTranslation = new Matrix4f().initTranslation(cameraPos.getX(), cameraPos.getY(), cameraPos.getZ());
 
         return projection.mul(cameraRotation.mul(cameraTranslation));
-    }
-
-    @Override
-    public void addToRenderingEngine(RenderingEngine renderingEngine) {
-        renderingEngine.addCamera(this);
     }
 
     @Override
@@ -89,7 +86,14 @@ public class Camera extends GameComponent {
         }
     }
 
-    public void move(Vector3f dir, float amount) {
+    @Override
+    public void addToRenderingEngine(@NotNull RenderingEngine renderingEngine)
+    {
+        renderingEngine.addCamera(this);
+    }
+
+    public void move(@NotNull Vector3f dir, float amount)
+    {
         getTransform().setPos(getTransform().getPos().add(dir.mul(amount)));
     }
 }

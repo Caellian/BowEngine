@@ -19,6 +19,7 @@
 package com.skythees.bowEngine.render.display;
 
 import com.skythees.bowEngine.core.math.Vector2f;
+import com.sun.istack.internal.NotNull;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -59,21 +60,12 @@ public class Window {
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public static int getWidth() {
-        return Display.getDisplayMode().getWidth();
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
-    public static int getHeight() {
-        return Display.getDisplayMode().getHeight();
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
     public static String getTitle() {
         return Display.getTitle();
     }
 
-    public static void setDimensions(Dimension dimensions) {
+    public static void setDimensions(@NotNull Dimension dimensions)
+    {
         try {
             Display.setDisplayMode(new DisplayMode(dimensions.getWidth(), dimensions.getHeight()));
         } catch (LWJGLException e) {
@@ -81,7 +73,20 @@ public class Window {
         }
     }
 
+    @NotNull
     public static Vector2f centerPosition() {
         return new Vector2f(getWidth() / 2, getHeight() / 2);
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public static int getWidth()
+    {
+        return Display.getDisplayMode().getWidth();
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public static int getHeight()
+    {
+        return Display.getDisplayMode().getHeight();
     }
 }

@@ -20,6 +20,7 @@ package com.skythees.bowEngine.core.util.helpers;
 
 import com.skythees.bowEngine.core.math.Matrix4f;
 import com.skythees.bowEngine.render.Vertex;
+import com.sun.istack.internal.NotNull;
 
 import java.nio.*;
 import java.util.ArrayList;
@@ -49,17 +50,6 @@ public class DataUtil {
 	    return ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder());
     }
 
-	/**
-     * Construct a direct native-order charbuffer with the specified number
-     * of elements.
-     *
-     * @param size The size, in chars
-     * @return an CharBuffer
-     */
-    public static CharBuffer createCharBuffer(int size) {
-        return createByteBuffer(size << 1).asCharBuffer();
-    }
-
     /**
      * Construct a direct native-order longbuffer with the specified number
      * of elements.
@@ -82,7 +72,9 @@ public class DataUtil {
         return createByteBuffer(size << 3).asDoubleBuffer();
     }
 
-    public static IntBuffer createFlippedBuffer(int... values) {
+    @NotNull
+    public static IntBuffer createFlippedBuffer(@NotNull int... values)
+    {
         IntBuffer buffer = createIntBuffer(values.length);
         buffer.put(values);
         buffer.flip();
@@ -103,7 +95,32 @@ public class DataUtil {
 		return createByteBuffer(size << 2).asIntBuffer();
 	}
 
-    public static FloatBuffer createFlippedBuffer(Vertex[] vertices) {
+    @NotNull
+    public static CharBuffer createFlippedBuffer(@NotNull char... values)
+    {
+        CharBuffer buffer = createCharBuffer(values.length);
+        buffer.put(values);
+        buffer.flip();
+        return buffer;
+    }
+
+    /**
+     * Construct a direct native-order charbuffer with the specified number
+     * of elements.
+     *
+     * @param size
+     * 		  The size, in chars
+     *
+     * @return an CharBuffer
+     */
+    public static CharBuffer createCharBuffer(int size)
+    {
+        return createByteBuffer(size << 1).asCharBuffer();
+    }
+
+    @NotNull
+    public static FloatBuffer createFlippedBuffer(@NotNull Vertex[] vertices)
+    {
         FloatBuffer buffer = createFloatBuffer(vertices.length * Vertex.SIZE);
 
         for (Vertex vertex : vertices) {
@@ -134,9 +151,10 @@ public class DataUtil {
 	public static FloatBuffer createFloatBuffer(int size)
 	{
 		return createByteBuffer(size << 2).asFloatBuffer();
-	}
+   }
 
-    public static FloatBuffer createFlippedBuffer(Matrix4f matrix) {
+    @NotNull
+    public static FloatBuffer createFlippedBuffer(@NotNull Matrix4f matrix) {
         FloatBuffer buffer = createFloatBuffer(4 * 4);
 
         for (int i : new int[]{0, 1, 2, 3}) {
@@ -150,7 +168,7 @@ public class DataUtil {
         return buffer;
     }
 
-    public static String[] removeEmptyStrings(String[] tokens) {
+    public static String[] removeEmptyStrings(@NotNull String[] tokens) {
         ArrayList<String> tokenList = new ArrayList<>();
 
         for (final String token : tokens) {
@@ -161,7 +179,8 @@ public class DataUtil {
         return tokenList.toArray(new String[tokenList.size()]);
     }
 
-    public static int[] toIntArray(Integer[] indexData) {
+    @NotNull
+    public static int[] toIntArray(@NotNull Integer[] indexData) {
         int[] result = new int[indexData.length];
         int counter = 0;
         for (final Integer integer : indexData) {

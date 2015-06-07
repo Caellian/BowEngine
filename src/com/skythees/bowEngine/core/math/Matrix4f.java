@@ -18,6 +18,8 @@
 
 package com.skythees.bowEngine.core.math;
 
+import com.sun.istack.internal.NotNull;
+
 public class Matrix4f {
     private float[][] matrix;
 
@@ -25,6 +27,7 @@ public class Matrix4f {
         matrix = new float[4][4];
     }
 
+    @NotNull
     @SuppressWarnings("UnusedDeclaration")
     public Matrix4f initIdentity() {
         matrix[0][0] = 1;
@@ -47,6 +50,7 @@ public class Matrix4f {
         return this;
     }
 
+    @NotNull
     public Matrix4f initTranslation(float x, float y, float z) {
         matrix[0][0] = 1;
         matrix[0][1] = 0;
@@ -68,6 +72,7 @@ public class Matrix4f {
         return this;
     }
 
+    @NotNull
     public Matrix4f initRotation(float x, float y, float z) {
         Matrix4f rx = new Matrix4f();
         Matrix4f ry = new Matrix4f();
@@ -133,7 +138,62 @@ public class Matrix4f {
         return this;
     }
 
-    public Matrix4f initScale(float x, float y, float z) {
+    @NotNull
+    @SuppressWarnings("WeakerAccess")
+    public float[][] getMatrix()
+    {
+        float[][] result = new float[4][4];
+
+        for (final int posX : new int[]{0, 1, 2, 3})
+        {
+            for (final int posY : new int[]{0, 1, 2, 3})
+            {
+                result[posX][posY] = matrix[posX][posY];
+            }
+        }
+
+        return result;
+    }
+
+    @NotNull
+    public Matrix4f mul(@NotNull Matrix4f r)
+    {
+        Matrix4f res = new Matrix4f();
+
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                res.set(i, j, matrix[i][0] * r.get(0, j) +
+                        matrix[i][1] * r.get(1, j) +
+                        matrix[i][2] * r.get(2, j) +
+                        matrix[i][3] * r.get(3, j));
+            }
+        }
+
+        return res;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public void set(int x, int y, float value)
+    {
+        matrix[x][y] = value;
+    }
+
+    public float get(int x, int y)
+    {
+        return matrix[x][y];
+    }
+
+    @SuppressWarnings("UnusedDeclaration")
+    public void setMatrix(float[][] matrix)
+    {
+        this.matrix = matrix;
+    }
+
+    @NotNull
+    public Matrix4f initScale(float x, float y, float z)
+    {
         matrix[0][0] = x;
         matrix[0][1] = 0;
         matrix[0][2] = 0;
@@ -154,7 +214,9 @@ public class Matrix4f {
         return this;
     }
 
-    public Matrix4f initPerspective(float fov, float aspectRatio, float clipNear, float clipFar) {
+    @NotNull
+    public Matrix4f initPerspective(float fov, float aspectRatio, float clipNear, float clipFar)
+    {
         float fowAngle = (float) Math.tan(fov / 2);
         float clipRange = clipNear - clipFar;
 
@@ -178,7 +240,9 @@ public class Matrix4f {
         return this;
     }
 
-    public Matrix4f initOrthographic(float left, float right, float bottom, float top, float near, float far) {
+    @NotNull
+    public Matrix4f initOrthographic(float left, float right, float bottom, float top, float near, float far)
+    {
         float width = right - left;
         float height = top - bottom;
         float depth = far - near;
@@ -203,7 +267,9 @@ public class Matrix4f {
         return this;
     }
 
-    public Matrix4f initRotation(Vector3f forward, Vector3f up) {
+    @NotNull
+    public Matrix4f initRotation(@NotNull Vector3f forward, @NotNull Vector3f up)
+    {
         Vector3f f = forward.normalized();
         Vector3f r = up.normalized().cross(f);
         Vector3f u = f.cross(r);
@@ -211,7 +277,9 @@ public class Matrix4f {
         return initRotation(f, u, r);
     }
 
-    public Matrix4f initRotation(Vector3f forward, Vector3f up, Vector3f right) {
+    @NotNull
+    public Matrix4f initRotation(@NotNull Vector3f forward, @NotNull Vector3f up, @NotNull Vector3f right)
+    {
 
         matrix[0][0] = right.getX();
         matrix[0][1] = right.getY();
@@ -233,49 +301,9 @@ public class Matrix4f {
         return this;
     }
 
-    public Vector3f transform(Vector3f r) {
-        return new Vector3f(matrix[0][0] * r.getX() + matrix[0][1] * r.getY() + matrix[0][2] * r.getZ() + matrix[0][3],
-                matrix[1][0] * r.getX() + matrix[1][1] * r.getY() + matrix[1][2] * r.getZ() + matrix[1][3],
-                matrix[2][0] * r.getX() + matrix[2][1] * r.getY() + matrix[2][2] * r.getZ() + matrix[2][3]);
-    }
-
-    public Matrix4f mul(Matrix4f r) {
-        Matrix4f res = new Matrix4f();
-
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                res.set(i, j, matrix[i][0] * r.get(0, j) +
-                        matrix[i][1] * r.get(1, j) +
-                        matrix[i][2] * r.get(2, j) +
-                        matrix[i][3] * r.get(3, j));
-            }
-        }
-
-        return res;
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    public float[][] getMatrix() {
-        float[][] result = new float[4][4];
-
-        for (final int posX : new int[]{0, 1, 2, 3})
-            for (final int posY : new int[]{0, 1, 2, 3})
-                result[posX][posY] = matrix[posX][posY];
-
-        return result;
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
-    public void setMatrix(float[][] matrix) {
-        this.matrix = matrix;
-    }
-
-    public float get(int x, int y) {
-        return matrix[x][y];
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    public void set(int x, int y, float value) {
-        matrix[x][y] = value;
+    @NotNull
+    public Vector3f transform(@NotNull Vector3f r)
+    {
+        return new Vector3f(matrix[0][0] * r.getX() + matrix[0][1] * r.getY() + matrix[0][2] * r.getZ() + matrix[0][3], matrix[1][0] * r.getX() + matrix[1][1] * r.getY() + matrix[1][2] * r.getZ() + matrix[1][3], matrix[2][0] * r.getX() + matrix[2][1] * r.getY() + matrix[2][2] * r.getZ() + matrix[2][3]);
     }
 }

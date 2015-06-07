@@ -19,6 +19,7 @@
 package com.skythees.bowEngine.render;
 
 import com.skythees.bowEngine.core.math.Vector3f;
+import com.sun.istack.internal.NotNull;
 
 import java.util.HashMap;
 
@@ -33,6 +34,7 @@ public class Material {
         floatHashMap = new HashMap<>();
     }
 
+    @NotNull
     public Material addTexture(String name, Texture texture) {
         textureHashMap.put(name, texture);
         return this;
@@ -46,16 +48,19 @@ public class Material {
         return textureHashMap.remove(name);
     }
 
+    @NotNull
     public Material clearTextures() {
         textureHashMap.clear();
         return this;
     }
 
+    @NotNull
     public Material addVector3f(String name, Vector3f texture) {
         vector3fHashMap.put(name, texture);
         return this;
     }
 
+    @NotNull
     public Vector3f getVector3f(String name) {
         Vector3f result = vector3fHashMap.get(name);
         return result != null ? result : new Vector3f(0, 0, 0);
@@ -65,16 +70,19 @@ public class Material {
         return vector3fHashMap.remove(name);
     }
 
+    @NotNull
     public Material clearVector3f() {
         vector3fHashMap.clear();
         return this;
     }
 
+    @NotNull
     public Material addFloat(String name, Float texture) {
         floatHashMap.put(name, texture);
         return this;
     }
 
+    @NotNull
     public Float getFloat(String name) {
         Float result = floatHashMap.get(name);
         return result != null ? result : 0;
@@ -84,6 +92,7 @@ public class Material {
         return floatHashMap.remove(name);
     }
 
+    @NotNull
     public Material clearFloats() {
         floatHashMap.clear();
         return this;

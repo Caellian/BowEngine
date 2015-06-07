@@ -18,30 +18,38 @@
 
 package com.skythees.bowEngine.core.lib;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 /**
  * Created on 03.03.15.
  */
 public class Reference {
-    @SuppressWarnings("UnusedDeclaration")
-    public static final String ENGINE_NAME = "Bow Engine";
-    @SuppressWarnings("UnusedDeclaration")
-    public static final String ENGINE_ID = "bow_engine";
-    @SuppressWarnings("UnusedDeclaration")
-    public static final String ENGINE_VERSION = "0.0.1";
-    @SuppressWarnings("UnusedDeclaration")
-    public static final String AUTHOR = "Skythees";
 
-    @SuppressWarnings("SameParameterValue")
-    public static URI getURIPath(String path) {
-//        return Reference.class.getClassLoader().getResource(path);
-        try {
-            return new URI(path);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public class Info
+    {
+        @SuppressWarnings("UnusedDeclaration")
+        public static final String ENGINE_NAME    = "Bow Engine";
+        @SuppressWarnings("UnusedDeclaration")
+        public static final String ENGINE_ID      = "bow_engine";
+        @SuppressWarnings("UnusedDeclaration")
+        public static final String ENGINE_VERSION = "0.0.1";
+        @SuppressWarnings("UnusedDeclaration")
+        public static final String AUTHOR         = "Skythees";
+    }
+
+    public class FileParsing
+    {
+        public static final String OPENGL_ATTRIBUTE = "attribute";
+        public static final String OPENGL_STRUCTURE = "struct";
+        public static final String OPENGL_UNIFORM   = "uniform";
+
+        public static final String INCLUDE_DIRECTIVE = "#include";
+    }
+
+    public class Extensions
+    {
+        public static final String FRAGMENT_SHADER_EXTENSION = ".fs";
+        public static final String VERTEX_SHADER_EXTENSION   = ".vs";
+        public static final String GEOMETRY_SHADER_EXTENSION = ".gs";
+
+        public static final String OPENGL_HEADER = ".glh";
     }
 }

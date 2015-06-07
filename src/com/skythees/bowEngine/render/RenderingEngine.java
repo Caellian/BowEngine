@@ -5,6 +5,7 @@ import com.skythees.bowEngine.core.math.Vector3f;
 import com.skythees.bowEngine.render.components.Camera;
 import com.skythees.bowEngine.render.components.light.BaseLight;
 import com.skythees.bowEngine.shaders.ForwardAmbient;
+import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;
 
@@ -16,12 +17,14 @@ import static org.lwjgl.opengl.GL32.GL_DEPTH_CLAMP;
  */
 public class RenderingEngine {
     private Camera mainCamera;
+    @NotNull
     private Vector3f ambientLight = new Vector3f(0.1f, 0.1f, 0.1f);
 
     private ArrayList<BaseLight> lights;
     private BaseLight activeLight;
 
-    public RenderingEngine() {
+    public RenderingEngine()
+    {
         lights = new ArrayList<>();
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -35,7 +38,8 @@ public class RenderingEngine {
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public static void setTextures(boolean enabled) {
+    public static void setTextures(boolean enabled)
+    {
         if (enabled)
             glEnable(GL_TEXTURE_2D);
         else
@@ -46,7 +50,8 @@ public class RenderingEngine {
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-    private static void setClearColor(Vector3f color) {
+    private static void setClearColor(@NotNull Vector3f color)
+    {
         glClearColor(color.getX(), color.getY(), color.getZ(), 1.0f);
     }
 
@@ -54,6 +59,7 @@ public class RenderingEngine {
         return glGetString(GL_VERSION);
     }
 
+    @NotNull
     public Vector3f getAmbientLight() {
         return ambientLight;
     }
@@ -62,7 +68,8 @@ public class RenderingEngine {
         lights.add(light);
     }
 
-    public void render(GameObject object) {
+    public void render(@NotNull GameObject object)
+    {
         clearScreen();
 
         lights.clear();

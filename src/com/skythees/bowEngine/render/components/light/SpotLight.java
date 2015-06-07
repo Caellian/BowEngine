@@ -20,6 +20,7 @@ package com.skythees.bowEngine.render.components.light;
 
 import com.skythees.bowEngine.core.math.Vector3f;
 import com.skythees.bowEngine.shaders.ForwardSpot;
+import com.sun.istack.internal.NotNull;
 
 /**
  * Created on 03.03.15.
@@ -34,6 +35,7 @@ public class SpotLight extends PointLight {
         setShader(ForwardSpot.getInstance());
     }
 
+    @NotNull
     public Vector3f getDirection() {
         return getTransform().getTransformedRotation().getForward();
     }
