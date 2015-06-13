@@ -1,0 +1,27 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+
+version = "0.0.0"
+group = "com.skythees.bowEngine"
+projectID = "bowEngine"
+
+processResources
+        {
+            inputs.property "version", project.version
+
+            from(sourceSets.main.java.srcDirs) {
+                include 'com/skythees/bowEngine/core/lib/Reference.java'
+                expand 'version': project.version
+            }
+        }
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+        resources {
+            srcDir 'resources'
+        }
+    }
+}

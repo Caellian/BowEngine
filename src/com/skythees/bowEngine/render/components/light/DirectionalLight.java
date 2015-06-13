@@ -19,7 +19,7 @@
 package com.skythees.bowEngine.render.components.light;
 
 import com.skythees.bowEngine.core.math.Vector3f;
-import com.skythees.bowEngine.shaders.ForwardDirectional;
+import com.skythees.bowEngine.render.Shader;
 import com.sun.istack.internal.NotNull;
 
 /**
@@ -32,7 +32,7 @@ public class DirectionalLight extends BaseLight
 	{
 		super(color, intensity);
 
-		this.setShader(ForwardDirectional.getInstance());
+		this.setShader(new Shader("./resources/shaders/forward-directional"));
 	}
 
 	@NotNull

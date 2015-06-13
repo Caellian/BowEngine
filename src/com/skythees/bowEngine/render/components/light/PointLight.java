@@ -19,7 +19,7 @@
 package com.skythees.bowEngine.render.components.light;
 
 import com.skythees.bowEngine.core.math.Vector3f;
-import com.skythees.bowEngine.shaders.ForwardPoint;
+import com.skythees.bowEngine.render.Shader;
 import com.sun.istack.internal.NotNull;
 
 /**
@@ -42,7 +42,7 @@ public class PointLight extends BaseLight
 		float c = attenuation.getX() - COLOR_DEPTH * getIntensity() * getColor().max();
 		this.range = (float) (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
 
-		setShader(ForwardPoint.getInstance());
+		setShader(new Shader("./resources/shaders/forward-point"));
 	}
 
 	public float getRange()

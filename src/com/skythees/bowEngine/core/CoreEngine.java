@@ -77,7 +77,6 @@ public class CoreEngine
 	{
 		isRunning = true;
 
-		int frames = 0;
 		float frameCounter = 0f;
 
 		game.init();
@@ -114,15 +113,14 @@ public class CoreEngine
 
 				if (frameCounter >= 1f)
 				{
-					frames = 0;
 					frameCounter = 0;
 				}
 			}
 			if (render)
 			{
 				game.render(renderingEngine);
+				renderingEngine.renderGUI();
 				Window.render();
-				frames++;
 			}
 			else
 			{

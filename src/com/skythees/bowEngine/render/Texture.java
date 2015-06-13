@@ -19,7 +19,7 @@
 package com.skythees.bowEngine.render;
 
 import com.skythees.bowEngine.core.util.helpers.DataUtil;
-import com.skythees.bowEngine.render.resourceManagement.TextureResource;
+import com.skythees.bowEngine.render.resources.TextureResource;
 import com.sun.istack.internal.NotNull;
 
 import javax.imageio.ImageIO;
@@ -29,6 +29,8 @@ import java.nio.ByteBuffer;
 import java.util.HashMap;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
 
 public class Texture
 {
@@ -51,13 +53,13 @@ public class Texture
 		}
 		else
 		{
-			resource = new TextureResource(loadTexture(fileName));
+			resource = loadTexture(fileName);
 			resourceHashMap.put(fileName, resource);
 		}
 	}
 
 	@SuppressWarnings({"UnusedDeclaration", "unused"})
-	public static int loadTexture(@NotNull String texture)
+	public static TextureResource loadTexture(@NotNull String texture)
 	{
 		String[] nameArray = texture.split("\\.");
 		@SuppressWarnings("UnusedAssignment") String extension = nameArray[nameArray.length - 1];
@@ -92,8 +94,8 @@ public class Texture
 			}
 			imageBuffer.flip();
 
-			int id = glGenTextures();
-			glBindTexture(GL_TEXTURE_2D, id);
+			TextureResource result = new TextureResource();
+			glBindTexture(GL_TEXTURE_2D, result.getId());
 
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -103,18 +105,25 @@ public class Texture
 
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, image.getWidth(), image.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, imageBuffer);
 
-			return id;
+			return result;
 		} catch (Exception e)
 		{
 			e.printStackTrace();
 			System.exit(1);
 		}
 
-		return 0;
+		return null;
 	}
 
 	public void bind()
 	{
+		glBindTexture(GL_TEXTURE_2D, resource.getId());
+	}
+
+	public void bind(int samplerSlot)
+	{
+		assert (samplerSlot >= 0 && samplerSlot <= 31);
+		glActiveTexture(GL_TEXTURE0 + samplerSlot);
 		glBindTexture(GL_TEXTURE_2D, resource.getId());
 	}
 

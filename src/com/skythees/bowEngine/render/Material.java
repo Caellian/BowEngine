@@ -18,23 +18,19 @@
 
 package com.skythees.bowEngine.render;
 
-import com.skythees.bowEngine.core.math.Vector3f;
+import com.skythees.bowEngine.render.resources.MapStorage;
 import com.sun.istack.internal.NotNull;
 
 import java.util.HashMap;
 
-public class Material
+public class Material extends MapStorage
 {
-	private final HashMap<String, Texture>  textureHashMap;
-	private final HashMap<String, Vector3f> vector3fHashMap;
-	private final HashMap<String, Float>    floatHashMap;
+	private final HashMap<String, Texture> textureHashMap;
 
 	@SuppressWarnings("unused")
 	public Material()
 	{
 		textureHashMap = new HashMap<>();
-		vector3fHashMap = new HashMap<>();
-		floatHashMap = new HashMap<>();
 	}
 
 	@SuppressWarnings("unused")
@@ -63,64 +59,4 @@ public class Material
 		textureHashMap.clear();
 		return this;
 	}
-
-	@SuppressWarnings("unused")
-	@NotNull
-	public Material addVector3f(String name, Vector3f texture)
-	{
-		vector3fHashMap.put(name, texture);
-		return this;
-	}
-
-	@SuppressWarnings("unused")
-	@NotNull
-	public Vector3f getVector3f(String name)
-	{
-		Vector3f result = vector3fHashMap.get(name);
-		return result != null ? result : new Vector3f(0, 0, 0);
-	}
-
-	@SuppressWarnings("unused")
-	public Vector3f removeVector3f(String name)
-	{
-		return vector3fHashMap.remove(name);
-	}
-
-	@SuppressWarnings("unused")
-	@NotNull
-	public Material clearVector3f()
-	{
-		vector3fHashMap.clear();
-		return this;
-	}
-
-	@SuppressWarnings("unused")
-	@NotNull
-	public Material addFloat(String name, Float texture)
-	{
-		floatHashMap.put(name, texture);
-		return this;
-	}
-
-	@NotNull
-	public Float getFloat(String name)
-	{
-		Float result = floatHashMap.get(name);
-		return result != null ? result : 0;
-	}
-
-	@SuppressWarnings("unused")
-	public Float removeFloat(String name)
-	{
-		return floatHashMap.remove(name);
-	}
-
-	@SuppressWarnings("unused")
-	@NotNull
-	public Material clearFloats()
-	{
-		floatHashMap.clear();
-		return this;
-	}
-
 }

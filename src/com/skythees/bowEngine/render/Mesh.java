@@ -22,7 +22,7 @@ import com.skythees.bowEngine.core.math.Vector3f;
 import com.skythees.bowEngine.core.util.helpers.DataUtil;
 import com.skythees.bowEngine.render.mesh.IndexedModel;
 import com.skythees.bowEngine.render.mesh.OBJModel;
-import com.skythees.bowEngine.render.resourceManagement.MeshResource;
+import com.skythees.bowEngine.render.resources.MeshResource;
 import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;

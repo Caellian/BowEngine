@@ -29,9 +29,9 @@ public class Reference
 		@SuppressWarnings("unused")
 		public static final String ENGINE_NAME    = "Bow Engine";
 		@SuppressWarnings("unused")
-		public static final String ENGINE_ID      = "bow_engine";
+		public static final String ENGINE_ID      = "bowEngine";
 		@SuppressWarnings("unused")
-		public static final String ENGINE_VERSION = "0.0.1";
+		public static final String ENGINE_VERSION = "${version}";
 		@SuppressWarnings("unused")
 		public static final String AUTHOR         = "Skythees";
 	}
@@ -39,12 +39,11 @@ public class Reference
 	public class FileParsing
 	{
 		@SuppressWarnings("unused")
-		public static final String OPENGL_ATTRIBUTE = "attribute";
+		public static final String OPENGL_ATTRIBUTE  = "attribute";
 		@SuppressWarnings("unused")
-		public static final String OPENGL_STRUCTURE = "struct";
+		public static final String OPENGL_STRUCTURE  = "struct";
 		@SuppressWarnings("unused")
-		public static final String OPENGL_UNIFORM   = "uniform";
-
+		public static final String OPENGL_UNIFORM    = "uniform";
 		@SuppressWarnings("unused")
 		public static final String INCLUDE_DIRECTIVE = "#include";
 	}
@@ -57,8 +56,13 @@ public class Reference
 		public static final String VERTEX_SHADER_EXTENSION   = ".vs";
 		@SuppressWarnings("unused")
 		public static final String GEOMETRY_SHADER_EXTENSION = ".gs";
-
 		@SuppressWarnings("unused")
-		public static final String OPENGL_HEADER = ".glh";
+		public static final String OPENGL_HEADER             = ".glh";
+	}
+
+	public class SamplerData
+	{
+		public static final int DIFFUSE = 0;
+		public static final int NORMAL  = 1;
 	}
 }

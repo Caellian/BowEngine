@@ -1,10 +1,12 @@
 package com.skythees.bowEngine.render;
 
+import com.skythees.bowEngine.core.Transform;
 import com.skythees.bowEngine.core.components.GameObject;
+import com.skythees.bowEngine.core.lib.Reference;
 import com.skythees.bowEngine.core.math.Vector3f;
 import com.skythees.bowEngine.render.components.Camera;
 import com.skythees.bowEngine.render.components.light.BaseLight;
-import com.skythees.bowEngine.shaders.ForwardAmbient;
+import com.skythees.bowEngine.render.resources.MapStorage;
 import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;
@@ -15,17 +17,22 @@ import static org.lwjgl.opengl.GL32.GL_DEPTH_CLAMP;
 /**
  * Created on 15.3.2015. at 2:47.
  */
-public class RenderingEngine
+public class RenderingEngine extends MapStorage
 {
-	private final ArrayList<BaseLight> lights;
-	private       Camera               mainCamera;
-	@NotNull
-	private Vector3f ambientLight = new Vector3f(0.1f, 0.1f, 0.1f);
+	private final ArrayList<BaseLight> lights = new ArrayList<>();
 	private BaseLight activeLight;
+
+	private Shader forwardAmbient;
+	private Camera mainCamera;
+
 
 	public RenderingEngine()
 	{
-		lights = new ArrayList<>();
+		integerHashMap.put("diffuse", Reference.SamplerData.DIFFUSE);
+		vector3fHashMap.put("ambient", new Vector3f(0.1f, 0.1f, 0.1f));
+
+		forwardAmbient = new Shader("./resources/shaders/forward-ambient");
+
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 		glFrontFace(GL_CW);
@@ -37,47 +44,15 @@ public class RenderingEngine
 		glEnable(GL_TEXTURE_2D);
 	}
 
-	@SuppressWarnings({"UnusedDeclaration", "unused"})
-	public static void setTextures(boolean enabled)
-	{
-		if (enabled)
-		{
-			glEnable(GL_TEXTURE_2D);
-		}
-		else
-		{
-			glDisable(GL_TEXTURE_2D);
-		}
-	}
-
-	@SuppressWarnings("unused")
-	private static void unbindTextures()
-	{
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-
-	@SuppressWarnings("unused")
-	private static void setClearColor(@NotNull Vector3f color)
-	{
-		glClearColor(color.getX(), color.getY(), color.getZ(), 1.0f);
-	}
-
-	@SuppressWarnings("unused")
-	public static String openGLVer()
+	public static String openGLVersion()
 	{
 		return glGetString(GL_VERSION);
 	}
 
-	@NotNull
-	public Vector3f getAmbientLight()
+	public void updateUniformStruct(Transform transform, Material material, Shader shader, String uniformName, String uniformType)
 	{
-		return ambientLight;
-	}
-
-	@SuppressWarnings("unused")
-	public void setAmbientLight(@NotNull Vector3f ambientLight)
-	{
-		this.ambientLight = ambientLight;
+		//TODO: Add a better support for custom shader uniform struct update.
+		throw new IllegalArgumentException(uniformType + " is not a supported type in Rendering Engine!");
 	}
 
 	public void addLight(BaseLight light)
@@ -87,12 +62,10 @@ public class RenderingEngine
 
 	public void render(@NotNull GameObject object)
 	{
-		clearScreen();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		lights.clear();
 		object.addToRenderingEngine(this);
-
-		Shader forwardAmbient = ForwardAmbient.getInstance();
 
 		object.render(forwardAmbient, this);
 		glEnable(GL_BLEND);
@@ -111,10 +84,11 @@ public class RenderingEngine
 		glDisable(GL_BLEND);
 	}
 
-	@SuppressWarnings({"UnusedDeclaration", "unused"})
-	public static void clearScreen()
+	public void renderGUI()
 	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glDisable(GL_DEPTH_TEST);
+		//TODO: Add GUI support
+		glEnable(GL_DEPTH_TEST);
 	}
 
 	public BaseLight getActiveLight()
@@ -130,5 +104,10 @@ public class RenderingEngine
 	public void addCamera(Camera camera)
 	{
 		this.mainCamera = camera;
+	}
+
+	public int getSamplerSlot(String samplerName)
+	{
+		return integerHashMap.get(samplerName);
 	}
 }

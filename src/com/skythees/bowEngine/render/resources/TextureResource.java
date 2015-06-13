@@ -1,5 +1,6 @@
-package com.skythees.bowEngine.render.resourceManagement;
+package com.skythees.bowEngine.render.resources;
 
+import static org.lwjgl.opengl.GL11.glGenTextures;
 import static org.lwjgl.opengl.GL15.glDeleteBuffers;
 
 /**
@@ -10,9 +11,10 @@ public class TextureResource
 	private final int id;
 	private       int referenceCounter;
 
-	public TextureResource(int id)
+	public TextureResource()
 	{
-		this.id = id;
+		this.id = glGenTextures();
+		referenceCounter = 1;
 	}
 
 	public void increaseReference()
