@@ -1,5 +1,5 @@
 /*
- * Software developed by Skythees
+ * BowEngine, modular and easy to use game engine
  * Copyright (C) 2015 Skythees
  *
  * This program is free software: you can redistribute it and/or modify
@@ -13,13 +13,13 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.skythees.bowEngine.render.components.light;
 
 import com.skythees.bowEngine.core.math.Vector3f;
-import com.skythees.bowEngine.shaders.ForwardPoint;
+import com.skythees.bowEngine.render.Shader;
 import com.sun.istack.internal.NotNull;
 
 /**
@@ -42,7 +42,7 @@ public class PointLight extends BaseLight
 		float c = attenuation.getX() - COLOR_DEPTH * getIntensity() * getColor().max();
 		this.range = (float) (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
 
-		setShader(ForwardPoint.getInstance());
+		setShader(new Shader("./resources/shaders/forward-point"));
 	}
 
 	public float getRange()

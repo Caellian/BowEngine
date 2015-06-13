@@ -16,24 +16,45 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.physics;
+package com.skythees.bowEngine.render.resources;
 
-import com.skythees.bowEngine.core.components.GameObject;
+import static org.lwjgl.opengl.GL11.glGenTextures;
+import static org.lwjgl.opengl.GL15.glDeleteBuffers;
 
 /**
- * Created on 19.3.2015. at 22:19.
+ * Created by Caellian on 05.06.15., at 15:59, at 16:01.
  */
-public class PhysicsEngine
+public class TextureResource
 {
-	@SuppressWarnings({"EmptyMethod", "unused"})
-	public void preRender(@SuppressWarnings("UnusedParameters") GameObject rootObject)
-	{
+	private final int id;
+	private       int referenceCounter;
 
+	public TextureResource()
+	{
+		this.id = glGenTextures();
+		referenceCounter = 1;
 	}
 
-	@SuppressWarnings({"EmptyMethod", "unused"})
-	public void postRender(@SuppressWarnings("UnusedParameters") GameObject rootObject)
+	public void increaseReference()
 	{
+		referenceCounter++;
+	}
 
+	public boolean decreaseReference()
+	{
+		referenceCounter--;
+		return referenceCounter == 0;
+	}
+
+	public int getId()
+	{
+		return id;
+	}
+
+	@Override
+	protected void finalize() throws Throwable
+	{
+		super.finalize();
+		glDeleteBuffers(id);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Software developed by Skythees
+ * BowEngine, modular and easy to use game engine
  * Copyright (C) 2015 Skythees
  *
  * This program is free software: you can redistribute it and/or modify
@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.skythees.bowEngine.render;
@@ -23,6 +23,11 @@ import com.skythees.bowEngine.core.lib.Reference;
 import com.skythees.bowEngine.core.math.Matrix4f;
 import com.skythees.bowEngine.core.math.Vector3f;
 import com.skythees.bowEngine.core.util.helpers.DataUtil;
+import com.skythees.bowEngine.render.components.light.BaseLight;
+import com.skythees.bowEngine.render.components.light.DirectionalLight;
+import com.skythees.bowEngine.render.components.light.PointLight;
+import com.skythees.bowEngine.render.components.light.SpotLight;
+import com.skythees.bowEngine.render.resources.ShaderResource;
 import com.sun.istack.internal.NotNull;
 
 import java.io.BufferedReader;
@@ -34,35 +39,46 @@ import java.util.HashMap;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL32.GL_GEOMETRY_SHADER;
 
-public abstract class Shader
+public class Shader
 {
-	private final int                      program;
-	@SuppressWarnings("CanBeFinal")
-	private       HashMap<String, Integer> uniforms;
+	private static final HashMap<String, ShaderResource> loadedShaders = new HashMap<>();
 
-	protected Shader(String fileName)
+	private ShaderResource resource;
+
+	private String fileName;
+
+	public Shader(String fileName)
 	{
-		program = glCreateProgram();
-		uniforms = new HashMap<>();
+		this.fileName = fileName;
+		resource = loadedShaders.get(fileName);
 
-		if (program == 0)
+		if (resource != null)
 		{
-			System.err.println("Shader creation failed: Could not find valid memory location in constructor");
-			System.exit(1);
+			resource.increaseReference();
 		}
+		else
+		{
+			resource = new ShaderResource();
+			if (resource.getProgram() == 0)
+			{
+				System.err.println("Shader creation failed: Could not find valid memory location in constructor");
+				System.exit(1);
+			}
 
-		String vertexShaderText = loadShader(fileName + Reference.Extensions.VERTEX_SHADER_EXTENSION);
-		String fragmentShaderText = loadShader(fileName + Reference.Extensions.FRAGMENT_SHADER_EXTENSION);
+			String vertexShaderText = loadShader(fileName + Reference.Extensions.VERTEX_SHADER_EXTENSION);
+			String fragmentShaderText = loadShader(fileName + Reference.Extensions.FRAGMENT_SHADER_EXTENSION);
 
-		addVertexShader(vertexShaderText);
-		addFragmentShader(fragmentShaderText);
+			addVertexShader(vertexShaderText);
+			addFragmentShader(fragmentShaderText);
+			addAllAttributes(vertexShaderText);
 
-		addAllAttributes(vertexShaderText);
+			compileShader();
 
-		compileShader();
+			addAllUniforms(vertexShaderText);
+			addAllUniforms(fragmentShaderText);
 
-		addAllUniforms(vertexShaderText);
-		addAllUniforms(fragmentShaderText);
+			loadedShaders.put(fileName, resource);
+		}
 	}
 
 	private static String loadShader(@NotNull String fileName)
@@ -125,12 +141,98 @@ public abstract class Shader
 
 	public void bind()
 	{
-		glUseProgram(program);
+		glUseProgram(resource.getProgram());
 	}
 
+	//TODO: Make this class more efficient and less hardcoded!
 	public void updateUniforms(Transform transform, Material material, RenderingEngine renderingEngine)
 	{
+		Matrix4f worldMatrix = transform.getTransformation();
+		Matrix4f MVPMatrix = renderingEngine.getMainCamera().getViewProjection().mul(worldMatrix);
 
+		for (int uniformIndex = 0; uniformIndex < resource.getUniformNames().size(); uniformIndex++)
+		{
+			try
+			{
+				String uniformName = resource.getUniformNames().get(uniformIndex);
+				String uniformType = resource.getUniformTypes().get(uniformIndex);
+
+				switch (uniformName.substring(0, 2))
+				{
+					case "T_":
+						switch (uniformName)
+						{
+							case "T_MVP":
+								setUniform(uniformName, MVPMatrix);
+								break;
+							case "T_model":
+								setUniform(uniformName, worldMatrix);
+								break;
+							default:
+								throw new IllegalArgumentException(uniformName + " is not a valid component of Transform!");
+						}
+						break;
+					case "R_":
+						String rUnprefixedUniformName = uniformName.substring(2);
+						switch (uniformType)
+						{
+							case "sampler2D":
+								int samplerSlot = renderingEngine.getSamplerSlot(rUnprefixedUniformName);
+								material.getTexture(rUnprefixedUniformName).bind(samplerSlot);
+								setUniform(uniformName, samplerSlot);
+								break;
+							case "vec3":
+								setUniform(uniformName, renderingEngine.getVector3fHashMap().get(rUnprefixedUniformName));
+								break;
+							case "float":
+								setUniform(uniformName, renderingEngine.getFloatHashMap().get(rUnprefixedUniformName));
+								break;
+							case "DirectionalLight":
+								setUniformDirectionalLight(uniformName, (DirectionalLight) renderingEngine.getActiveLight());
+								break;
+							case "PointLight":
+								setUniformPointLight(uniformName, (PointLight) renderingEngine.getActiveLight());
+								break;
+							case "SpotLight":
+								setUniformSpotLight(uniformName, (SpotLight) renderingEngine.getActiveLight());
+								break;
+							default:
+								renderingEngine.updateUniformStruct(transform, material, this, uniformName, uniformType);
+						}
+						break;
+					case "C_":
+						switch (uniformName)
+						{
+							case "C_eyePos":
+								setUniform(uniformName, renderingEngine.getMainCamera().getTransform().getTransformedPosition());
+								break;
+							default:
+								throw new IllegalArgumentException(uniformName + " is not a valid component of Camera!");
+						}
+						break;
+					case "M_":
+						String mUnprefixedUniformName = uniformName.substring(2);
+						switch (uniformType)
+						{
+							case "vec3":
+								setUniform(uniformName, material.getVector3fHashMap().get(mUnprefixedUniformName));
+								break;
+							case "float":
+								setUniform(uniformName, material.getFloatHashMap().get(mUnprefixedUniformName));
+								break;
+							default:
+								throw new IllegalArgumentException(uniformName + " is not a supported type in Material!");
+						}
+						break;
+					default:
+						//TODO: Custom uniform handling!
+						throw new IllegalArgumentException(uniformName + " is not supported by Bow Engine!");
+				}
+			} catch (NullPointerException npe)
+			{
+				System.err.println("Received Null Pointer Exception: for uniform '" + resource.getUniformNames().get(uniformIndex) + "', of type: '" + resource.getUniformTypes().get(uniformIndex) + "', while rendering:" + transform.toString());
+			}
+		}
 	}
 
 	private void addAllAttributes(@NotNull String shaderText)
@@ -219,13 +321,15 @@ public abstract class Shader
 			String uniformName = uniformLine.split(" ")[1];
 			String uniformType = uniformLine.split(" ")[0];
 
-			addUniformWithStructCheck(uniformName, uniformType, structs);
+			resource.getUniformNames().add(uniformName);
+			resource.getUniformTypes().add(uniformType);
+			addUniform(uniformName, uniformType, structs);
 
 			uniformStartLocation = shaderText.indexOf(Reference.FileParsing.OPENGL_UNIFORM, uniformStartLocation + Reference.FileParsing.OPENGL_UNIFORM.length());
 		}
 	}
 
-	private void addUniformWithStructCheck(@NotNull String uniformName, String uniformType, @NotNull HashMap<String, ArrayList<GLSLStruct>> structs)
+	private void addUniform(@NotNull String uniformName, String uniformType, @NotNull HashMap<String, ArrayList<GLSLStruct>> structs)
 	{
 		boolean addThis = true;
 		ArrayList<GLSLStruct> structComponents = structs.get(uniformType);
@@ -235,28 +339,23 @@ public abstract class Shader
 			addThis = false;
 			for (GLSLStruct struct : structComponents)
 			{
-				addUniformWithStructCheck(uniformName + "." + struct.name, struct.type, structs);
+				addUniform(uniformName + "." + struct.name, struct.type, structs);
 			}
 		}
 
 		if (addThis)
 		{
-			addUniform(uniformName);
+			int uniformLocation = glGetUniformLocation(resource.getProgram(), uniformName);
+
+			if (uniformLocation == 0xFFFFFFFF)
+			{
+				System.err.println("Error: Could not find uniform: " + uniformName);
+				new Exception().printStackTrace();
+				System.exit(1);
+			}
+
+			resource.getUniforms().put(uniformName, uniformLocation);
 		}
-	}
-
-	private void addUniform(@NotNull String uniform)
-	{
-		int uniformLocation = glGetUniformLocation(program, uniform);
-
-		if (uniformLocation == 0xFFFFFFFF)
-		{
-			System.err.println("Error: Could not find uniform: " + uniform);
-			new Exception().printStackTrace();
-			System.exit(1);
-		}
-
-		uniforms.put(uniform, uniformLocation);
 	}
 
 	private void addVertexShader(@NotNull String text)
@@ -289,7 +388,7 @@ public abstract class Shader
 			System.exit(1);
 		}
 
-		glAttachShader(program, shader);
+		glAttachShader(resource.getProgram(), shader);
 	}
 
 	private void addFragmentShader(@NotNull String text)
@@ -299,50 +398,79 @@ public abstract class Shader
 
 	private void setAttributeLocation(@NotNull String attributeName, int location)
 	{
-		glBindAttribLocation(program, location, attributeName);
+		glBindAttribLocation(resource.getProgram(), location, attributeName);
 	}
 
 	private void compileShader()
 	{
-		glLinkProgram(program);
+		glLinkProgram(resource.getProgram());
 
-		if (glGetProgrami(program, GL_LINK_STATUS) == 0)
+		if (glGetProgrami(resource.getProgram(), GL_LINK_STATUS) == 0)
 		{
-			System.err.println(glGetProgramInfoLog(program, 1024));
+			System.err.println(glGetProgramInfoLog(resource.getProgram(), 1024));
 			System.exit(1);
 		}
 
-		glValidateProgram(program);
+		glValidateProgram(resource.getProgram());
 
-		if (glGetProgrami(program, GL_VALIDATE_STATUS) == 0)
+		if (glGetProgrami(resource.getProgram(), GL_VALIDATE_STATUS) == 0)
 		{
-			System.err.println(glGetProgramInfoLog(program, 1024));
+			System.err.println(glGetProgramInfoLog(resource.getProgram(), 1024));
 			System.exit(1);
 		}
 	}
 
 	@SuppressWarnings("unused")
-	public void setUniform(String uniformName, int value)
+	protected void setUniform(String uniformName, int value)
 	{
-		glUniform1i(uniforms.get(uniformName), value);
+		glUniform1i(resource.getUniforms().get(uniformName), value);
 	}
 
 	@SuppressWarnings("WeakerAccess")
-	public void setUniform(String uniformName, float value)
+	protected void setUniform(String uniformName, float value)
 	{
-		glUniform1f(uniforms.get(uniformName), value);
+		glUniform1f(resource.getUniforms().get(uniformName), value);
 	}
 
 	@SuppressWarnings("WeakerAccess")
-	public void setUniform(String uniformName, @NotNull Vector3f value)
+	protected void setUniform(String uniformName, @NotNull Vector3f value)
 	{
-		glUniform3f(uniforms.get(uniformName), value.getX(), value.getY(), value.getZ());
+		glUniform3f(resource.getUniforms().get(uniformName), value.getX(), value.getY(), value.getZ());
 	}
 
 	@SuppressWarnings("WeakerAccess")
-	public void setUniform(String uniformName, @NotNull Matrix4f value)
+	protected void setUniform(String uniformName, @NotNull Matrix4f value)
 	{
-		glUniformMatrix4(uniforms.get(uniformName), true, DataUtil.createFlippedBuffer(value));
+		glUniformMatrix4(resource.getUniforms().get(uniformName), true, DataUtil.createFlippedBuffer(value));
+	}
+
+	protected void setUniformSpotLight(String uniformName, @NotNull SpotLight spotLight)
+	{
+		setUniformPointLight(uniformName + ".pointLight", spotLight);
+		setUniform(uniformName + ".direction", spotLight.getDirection());
+		setUniform(uniformName + ".cutoff", spotLight.getCutoff());
+	}
+
+	protected void setUniformPointLight(String uniformName, @NotNull PointLight pointLight)
+	{
+		setUniformBaseLight(uniformName + ".base", pointLight);
+		setUniform(uniformName + ".attenuation.constant", pointLight.getConstant());
+		setUniform(uniformName + ".attenuation.linear", pointLight.getLinear());
+		setUniform(uniformName + ".attenuation.exponent", pointLight.getExponent());
+		setUniform(uniformName + ".position", pointLight.getTransform().getTransformedPosition());
+		setUniform(uniformName + ".range", pointLight.getRange());
+	}
+
+	protected void setUniformBaseLight(String uniformName, @NotNull BaseLight baseLight)
+	{
+		setUniform(uniformName + ".color", baseLight.getColor());
+		setUniform(uniformName + ".intensity", baseLight.getIntensity());
+	}
+
+	protected void setUniformDirectionalLight(@SuppressWarnings("SameParameterValue") String uniformName, @NotNull DirectionalLight directionalLight)
+	{
+		setUniformBaseLight(uniformName + ".base", directionalLight);
+		setUniform(uniformName + ".direction", directionalLight.getDirection());
 	}
 
 	private class GLSLStruct
