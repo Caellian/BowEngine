@@ -30,7 +30,7 @@ public class SpotLight extends PointLight
 	private float cutoff;
 
 	@SuppressWarnings("unused")
-	public SpotLight(Vector3f color, float intensity, Vector3f attenuation, float cutoff)
+	public SpotLight(Vector3f color, float intensity, Attenuation attenuation, float cutoff)
 	{
 		super(color, intensity, attenuation); //TODO: Calculate
 		this.cutoff = cutoff;

@@ -18,6 +18,7 @@
 
 package com.skythees.bowEngine.core.components;
 
+import com.skythees.bowEngine.core.CoreEngine;
 import com.skythees.bowEngine.core.Transform;
 import com.skythees.bowEngine.render.RenderingEngine;
 import com.skythees.bowEngine.render.Shader;
@@ -33,20 +34,32 @@ public class GameObject
 	private final ArrayList<GameObject>    children;
 	private final ArrayList<GameComponent> components;
 	private final Transform                transform;
+	private CoreEngine engine;
 
 	public GameObject()
 	{
 		this.children = new ArrayList<>();
 		this.components = new ArrayList<>();
 		this.transform = new Transform();
+
+		engine = null;
 	}
 
 	@NotNull
 	public GameObject addChild(@NotNull GameObject child)
 	{
 		children.add(child);
+		child.setEngine(engine);
 		child.getTransform().setParent(transform);
 		return this;
+	}
+
+	public ArrayList<GameObject> getAllAttached()
+	{
+		ArrayList<GameObject> result = new ArrayList<>();
+		children.forEach(child->result.addAll(child.getAllAttached()));
+		result.add(this);
+		return result;
 	}
 
 	public Transform getTransform()
@@ -63,28 +76,55 @@ public class GameObject
 		return this;
 	}
 
+	public void inputAll(float delta)
+	{
+		input(delta);
+
+		transform.update();
+		components.forEach(component->component.input(delta));
+		children.forEach(child->child.inputAll(delta));
+	}
+
+	public void updateAll(float delta)
+	{
+		update(delta);
+
+		components.forEach(component->component.update(delta));
+		children.forEach(child->child.updateAll(delta));
+	}
+
+	public void renderAll(Shader shader, RenderingEngine renderingEngine)
+	{
+		render(shader, renderingEngine);
+
+		components.forEach(component->component.render(shader, renderingEngine));
+		children.forEach(child->child.renderAll(shader, renderingEngine));
+	}
+
 	public void input(float delta)
 	{
 		transform.update();
 		components.forEach(component->component.input(delta));
-		children.forEach(child->child.input(delta));
 	}
 
 	public void update(float delta)
 	{
 		components.forEach(component->component.update(delta));
-		children.forEach(child->child.update(delta));
 	}
 
 	public void render(Shader shader, RenderingEngine renderingEngine)
 	{
 		components.forEach(component->component.render(shader, renderingEngine));
-		children.forEach(child->child.render(shader, renderingEngine));
 	}
 
-	public void addToRenderingEngine(RenderingEngine renderingEngine)
+	public void setEngine(CoreEngine engine)
 	{
-		components.forEach(component->component.addToRenderingEngine(renderingEngine));
-		children.forEach(child->child.addToRenderingEngine(renderingEngine));
+		if (this.engine != engine)
+		{
+			this.engine = engine;
+
+			components.forEach(component->component.addToEngine(engine));
+			children.forEach(child->child.setEngine(engine));
+		}
 	}
 }

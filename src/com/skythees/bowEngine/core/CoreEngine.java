@@ -47,6 +47,7 @@ public class CoreEngine
 		this.width = width;
 		this.height = height;
 		this.frameTime = 1.0 / frameRate;
+		game.setEngine(this);
 	}
 
 	@SuppressWarnings("unused")
@@ -174,5 +175,15 @@ public class CoreEngine
 	public void setDimensions(Dimension dimensions)
 	{
 		Window.setDimensions(dimensions);
+	}
+
+	public RenderingEngine getRenderingEngine()
+	{
+		return renderingEngine;
+	}
+
+	public PhysicsEngine getPhysicsEngine()
+	{
+		return physicsEngine;
 	}
 }

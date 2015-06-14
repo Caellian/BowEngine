@@ -20,7 +20,6 @@ package com.skythees.bowEngine.render.components.light;
 
 import com.skythees.bowEngine.core.math.Vector3f;
 import com.skythees.bowEngine.render.Shader;
-import com.sun.istack.internal.NotNull;
 
 /**
  * Created on 02.03.15.
@@ -29,17 +28,17 @@ public class PointLight extends BaseLight
 {
 	private static final int COLOR_DEPTH = 256;
 
-	private Vector3f attenuation;
+	private Attenuation attenuation;
 	private float    range;
 
-	public PointLight(Vector3f color, float intensity, @NotNull Vector3f attenuation)
+	public PointLight(Vector3f color, float intensity, Attenuation attenuation)
 	{
 		super(color, intensity);
 		this.attenuation = attenuation;
 
-		float a = attenuation.getZ();
-		float b = attenuation.getY();
-		float c = attenuation.getX() - COLOR_DEPTH * getIntensity() * getColor().max();
+		float a = attenuation.getExponent();
+		float b = attenuation.getLinear();
+		float c = attenuation.getConstant() - COLOR_DEPTH * getIntensity() * getColor().max();
 		this.range = (float) (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
 
 		setShader(new Shader("./resources/shaders/forward-point"));
@@ -56,36 +55,8 @@ public class PointLight extends BaseLight
 		this.range = range;
 	}
 
-	public float getConstant()
+	public Attenuation getAttenuation()
 	{
-		return this.attenuation.getX();
-	}
-
-	@SuppressWarnings("unused")
-	public void setConstant(float constant)
-	{
-		this.attenuation.setX(constant);
-	}
-
-	public float getLinear()
-	{
-		return this.attenuation.getY();
-	}
-
-	@SuppressWarnings("unused")
-	public void setLinear(float linear)
-	{
-		this.attenuation.setY(linear);
-	}
-
-	public float getExponent()
-	{
-		return this.attenuation.getZ();
-	}
-
-	@SuppressWarnings("unused")
-	public void setExponent(float exponent)
-	{
-		this.attenuation.setZ(exponent);
+		return this.attenuation;
 	}
 }

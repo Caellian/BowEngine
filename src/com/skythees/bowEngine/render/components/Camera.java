@@ -18,21 +18,15 @@
 
 package com.skythees.bowEngine.render.components;
 
+import com.skythees.bowEngine.core.CoreEngine;
 import com.skythees.bowEngine.core.components.GameComponent;
 import com.skythees.bowEngine.core.math.Matrix4f;
-import com.skythees.bowEngine.core.math.Vector2f;
 import com.skythees.bowEngine.core.math.Vector3f;
-import com.skythees.bowEngine.core.util.input.InputHelper;
-import com.skythees.bowEngine.render.RenderingEngine;
-import com.skythees.bowEngine.render.display.Window;
 import com.sun.istack.internal.NotNull;
-import org.lwjgl.input.Keyboard;
 
 public class Camera extends GameComponent
 {
-	private static final Vector3f yAxis = new Vector3f(0, 1, 0);
 	private final Matrix4f projection;
-	private boolean mouseLocked = false;
 
 	@SuppressWarnings("unused")
 	public Camera(float fov, float aspectRatio, float zNear, float zFar)
@@ -51,71 +45,9 @@ public class Camera extends GameComponent
 	}
 
 	@Override
-	public void input(float delta)
+	public void addToEngine(CoreEngine engine)
 	{
-		float sensitivity = 0.5f;
-		float movAmt = 10 * delta;
-
-		if (InputHelper.getKey(Keyboard.KEY_ESCAPE))
-		{
-			InputHelper.setCursor(true);
-			mouseLocked = false;
-		}
-		if (InputHelper.getMouseDown(0))
-		{
-			InputHelper.setMousePosition(Window.centerPosition());
-			InputHelper.setCursor(false);
-			mouseLocked = true;
-		}
-
-		if (InputHelper.getKey(Keyboard.KEY_W))
-		{
-			move(getTransform().getRot().getForward(), movAmt);
-		}
-		if (InputHelper.getKey(Keyboard.KEY_S))
-		{
-			move(getTransform().getRot().getForward(), -movAmt);
-		}
-		if (InputHelper.getKey(Keyboard.KEY_A))
-		{
-			move(getTransform().getRot().getLeft(), movAmt);
-		}
-		if (InputHelper.getKey(Keyboard.KEY_D))
-		{
-			move(getTransform().getRot().getRight(), movAmt);
-		}
-
-		if (mouseLocked)
-		{
-			Vector2f deltaPos = InputHelper.getMousePosition().sub(Window.centerPosition());
-
-			boolean rotY = deltaPos.getX() != 0;
-			boolean rotX = deltaPos.getY() != 0;
-
-			if (rotY)
-			{
-				getTransform().rotate(yAxis, (float) Math.toRadians(deltaPos.getX() * sensitivity));
-			}
-			if (rotX)
-			{
-				getTransform().rotate(getTransform().getRot().getRight(), (float) Math.toRadians(-deltaPos.getY() * sensitivity));
-			}
-			if (rotY || rotX)
-			{
-				InputHelper.setMousePosition(Window.centerPosition());
-			}
-		}
+		engine.getRenderingEngine().addCamera(this);
 	}
 
-	@Override
-	public void addToRenderingEngine(@NotNull RenderingEngine renderingEngine)
-	{
-		renderingEngine.addCamera(this);
-	}
-
-	@SuppressWarnings("WeakerAccess")
-	public void move(@NotNull Vector3f dir, float amount)
-	{
-		getTransform().setPos(getTransform().getPos().add(dir.mul(amount)));
-	}
 }

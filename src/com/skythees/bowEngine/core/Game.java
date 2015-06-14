@@ -38,12 +38,12 @@ public abstract class Game
 
 	public void input(float delta)
 	{
-		root.input(delta);
+		root.inputAll(delta);
 	}
 
 	public void update(float delta)
 	{
-		root.update(delta);
+		root.updateAll(delta);
 	}
 
 	@SuppressWarnings("unused")
@@ -57,5 +57,20 @@ public abstract class Game
 	public void render(@NotNull RenderingEngine renderingEngine)
 	{
 		renderingEngine.render(root);
+	}
+
+	public void setEngine(CoreEngine engine)
+	{
+		root.setEngine(engine);
+	}
+
+	public GameObject getRoot()
+	{
+		return root;
+	}
+
+	public void setRoot(GameObject root)
+	{
+		this.root = root;
 	}
 }

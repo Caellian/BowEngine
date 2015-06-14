@@ -16,41 +16,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skythees.bowEngine.core.exceptions;
+package com.skythees.bowEngine.render.components.light;
+
+import com.skythees.bowEngine.core.math.Vector3f;
 
 /**
- * Created on 06.03.15.
+ * Created by caellian on 13.06.15., at 14:43.
  */
-@SuppressWarnings("WeakerAccess")
-public class BowEngineException extends Exception
+public class Attenuation extends Vector3f
 {
-	@SuppressWarnings("unused")
-	public BowEngineException()
+	public Attenuation(float constant, float linear, float exponent)
 	{
-		super();
+		super(constant, linear, exponent);
 	}
 
-	@SuppressWarnings("unused")
-	public BowEngineException(String message)
+	public float getConstant()
 	{
-		super(message);
+		return super.getX();
 	}
 
-	@SuppressWarnings("unused")
-	public BowEngineException(String message, Throwable cause)
+	public float getLinear()
 	{
-		super(message, cause);
+		return super.getY();
 	}
 
-	@SuppressWarnings("unused")
-	public BowEngineException(Throwable cause)
+	public float getExponent()
 	{
-		super(cause);
-	}
-
-	@SuppressWarnings("unused")
-	protected BowEngineException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace)
-	{
-		super(message, cause, enableSuppression, writableStackTrace);
+		return super.getZ();
 	}
 }

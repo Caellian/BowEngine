@@ -18,11 +18,10 @@
 
 package com.skythees.bowEngine.render.components.light;
 
+import com.skythees.bowEngine.core.CoreEngine;
 import com.skythees.bowEngine.core.components.GameComponent;
 import com.skythees.bowEngine.core.math.Vector3f;
-import com.skythees.bowEngine.render.RenderingEngine;
 import com.skythees.bowEngine.render.Shader;
-import com.sun.istack.internal.NotNull;
 
 /**
  * Created on 02.03.15
@@ -41,9 +40,9 @@ public class BaseLight extends GameComponent
 	}
 
 	@Override
-	public void addToRenderingEngine(@NotNull RenderingEngine renderingEngine)
+	public void addToEngine(CoreEngine engine)
 	{
-		renderingEngine.addLight(this);
+		engine.getRenderingEngine().addLight(this);
 	}
 
 	public Shader getShader()
