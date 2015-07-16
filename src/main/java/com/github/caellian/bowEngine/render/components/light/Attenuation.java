@@ -16,19 +16,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
+package com.github.caellian.bowEngine.render.components.light;
 
-repositories {
-	mavenCentral()
-	jcenter()
-}
+import com.github.caellian.bowEngine.core.math.Vector3f;
 
-dependencies {
-	compile 'org.slf4j:slf4j-api:1.7.12'
-	compile "org.lwjgl.lwjgl:lwjgl:2.9.3"
-	compile "org.lwjgl.lwjgl:lwjgl_util:2.9.3"
+/**
+ * @author Caellian
+ */
+public class Attenuation extends Vector3f
+{
+	public Attenuation(float constant, float linear, float exponent)
+	{
+		super(constant, linear, exponent);
+	}
 
-	testCompile 'junit:junit:4.12'
+	public float getConstant()
+	{
+		return super.getX();
+	}
+
+	public float getLinear()
+	{
+		return super.getY();
+	}
+
+	public float getExponent()
+	{
+		return super.getZ();
+	}
 }

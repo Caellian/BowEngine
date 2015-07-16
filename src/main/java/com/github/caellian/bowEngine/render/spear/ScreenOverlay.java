@@ -16,19 +16,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
+package com.github.caellian.bowEngine.render.spear;
 
-repositories {
-	mavenCentral()
-	jcenter()
-}
+import com.github.caellian.bowEngine.render.IScreenDrawable;
 
-dependencies {
-	compile 'org.slf4j:slf4j-api:1.7.12'
-	compile "org.lwjgl.lwjgl:lwjgl:2.9.3"
-	compile "org.lwjgl.lwjgl:lwjgl_util:2.9.3"
+/**
+ * @author Caellian
+ */
+public class ScreenOverlay implements IScreenDrawable
+{
+	@Override
+	public boolean draw()
+	{
+		return false;
+	}
 
-	testCompile 'junit:junit:4.12'
+	@Override
+	public int getSizeX()
+	{
+		return 0;
+	}
+
+	@Override
+	public int getSizeY()
+	{
+		return 0;
+	}
 }

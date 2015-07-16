@@ -16,19 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
+package com.github.caellian.bowEngine.core.util.helpers;
 
-repositories {
-	mavenCentral()
-	jcenter()
-}
+import com.github.caellian.bowEngine.core.Transform;
+import com.github.caellian.bowEngine.render.Material;
+import com.github.caellian.bowEngine.render.Shader;
 
-dependencies {
-	compile 'org.slf4j:slf4j-api:1.7.12'
-	compile "org.lwjgl.lwjgl:lwjgl:2.9.3"
-	compile "org.lwjgl.lwjgl:lwjgl_util:2.9.3"
+/**
+ * This class allows users to manage uniforms unhandled by Bow Engine without use of ASM, patching the engine files or
+ * modifying source code.
+ *
+ * @author Caellian
+ */
+public interface IUniformHandler
+{
+	boolean updateUniformStruct(Transform transform, Material material, Shader shader, String uniformName, String uniformType);
 
-	testCompile 'junit:junit:4.12'
+	boolean updateUndefinedUniformStruct(Transform transform, Material material, Shader shader, String uniformName, String uniformType);
 }

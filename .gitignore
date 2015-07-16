@@ -1,18 +1,21 @@
-*.class
+#Ignore All
+/*
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+#Except:
+# Source Files
+!/src
 
-# Package Files #
-*.jar
-*.war
-*.ear
+# License File
+!/LICENSE
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+# GitHub Files
+!.gitignore
+!/*.md
 
-# IntelliJ IDEA Files
-out/*
-runDIR/*
-.idea/*
-*.iml
+# Gradle
+!/build.gradle
+!/build.properties
+!/settings.gradle
+!/gradle.properties
+!/gradlew*
+!/gradle

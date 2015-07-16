@@ -16,19 +16,45 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
+package com.github.caellian.bowEngine.render.resources;
 
-repositories {
-	mavenCentral()
-	jcenter()
-}
+import static org.lwjgl.opengl.GL11.glGenTextures;
+import static org.lwjgl.opengl.GL15.glDeleteBuffers;
 
-dependencies {
-	compile 'org.slf4j:slf4j-api:1.7.12'
-	compile "org.lwjgl.lwjgl:lwjgl:2.9.3"
-	compile "org.lwjgl.lwjgl:lwjgl_util:2.9.3"
+/**
+ * @author Caellian
+ */
+public class TextureResource
+{
+	private final int id;
+	private       int referenceCounter;
 
-	testCompile 'junit:junit:4.12'
+	public TextureResource()
+	{
+		this.id = glGenTextures();
+		referenceCounter = 1;
+	}
+
+	public void increaseReference()
+	{
+		referenceCounter++;
+	}
+
+	public boolean decreaseReference()
+	{
+		referenceCounter--;
+		return referenceCounter == 0;
+	}
+
+	public int getId()
+	{
+		return id;
+	}
+
+	@Override
+	protected void finalize() throws Throwable
+	{
+		super.finalize();
+		glDeleteBuffers(id);
+	}
 }
