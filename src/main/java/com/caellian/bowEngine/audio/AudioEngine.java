@@ -16,21 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
+package com.caellian.bowEngine.audio;
 
-repositories {
-	mavenCentral()
-	jcenter()
-}
+/**
+ * It is suggested that audio files are not loaded after program initialization has finished because file I/O can cause
+ * performance drops.
+ *
+ * @author Caellian
+ */
+public class AudioEngine
+{
+	public AudioEngine() {
 
-version = '0.0.0'
-
-dependencies {
-	compile 'org.slf4j:slf4j-api:1.7.12'
-	compile "org.lwjgl.lwjgl:lwjgl:2.9.3"
-	compile "org.lwjgl.lwjgl:lwjgl_util:2.9.3"
-
-	testCompile 'junit:junit:4.12'
+	}
 }

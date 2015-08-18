@@ -16,21 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
+package com.caellian.bowEngine.audio.resources;
 
-repositories {
-	mavenCentral()
-	jcenter()
-}
+/**
+ * @author Caellian
+ */
+public class AudioResource
+{
+	public AudioResource(String audioURL) {
 
-version = '0.0.0'
+	}
 
-dependencies {
-	compile 'org.slf4j:slf4j-api:1.7.12'
-	compile "org.lwjgl.lwjgl:lwjgl:2.9.3"
-	compile "org.lwjgl.lwjgl:lwjgl_util:2.9.3"
-
-	testCompile 'junit:junit:4.12'
+	public boolean play() {
+		return true;
+	}
 }

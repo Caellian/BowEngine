@@ -16,21 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
+package com.caellian.bowEngine.render.components.light;
 
-repositories {
-	mavenCentral()
-	jcenter()
-}
+import com.caellian.bowEngine.core.math.Vector3f;
+import com.caellian.bowEngine.render.Shader;
+import com.sun.istack.internal.NotNull;
 
-version = '0.0.0'
+/**
+ * Created on 02.03.15
+ */
+public class DirectionalLight extends BaseLight
+{
+	@SuppressWarnings("unused")
+	public DirectionalLight(Vector3f color, float intensity)
+	{
+		super(color, intensity);
 
-dependencies {
-	compile 'org.slf4j:slf4j-api:1.7.12'
-	compile "org.lwjgl.lwjgl:lwjgl:2.9.3"
-	compile "org.lwjgl.lwjgl:lwjgl_util:2.9.3"
+		this.setShader(new Shader("./resources/shaders/forward-directional"));
+	}
 
-	testCompile 'junit:junit:4.12'
+	@NotNull
+	public Vector3f getDirection()
+	{
+		return getTransform().getTransformedRotation().getForward();
+	}
 }
