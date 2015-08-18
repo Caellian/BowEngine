@@ -36,7 +36,7 @@ import static org.lwjgl.opengl.GL20.*;
 public class Mesh
 {
 	@NotNull
-	private static final HashMap<String, MeshResource> resourceHashMap = new HashMap<>();
+	private static final HashMap<String, MeshResource> resourceHashMap = new HashMap<>(0);
 	private final String       fileName;
 	private       MeshResource resource;
 
