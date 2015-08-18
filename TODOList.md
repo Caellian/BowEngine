@@ -1,11 +1,17 @@
+Core engine:
+
 Rendering engine:
-- Add 2D support for GUI
-- Optimise code
-- Add better shader and model import code
 - Add global lighting
+- Add shadow system
+    Could do this by rendering objects from "Sun" perspective and project them on objects behind/below.
 
 Physics engine:
-- Create one
+- Make gravity position dependant
+- Is collision going to be handled by games?
+    - Should I make presets?
+        - Simple geometric primitives collision
+        - Complex mesh collision
+
 
 Audio engine:
-- Create one
+- Create one -> look at OpenAL
